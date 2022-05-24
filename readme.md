@@ -1,0 +1,1 @@
+this course equipped to help you create web projects that look beautiful on any device!

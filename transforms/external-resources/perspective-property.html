@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perspective property</title>
+</head>
+
+<body>
+    <!-- 
+        >> perspective CSS property gives an element a 3D-space by affecting the distance between the Z plane and the user
+        >> strength of the effect is determined by the value
+        >> smaller the value, the closer you get from the Z plane and the more impressive the visual effect
+        >> greater the value, the more subtle will be the effect
+        >> Please note the perspective property doesn’t affect how the element is rendered; it simply enables a 3D-space for children elements
+        >> This is the main difference between the transform: perspective() function and the perspective property
+        >> first gives element depth while the later creates a 3D-space shared by all its transformed children\
+        >> e.g. .parent { perspective: 1000px; } and .child { transform: rotateY(50deg); }
+     -->
+    <div class="difference-between-perspective-function-and-property">
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                font-size: 20px;
+            }
+
+            .parent {
+                width: 50%;
+                display: inline-block;
+                padding: .5em;
+            }
+
+            .parent.perspective {
+                perspective: 50em;
+            }
+
+            .child {
+                margin: .5em;
+                width: 3em;
+                height: 3em;
+                background: tomato;
+                display: inline-block;
+                border: 1px solid rgba(0, 0, 0, .5);
+            }
+
+            .parent.perspective .child {
+                transform: rotateX(50deg);
+                background: tomato;
+            }
+
+            .parent.transform .child {
+                transform: perspective(50em) rotateX(50deg);
+                background: deepskyblue;
+            }
+
+            h1 {
+                font-size: 1em;
+            }
+        </style>
+        <!-- On this side, you can see the property applied to the parent (perspective: 50em) of transformed elements (transform: rotateY(50deg)). -->
+        <div class="parent perspective">
+            <h1>Using perspective property on parent</h1>
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+        </div>
+        <!-- On the right side, the perspective is applied from the transform directly on children (transform: perspective(50em) rotateY(50deg)) -->
+        <div class="parent transform">
+            <h1>Using transform: perspective() on children</h1>
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+            <div class="child"></div>
+        </div>
+    </div>
+
+    <!-- another example with cubes -->
+    <!-- 
+        Here is how the cube is made: 
+        >> it relies on two nested wrappers (one to give the cube perspective and one to wrap all the sides) and 6 elements to make the sides
+        >> Each element is given its own transform mixing translating and rotating in the 3D-space (e.g. transform: rotateX(90deg) translateZ(1em))
+     -->
+    <div class="perspective-example-with-cubes">
+        <style>
+            @import "compass/css3";
+
+            .wrapper {
+                width: 50%;
+                float: left;
+            }
+
+            .w1 {
+                perspective: 1000px;
+            }
+
+            .w2 {
+                perspective: 250px;
+            }
+
+            .wrapper h1 {
+                text-align: center;
+            }
+
+            .cube {
+                font-size: 4em;
+                width: 2em;
+                margin: 1.5em auto;
+                transform-style: preserve-3d;
+                transform: rotateX(-40deg) rotateY(32deg);
+            }
+
+            .side {
+                position: absolute;
+                width: 2em;
+                height: 2em;
+
+                background: rgba(tomato, .6);
+                border: 1px solid rgba(0, 0, 0, .5);
+
+                color: white;
+                text-align: center;
+                line-height: 2em;
+            }
+
+            .front {
+                transform: translateZ(1em);
+            }
+
+            .top {
+                transform: rotateX(90deg) translateZ(1em);
+            }
+
+            .right {
+                transform: rotateY(90deg) translateZ(1em);
+            }
+
+            .left {
+                transform: rotateY(-90deg) translateZ(1em);
+            }
+
+            .bottom {
+                transform: rotateX(-90deg) translateZ(1em);
+            }
+
+            .back {
+                transform: rotateY(-180deg) translateZ(1em);
+            }
+        </style>
+        <div class="wrapper w1">
+            <h1><code>perspective: 1000px</code></h1>
+            <div class="cube">
+                <div class="side  front">1</div>
+                <div class="side   back">6</div>
+                <div class="side  right">4</div>
+                <div class="side   left">3</div>
+                <div class="side    top">5</div>
+                <div class="side bottom">2</div>
+            </div>
+        </div>
+        <div class="wrapper w2">
+            <h1><code>perspective: 250px</code></h1>
+            <div class="cube">
+                <div class="side  front">1</div>
+                <div class="side   back">6</div>
+                <div class="side  right">4</div>
+                <div class="side   left">3</div>
+                <div class="side    top">5</div>
+                <div class="side bottom">2</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 
+        a demo featuring what could be the base of a real world design: 
+            >> a wall of photographs + captions using perspective and transform
+        >> Using perspective (with a value different from 0 or none) creates a new stacking context
+
+        Syntax: 
+            >> Initial value: none
+            >> Applies to: transformable elements
+            >> Inherited: no
+            >> Percentages: n/a
+            >> Computed value: the keyword none or an absolute length
+            >> Animation type: by computed value
+     -->
+    <div class="real-world-perspective-usecase">
+        <style>
+            @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro);
+
+
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                font-size: 16px;
+            }
+
+            .wrapper {
+                perspective: 1000px;
+                margin: 4em auto;
+                width: 37em;
+            }
+
+            .wrapper:hover .inner {
+                transform: rotate(0)
+            }
+
+            .inner {
+                transition: .3s;
+                transform: rotateY(40deg);
+            }
+
+            .inner figure {
+                box-shadow: -6px 6px 2px -3px rgba(100, 100, 100, .1);
+                width: 11em;
+                padding: 1em;
+                display: inline-block;
+                margin-right: 1em;
+                background: rgba(250, 200, 200, 0.1);
+                border: 1px solid rgba(250, 200, 200, .5);
+            }
+
+            .inner figcaption {
+                text-align: center;
+                margin: .5em 0;
+                font-family: 'Source Sans Pro', sans-serif;
+                font-weight: bold;
+                color: darken(tomato, 15%);
+            }
+
+            .inner img {
+                display: block;
+                height: auto;
+                max-width: 100%;
+                margin: 0 auto;
+                -webkit-filter: sepia(75%);
+            }
+        </style>
+        <div class="wrapper">
+            <div class="inner">
+                <figure>
+                    <img src="http://lorempixel.com/200/200/nature" alt="Nature">
+                    <figcaption>Nature picture</figcaption>
+                </figure>
+                <figure>
+                    <img src="http://lorempixel.com/200/200/abstract" alt="Nature">
+                    <figcaption>Abstract image </figcaption>
+                </figure>
+                <figure>
+                    <img src="http://lorempixel.com/200/200/animals" alt="Nature">
+                    <figcaption>Animal photo</figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

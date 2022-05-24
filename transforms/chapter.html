@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transform property</title>
+</head>
+
+<body>
+    <!-- 
+        >> transform property is a powerful tool to change the appearance of elements without affecting the natural document flow
+        >> Transforms are very commonly used for animated effects
+        
+        Basics of Transforms:
+        typo >> transform property takes in one or more CSS transform functions as its values, with those functions taking in their own value(s), usually an angle or a number
+        >> Almost all elements can have the transform property applied to it, with the exceptions being <col>, <colgroup>, and non-replaced inline elements
+            >> “Non-replaced” simply refers to elements whose content is contained within the HTML document (<span>, <b>, and <em>, for example), as opposed to a “replaced” element’s content being contained outside of the document (<a>, <iframe>, and <img>, for example)
+        
+        Two-Dimensional Transforms:
+        >> we’ll go through 2D transforms with the following transform functions: rotate, scale, skew, and translate
+            >> Rotate: 
+            >> This is the transform function value to rotate an element on a 2D plane: .element { transform: rotate(45deg || -1rad || 0.3turn); }
+            
+            >> Scale: 
+            >> These are the transform function values to scale an element on a 2D plane: 
+                >>  .element {
+                        transform: scaleX(0.25);
+                        transform: scaleY(1.5);
+                        transform: scale(0.25, 1.5);
+                        transform: scale(0.5);
+                    }
+            
+            >> Skew: 
+            >> These are the transform function values to skew an element on a 2D plane:
+                >> .element {
+                        transform: skewX(45deg);
+                        transform: skewY(-0.5rad);
+                        transform: skew(45deg, -0.5rad);
+                        /* single value behaves the same as skewX */
+                        transform: skew(45deg);
+                    }
+            
+            >> Translate: 
+            >> These are the transform function values to translate an element on a 2D plane:
+                >> .element {
+                        transform: translateX(20px);
+                        /* percent values are of the element's width */
+                        transform: translateY(-33%);
+                        transform: translate(20px, -33%);
+                    }
+                
+            
+        Chaining Multiple Transforms: 
+        >> Chaining multiple transforms is as simple as adding more transform functions with a space between each one    
+        >> transform functions are multiplied in order from left to right, meaning that composite transforms are effectively applied in order from right to left
+        >> While you can generally chain multiple transforms in any order for various results, there is one exception: perspective
+        >> 
+     -->
+    <div class="chaining-transforms">
+        <style>
+            .red-box,
+            .blue-box {
+                position: absolute;
+                width: 100px;
+                height: 100px;
+            }
+
+            .red-box {
+                background: red;
+                transform: rotate(45deg) translate(200%);
+            }
+
+            .blue-box {
+                background: blue;
+                transform: translate(200%) rotate(45deg);
+            }
+        </style>
+        <div class="red-box"></div>
+        <div class="blue-box"></div>
+    </div>
+
+    <!-- 
+        Three-Dimensional Transforms: 
+        >> rotate, scale, and translate transform functions aren’t limited to just the 2D plane
+        >> They work for the 3D plane as well! However, to perceive a 3D effect on some of these function values, perspective is required
+
+        >> Perspective: 
+        >> This is the transform function value to set the distance from the user to the z = 0 plane: .element { transform: perspective(); }
+        >> Essentially, by setting a perspective value, we are telling the object to render as if we were viewing it from a specific distance on the z-axis
+        >> Unlike other transform function values, perspective must be declared first (leftmost) when there are multiple transform function values
+        
+     -->
+</body>
+
+</html>
