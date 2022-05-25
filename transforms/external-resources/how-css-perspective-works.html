@@ -14,7 +14,8 @@
         >> While moving the object on the X and Y axes is pretty straightforward, if we’ll move it on the Z axis, it will look like the square stays exactly the same, and that’s because when the object is moving on the Z axis, the animation moves it closer to us and then further from us, but the size (and location) of the square remains the same
         >> That’s where the CSS perspective property comes into play
         >> While perspective has no influence on the object when it’s moving on the X or Y axes, when the object is moving on the Z axis, perspective makes the square look bigger when it moves closer to us, and smaller when it moves further away
-        
+        >> Note that when the rotation of the object on the X or Y axes is at 90° (or 270°, 450°, 630°, and so on) it will “disappear” from view
+            >> Again, this is happening because we can’t add depth to an object, and at this position the square’s width (or height) will actually be 0
      -->
     <div class="basic-uses">
         <style>
@@ -84,8 +85,28 @@
                 animation: moveOnX 2s infinite ease-in-out alternate;
             }
 
-            #axesX:checked~.options>label.axesX {
+            #x-axis:checked~.container>.square {
+                -webkit-animation: rotateOnX 2s infinite linear;
+                animation: rotateOnX 2s infinite linear;
+            }
+
+            #axesX:checked~.options>label.axesX,
+            #x-axis:checked~.options>label.x-axis {
                 background-color: greenyellow;
+            }
+
+            @-webkit-keyframes rotateOnX {
+                to {
+                    -webkit-transform: rotateX(350deg);
+                    transform: rotateX(360deg);
+                }
+            }
+
+            @keyframes rotateOnX {
+                to {
+                    -webkit-transform: rotateX(350deg);
+                    transform: rotateX(360deg);
+                }
             }
 
             @-webkit-keyframes moveOnX {
@@ -117,8 +138,28 @@
                 animation: moveOnY 2s infinite ease-in-out alternate;
             }
 
-            #axesY:checked~.options>label.axesY {
+            #y-axis:checked~.container>.square {
+                -webkit-animation: rotateOnY 2s infinite linear;
+                animation: rotateOnY 2s infinite linear;
+            }
+
+            #axesY:checked~.options>label.axesY,
+            #y-axis:checked~.options>label.y-axis {
                 background-color: greenyellow;
+            }
+
+            @-webkit-keyframes rotateOnY {
+                to {
+                    -webkit-transform: rotateY(360deg);
+                    transform: rotateY(360deg);
+                }
+            }
+
+            @keyframes rotateOnY {
+                to {
+                    -webkit-transform: rotateY(360deg);
+                    transform: rotateY(360deg);
+                }
             }
 
             @-webkit-keyframes moveOnY {
@@ -150,8 +191,28 @@
                 animation: moveOnZ 2s infinite ease-in-out alternate;
             }
 
-            #axesZ:checked~.options>label.axesZ {
+            #z-axis:checked~.container>.square {
+                -webkit-animation: rotateOnZ 2s infinite linear;
+                animation: rotateOnZ 2s infinite linear;
+            }
+
+            #axesZ:checked~.options>label.axesZ,
+            #z-axis:checked~.options>label.z-axis {
                 background-color: greenyellow;
+            }
+
+            @-webkit-keyframes rotateOnZ {
+                to {
+                    -webkit-transform: rotateZ(360deg);
+                    transform: rotateZ(360deg);
+                }
+            }
+
+            @keyframes rotateOnZ {
+                to {
+                    -webkit-transform: rotateZ(360deg);
+                    transform: rotateZ(360deg);
+                }
             }
 
             @-webkit-keyframes moveOnZ {
@@ -200,6 +261,10 @@
         <input type="radio" name="rotateAxis" class="hidden" id="axesY">
         <input type="radio" name="rotateAxis" class="hidden" id="axesZ">
 
+        <input type="radio" name="rotateAxis" class="hidden" id="x-axis">
+        <input type="radio" name="rotateAxis" class="hidden" id="y-axis">
+        <input type="radio" name="rotateAxis" class="hidden" id="z-axis">
+
         <input type="checkbox" class="hidden" id="usePerspective">
 
         <div class="container">
@@ -213,7 +278,635 @@
             <label for="axesY" class="axis axesY">Y axis</label>
             <label for="axesZ" class="axis axesZ">Z axis</label>
 
+            <h3>Rotational Transform: </h3>
+            <label for="x-axis" class="axis x-axis">X Axis</label>
+            <label for="y-axis" class="axis y-axis">Y Axis</label>
+            <label for="z-axis" class="axis z-axis">Z Axis</label>
+
             <label for="usePerspective" class="usePerspective">Use perspective</label>
+        </div>
+    </div>
+
+    <!-- 
+        Perspective value: 
+        >> We need to set the perspective property with a value
+        >> This value sets the distance from the object’s plane, or in other words, the perspective’s strength
+        >> bigger the value, the further you are from the object; the smaller the value, the more noticeable the perspective will be
+
+        perspective origin: 
+        >> perspective-origin property determines the position from which you are “looking” at an object
+        >> If the origin is centered (which is the default) and the object is moved to the right, it will seem like you are looking at it from the left (and vice versa)
+        >> Alternatively, you can leave the object centered and move the perspective-origin
+            >> When the origin is set to the side, it’s like you are “looking” at the object from that side
+        >> bigger the value, the further aside it will look
+     -->
+    <div class="outerContainer">
+        <style>
+            .outerContainer {
+                width: 200px;
+                margin: 1em;
+            }
+
+            .container {
+                width: 200px;
+                height: 200px;
+                border: 1px solid #fff;
+                border-radius: 4px;
+                display: -webkit-box;
+                display: flex;
+                -webkit-box-align: center;
+                align-items: center;
+                -webkit-perspective: 240px;
+                perspective: 240px;
+            }
+
+            .square {
+                width: 100px;
+                height: 100px;
+                background-color: green;
+                -webkit-transform: rotateY(90deg);
+                transform: rotateY(90deg);
+            }
+
+            .containerA>.square {
+                -webkit-animation: moveSquare 4s infinite ease-in-out alternate;
+                animation: moveSquare 4s infinite ease-in-out alternate;
+            }
+
+            @-webkit-keyframes moveSquare {
+                from {
+                    -webkit-transform: translateX(-100px) rotateY(90deg);
+                    transform: translateX(-100px) rotateY(90deg);
+                }
+
+                to {
+                    -webkit-transform: translateX(100px) rotateY(90deg);
+                    transform: translateX(100px) rotateY(90deg);
+                }
+            }
+
+            /* plane stays at 90 deg angle and move along x axis */
+            @keyframes moveSquare {
+                from {
+                    -webkit-transform: translateX(-100px) rotateY(90deg);
+                    transform: translateX(-100px) rotateY(90deg);
+                }
+
+                to {
+                    -webkit-transform: translateX(100px) rotateY(90deg);
+                    transform: translateX(100px) rotateY(90deg);
+                }
+            }
+
+            .containerB {
+                -webkit-animation: moveOrigin 4s infinite ease-in-out alternate;
+                animation: moveOrigin 4s infinite ease-in-out alternate;
+            }
+
+            /* origin remains fixed and perspective changes from left to right */
+            @-webkit-keyframes moveOrigin {
+                from {
+                    -webkit-perspective-origin: left;
+                    perspective-origin: left;
+                }
+
+                to {
+                    -webkit-perspective-origin: right;
+                    perspective-origin: right;
+                }
+            }
+
+            @keyframes moveOrigin {
+                from {
+                    -webkit-perspective-origin: left;
+                    perspective-origin: left;
+                }
+
+                to {
+                    -webkit-perspective-origin: right;
+                    perspective-origin: right;
+                }
+            }
+        </style>
+        The square is moving from side to side while the perspective-origin is centered
+        <div class="container containerA">
+            <div class="square"></div>
+        </div>
+    </div>
+
+    <div class="outerContainer">
+        The square is centered while to perspective-origin is moving from side to side
+        <div class="container containerB">
+            <div class="square"></div>
+        </div>
+    </div>
+
+    <!-- 
+        Transformation: 
+        >> While perspective and perspective-origin are both set on an element’s parent container and determine the position of the vanishing point (i.e. the distance from the object’s plane from the position from which you are “looking” at the object)
+        >> object’s position and rotation is set using the transform property, which is declared on the object itself
+        >> this function is a type of transformation that is applied directly to the element we want to transform, but that behaves according to the perspective rules assigned to the parent element
+        >> We can “chain” multiple functions to the transform property
+        >> But when using multiple transforms, there three very important things to consider:
+            >> When rotating an object, its coordinate system is transformed along with the object
+            >> When translating an object, it moves relative to its own coordinate system (rather than its parent’s coordinates)
+            >> order in which these values are written can (and will) change the end result
+        >> as in out previous example, If this had been done the other way around (rotate first, then translate), then the result would have been completely different
+        >> To underscore how important the order of values is to the transform property, let’s take a look at a couple of quick examples
+        >> First, a simple two-dimensional (2D) transformation of two squares that both have the same transform values, but declared in a different order
+     -->
+    <div class="transform-chain">
+        <style>
+            .transform-chain .squareA {
+                -webkit-animation: sqrA 4s infinite ease-in-out;
+                animation: sqrA 4s infinite ease-in-out;
+            }
+
+            @-webkit-keyframes sqrA {
+
+                0%,
+                10% {
+                    -webkit-transform: none;
+                    transform: none;
+                }
+
+                50% {
+                    -webkit-transform: rotate(30deg);
+                    transform: rotate(30deg);
+                }
+
+                90%,
+                100% {
+                    -webkit-transform: rotate(30deg) translateX(140px);
+                    transform: rotate(30deg) translateX(140px);
+                }
+            }
+
+            @keyframes sqrA {
+
+                0%,
+                10% {
+                    -webkit-transform: none;
+                    transform: none;
+                }
+
+                50% {
+                    -webkit-transform: rotate(30deg);
+                    transform: rotate(30deg);
+                }
+
+                90%,
+                100% {
+                    -webkit-transform: rotate(30deg) translateX(140px);
+                    transform: rotate(30deg) translateX(140px);
+                }
+            }
+
+            .transform-chain .squareB {
+                -webkit-animation: sqrB 4s infinite ease-in-out;
+                animation: sqrB 4s infinite ease-in-out;
+            }
+
+            @-webkit-keyframes sqrB {
+
+                0%,
+                10% {
+                    -webkit-transform: none;
+                    transform: none;
+                }
+
+                50% {
+                    -webkit-transform: translateX(140px);
+                    transform: translateX(140px);
+                }
+
+                90%,
+                100% {
+                    -webkit-transform: translateX(140px) rotate(30deg);
+                    transform: translateX(140px) rotate(30deg);
+                }
+            }
+
+            @keyframes sqrB {
+
+                0%,
+                10% {
+                    -webkit-transform: none;
+                    transform: none;
+                }
+
+                50% {
+                    -webkit-transform: translateX(140px);
+                    transform: translateX(140px);
+                }
+
+                90%,
+                100% {
+                    -webkit-transform: translateX(140px) rotate(30deg);
+                    transform: translateX(140px) rotate(30deg);
+                }
+            }
+
+            .lineSquare {
+                width: 100px;
+                height: 100px;
+                border: 2px dashed;
+                position: absolute;
+                top: 30px;
+                left: 40px;
+            }
+
+            .lineSquareA,
+            .lineSquareD {
+                border-color: #D50000;
+            }
+
+            .lineSquareB,
+            .lineSquareE {
+                border-color: #AA00FF;
+            }
+
+            .lineSquareC,
+            .lineSquareF {
+                border-color: #304FFE;
+            }
+
+            .lineSquareB {
+                -webkit-transform: rotate(30deg);
+                transform: rotate(30deg);
+            }
+
+            .lineSquareC {
+                -webkit-transform: rotate(30deg) translateX(140px);
+                transform: rotate(30deg) translateX(140px);
+            }
+
+            .lineSquareE {
+                -webkit-transform: translateX(140px);
+                transform: translateX(140px);
+            }
+
+            .lineSquareF {
+                -webkit-transform: translateX(140px) rotate(30deg);
+                transform: translateX(140px) rotate(30deg);
+            }
+
+            .transform-chain>.outerContainer>span {
+                display: block;
+            }
+
+            .transform-chain>.outerContainer>span::before {
+                display: inline-block;
+                content: '';
+                width: 1em;
+                height: 1em;
+                margin-right: 0.25em;
+                border: 2px dashed;
+            }
+
+            .transform-chain>.outerContainer>span:nth-child(3)::before {
+                border-color: #D50000;
+            }
+
+            .transform-chain>.outerContainer>span:nth-child(4)::before {
+                border-color: #AA00FF;
+            }
+
+            .transform-chain>.outerContainer>span:nth-child(5)::before {
+                border-color: #304FFE;
+            }
+        </style>
+        <div class="outerContainer">
+            <code>transform: rotate(30deg) translateX(140px);</code>
+            <div class="container containerA">
+                <div class="square squareA">A</div>
+                <div class="lineSquare lineSquareA"></div>
+                <div class="lineSquare lineSquareB"></div>
+                <div class="lineSquare lineSquareC"></div>
+            </div>
+            <span>Original position</span>
+            <span>Step 1: Rotate</span>
+            <span>Step 2: Translate</span>
+        </div>
+
+        <div class="outerContainer">
+            <code>transform: translateX(140px) rotate(30deg);</code>
+            <div class="container containerB">
+                <div class="square squareB">B</div>
+                <div class="lineSquare lineSquareD"></div>
+                <div class="lineSquare lineSquareE"></div>
+                <div class="lineSquare lineSquareF"></div>
+            </div>
+            <span>Original position</span>
+            <span>Step 1: Translate</span>
+            <span>Step 2: Rotate</span>
+        </div>
+    </div>
+
+    <!-- second example of chaining transform behavior -->
+    <!-- 
+        >> It should be noted that while the order of values is important, we could simply change the values themselves to get the desired result instead of changing the order of the values
+        >> for example
+            >> transform: translateX(100px) rotateY(90deg); and transform: rotateY(90deg) translate<strong>Z(100px);  will have same effect
+            >> That’s because in the first line we moved the object on the X axis before rotating it
+            >> but in the second line we rotated the object, changed its coordinates, then moved it on the Z axis, Same result, different values
+     -->
+    <div class="chain-transform-second-example">
+        <style>
+            .chain-transform-second-example .square,
+            .transform-chain .square {
+                position: absolute;
+                top: 50px;
+                left: calc(50% - 50px);
+                display: -webkit-box;
+                display: flex;
+                -webkit-box-pack: center;
+                justify-content: center;
+                -webkit-box-align: center;
+                align-items: center;
+                font-size: 80px;
+                color: lightgreen;
+            }
+
+            .chain-transform-second-example .container {
+                -webkit-perspective: 420px;
+                perspective: 420px;
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+            }
+
+            .chain-transform-second-example .squareA {
+                -webkit-animation: sqrAA 4s infinite linear;
+                animation: sqrAA 4s infinite linear;
+            }
+
+            @-webkit-keyframes sqrAA {
+                from {
+                    -webkit-transform: translateX(120px) rotateY(0deg);
+                    transform: translateX(120px) rotateY(0deg);
+                }
+
+                to {
+                    -webkit-transform: translateX(120px) rotateY(360deg);
+                    transform: translateX(120px) rotateY(360deg);
+                }
+            }
+
+            @keyframes sqrAA {
+                from {
+                    -webkit-transform: translateX(120px) rotateY(0deg);
+                    transform: translateX(120px) rotateY(0deg);
+                }
+
+                to {
+                    -webkit-transform: translateX(120px) rotateY(360deg);
+                    transform: translateX(120px) rotateY(360deg);
+                }
+            }
+
+            .chain-transform-second-example .squareB {
+                -webkit-animation: sqrBB 4s infinite linear;
+                animation: sqrBB 4s infinite linear;
+            }
+
+            @-webkit-keyframes sqrBB {
+                from {
+                    -webkit-transform: rotateY(0deg) translateX(120px);
+                    transform: rotateY(0deg) translateX(120px);
+                }
+
+                to {
+                    -webkit-transform: rotateY(360deg) translateX(120px);
+                    transform: rotateY(360deg) translateX(120px);
+                }
+            }
+
+            @keyframes sqrBB {
+                from {
+                    -webkit-transform: rotateY(0deg) translateX(120px);
+                    transform: rotateY(0deg) translateX(120px);
+                }
+
+                to {
+                    -webkit-transform: rotateY(360deg) translateX(120px);
+                    transform: rotateY(360deg) translateX(120px);
+                }
+            }
+
+            .chain-transform-second-example .rotationAxis {
+                position: absolute;
+                top: 30px;
+                width: 1px;
+                height: 140px;
+                border: 1px dashed #AA00FF;
+                -webkit-transform: translateZ(1px);
+                transform: translateZ(1px);
+            }
+
+            .chain-transform-second-example .rotationAxis.A {
+                left: calc(50% + 120px);
+            }
+
+            .chain-transform-second-example .rotationAxis.B {
+                left: 50%;
+            }
+        </style>
+        <div class="outerContainer">
+            <code>
+      @keyframes {
+      <div class="indent">
+        from { transform: translateX(120px) rotateY(0deg); }<br>
+        to { transform: translateX(120px) rotateY(360deg); }
+      </div>
+      }
+    </code>
+            <div class="container containerA">
+                <div class="square squareA">A</div>
+                <div class="lineSquare"></div>
+                <div class="rotationAxis A"></div>
+            </div>
+            <span>Original position</span>
+            <span>Rotation axis</span>
+        </div>
+
+        <div class="outerContainer">
+            <code>
+      @keyframes {
+      <div class="indent">
+        from { transform: rotateY(0deg) translateX(120px); }<br>
+        to { transform: rotateY(360deg) translateX(120px); }
+      </div>
+      }
+    </code>
+            <div class="container containerB">
+                <div class="square squareB">B</div>
+                <div class="lineSquare"></div>
+                <div class="rotationAxis B"></div>
+            </div>
+            <span>Original position</span>
+            <span>Rotation axis</span>
+        </div>
+    </div>
+
+    <!-- 
+        transform and perspective in a three dimention or 3d cube
+
+        html
+        >> We’ll create a .container element that wraps around a .cube element that, in turn, consists of six elements that represent the sides of the cube
+        
+        css
+        >> First, we’ll add some perspective to the parent .container element
+        >> Then we’ll sure the .cube element has 200px sides and respects 3D transformations
+        
+        transforming sides
+        >> we'll move front sides forward by 110px
+        >> We can move the back side of the cube backwards by adding translateZ(-100px)
+            >> or Another way to do it is by rotating the side 180deg then
+        >> Like the back, there are a couple of ways we can transform the left and right sides:
+            >> rotate first and then translate
+            >> or translate first then rotate
+        >> top and bottom are a little different
+            >> Instead of rotating them on the Y axis, we need to rotate them on the X axis
+            >> and again can be done in two ways, rotate first and then translate or viceversa
+        
+        transform-style
+        >> transform-style property has two values: flat(default), and preserve-3d
+        >> When we set the property to preserve-3d, it does two important things:
+            >> It tells the sides of the cube (the child elements) to be positioned in the same 3D space as the cube
+                >> If it is not set to preserve-3d, the default value is set to flat , and the sides are flattened in the cube’s plane
+                >> preserve-3d “copies” the cube perspective to its children (the sides) and allows us to rotate just the cube, so we don’t need to animate each side separately
+            >> It displays the child elements according to their position in the 3D space, regardless of their place in the DOM
+        
+        animation
+        >> we’ll add the animation to all three axes
+        >> First, we’ll add the animation property to the .cube
+
+     -->
+    <div class="with-cubes">
+        <style>
+            /* The parent container, with perspective */
+            .with-cubes .container {
+                width: 400px;
+                height: 400px;
+                border: 2px solid white;
+                border-radius: 4px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                perspective: 800px;
+                perspective-origin: top right;
+
+                /* perspective-origin: left bottom; */
+            }            
+
+            /* The child element, with 3D tranforms preserved */
+            .cube {
+                position: relative;
+                width: 200px;
+                height: 200px;
+
+                transform-style: preserve-3d;
+                -webkit-animation: cubeRotate 10s linear infinite;
+                animation: cubeRotate 10s linear infinite;
+            }
+
+            /* animating cube */
+            @-webkit-keyframes cubeRotate {
+                from {
+                    -webkit-transform: rotateY(0deg) rotateX(720deg) rotateZ(0deg);
+                    transform: rotateY(0deg) rotateX(720deg) rotateZ(0deg);
+                }
+
+                to {
+                    -webkit-transform: rotateY(360deg) rotateX(0deg) rotateZ(360deg);
+                    transform: rotateY(360deg) rotateX(0deg) rotateZ(360deg);
+                }
+            }
+
+            @keyframes cubeRotate {
+                from {
+                    -webkit-transform: rotateY(0deg) rotateX(720deg) rotateZ(0deg);
+                    transform: rotateY(0deg) rotateX(720deg) rotateZ(0deg);
+                }
+
+                to {
+                    -webkit-transform: rotateY(360deg) rotateX(0deg) rotateZ(360deg);
+                    transform: rotateY(360deg) rotateX(0deg) rotateZ(360deg);
+                }
+            }
+
+            /* The sides of the cube, absolutely positioned */
+            .side {
+
+                position: absolute;
+
+                width: 100%;
+                height: 100%;
+                opacity: 0.9;
+                border: 2px solid white;
+            }
+
+            /* Background colors for the cube's sides to help visualize the work */
+            .front {
+                background-color: #d50000;
+
+                transform: translateZ(100px);
+            }
+
+            .back {
+                background-color: #aa00ff;
+
+                transform: translateZ(-100px);
+                /* or */
+                /* transform: rotateY(180deg) translateZ(100px); */
+            }
+
+            .left {
+                background-color: #304ffe;
+
+                transform: rotateY(90deg) translateZ(100px);
+
+                /* or */
+                /* transform: translateX(100px) rotateY(90deg); */
+            }
+
+            .right {
+                background-color: #0091ea;
+
+                transform: rotateY(-90deg) translateZ(100px);
+
+                /* or */
+                /* transform: translateX(-100px) rotateY(90deg); */
+            }
+
+            .top {
+                background-color: #00bfa5;
+
+                transform: rotateX(90deg) translateZ(100px);
+
+                /* or */
+                /* transform: translateY(-100px) rotateX(90deg); */
+            }
+
+            .bottom {
+                background-color: #64dd17;
+
+                transform: rotateX(-90deg) translateZ(100px);
+
+                /* or */
+                /* transform: translateY(100px) rotateX(90deg); */
+            }
+        </style>
+        <div class="container">
+            <div class="cube">
+                <div class="side front"></div>
+                <div class="side back"></div>
+                <div class="side left"></div>
+                <div class="side right"></div>
+                <div class="side top"></div>
+                <div class="side bottom"></div>
+            </div>
         </div>
     </div>
 </body>

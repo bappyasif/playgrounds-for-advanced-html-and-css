@@ -91,6 +91,104 @@
         >> Essentially, by setting a perspective value, we are telling the object to render as if we were viewing it from a specific distance on the z-axis
         >> Unlike other transform function values, perspective must be declared first (leftmost) when there are multiple transform function values
         
+        >> Rotate:
+        >> These are the additional transform function values to rotate an element on a 3D plane:
+            >> e.g. .element {
+                        transform: rotateX(60deg);
+                        transform: rotateY(60deg);
+                        transform: rotateZ(60deg);
+                        transform: rotate3d();
+                    }
+
+        >> scale: 
+        >> These are the additional transform function values to scale an element on a 3D plane:
+        >> e.g. .element {
+                    transform: scaleZ();
+                    transform: scale3d();
+                }
+            
+        >> Translate: 
+        >> These are the additional transform function values to translate an element on a 3D plane:
+        >> e.g. .element {
+                    transform: translateZ();
+                    transform: translate3d();
+                }
+        >> translateZ doesn’t do much without perspective
+        >> Instead, perspective and translateZ work together to create the illusion of 3-dimensional distance from the rendered object, as shown in the example below
+     -->
+    <div class="translate-z-perspective">
+        <style>
+            .translate30 {
+                transform: perspective(100px) translateZ(30px);
+            }
+
+            .translate-100 {
+                transform: perspective(100px) translateZ(-100px);
+            }
+
+            .translate-200 {
+                transform: perspective(100px) translateZ(-200px);
+            }
+
+            body {
+                padding: 2rem;
+                display: flex;
+                flex-direction: column;
+            }
+
+            p {
+                margin-bottom: 16px;
+            }
+
+            img {
+                width: 60px;
+            }
+
+            div,
+            *+p {
+                margin-top: 1.5rem;
+            }
+        </style>
+        <p>Original</p>
+        <img src="https://i.imgur.com/jkwFqfX.png" alt="top logo" />
+
+        <p>Translate 30px</p>
+        <img class="translate30" src="https://i.imgur.com/jkwFqfX.png" alt="top logo" />
+
+        <p>Translate -100px</p>
+        <img class="translate-100" src="https://i.imgur.com/jkwFqfX.png" alt="top logo" />
+
+        <p>Translate -200px</p>
+        <img class="translate-200" src="https://i.imgur.com/jkwFqfX.png" alt="top logo" />
+    </div>
+
+    <!-- 
+        matrix:
+        >> Matrix is a way of combining all transform functions into one
+        >> It is seldom used due to its poor readability, and almost never written by hand
+        >> Unless you have a very complex transformation to apply, you should use other transform function values instead
+        >> These are the transform function values for it: 
+        >> e.g. .element {
+                    transform: matrix();
+                    transform: matrix3d();
+                }
+        >> How does matrix() Work?
+        >> Any time you do a CSS transform, you're affecting the matrix, Even if you use another function such as rotate(), you're still affecting the matrix
+        >> matrix() function accepts six arguments that determine how the element will be transformed: matrix(a, b, c, d, e, f)
+            >> Here's what they're for: 
+            >> a, d: arguments a and d represent how the element is scaled in the x and y direction respectively (just like in scale(a, d))
+            >> b, c: arguments b and c represent how the element is skewed (just like in skew(b, c))
+            >> e, f: arguments e and f represent how the element is translated in the x and y direction respectively (just like in translate(e, f))
+        >> Both lines have the same result
+            scale(2, 3);
+            matrix(2, 0, 0, 3, 0, 0);
+        >> These make the element appear twice as long in the X axis, and three times as long in the Y axis
+        >> matrix() function only deals with 2D transforms, for 3d use matrix3d(), and this function accepts 16 parameters for defining a transform in three-dimensional space
+        >> matrix() function is an alternative to the two-dimensional transform functions rotate(), skew(), scale(), and translate()
+
+        Benefits of Transforms:
+        >> In order to understand why the transform property is great, you have to be aware of CSS triggers
+        >> 
      -->
 </body>
 

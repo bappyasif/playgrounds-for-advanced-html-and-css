@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3d Rotate</title>
+</head>
+
+<body>
+    <!-- 
+        >> rotate3d() CSS function defines a transformation that rotates an element around a fixed axis in 3D space, without deforming it
+        >> Its result is a <transform-function> data type
+        >> In 3D space, rotations have three degrees of liberty, which together describe a single axis of rotation
+        >> axis of rotation is defined by an [x, y, z] vector and pass by the origin (as defined by the transform-origin property)
+        >> If, as specified, the vector is not normalized (i.e., if the sum of the square of its three coordinates is not 1), the user agent will normalize it internally
+        >> A non-normalizable vector, such as the null vector, [0, 0, 0], will cause the rotation to be ignored, but without invalidating the whole CSS property
+        >> Unlike rotations in the 2D plane, the composition of 3D rotations is usually not commutative
+            >> in other words, the order in which the rotations are applied impacts the result
+        
+        >> Syntax: 
+        >> amount of rotation created by rotate3d() is specified by three <number>s and one <angle>
+        >> <number>s represent the x-, y-, and z-coordinates of the vector denoting the axis of rotation
+        >> <angle> represents the angle of rotation; if positive, the movement will be clockwise; if negative, it will be counter-clockwise
+        >> e.g. rotate3d(x, y, z, a)
+        >> values: 
+            >> x: Is a <number> describing the x-coordinate of the vector denoting the axis of rotation which could be between 0 and 1
+            >> y: Is a <number> describing the y-coordinate of the vector denoting the axis of rotation which could be between 0 and 1
+            >> z: Is a <number> describing the z-coordinate of the vector denoting the axis of rotation which could be between 0 and 1
+            >> a: Is an <angle> representing the angle of the rotation, A positive angle denotes a clockwise rotation, a negative angle a counter-clockwise one
+        >> default origin for the rotation is 50% 50%. You can use transform-origin to adjust the origin of the transformation:
+     -->
+    <style>
+        body {
+            perspective: 800px;
+        }
+
+        div {
+            width: 80px;
+            height: 80px;
+            background-color: skyblue;
+        }
+
+        .rotated {
+            transform: rotate3d(0, 1, 0, 60deg);
+            background-color: pink;
+        }
+
+        /* rotation in all axis */
+        .custom-rotated {
+            transform: rotate3d(1, 2, -1, 192deg);
+            background-color: pink;
+        }
+
+        /* Adding transform-origin */
+        .tr-origin {
+            transform-origin: -290% 90%;
+            transform: rotate3d(1, -4, 1, -65deg);
+        }
+    </style>
+    <div>Normal</div>
+    <div class="rotated">Rotated</div>
+    <div class="custom-rotated">Rotated</div>
+    <div class="tr-origin">Transform origin</div>
+
+    <!-- 
+        scaleZ(): 
+        >> scaleZ() CSS function defines a transformation that resizes an element along the z-axis
+        >> Its result is a <transform-function> data type
+        >> This scaling transformation modifies the z-coordinate of each element point by a constant factor
+        >> except when the scale factor is 1, in which case the function is the identity transform (is a data transformation that copies the source data into the destination data without change)
+        >> scalign is isotropic(uniformity in all orientations), and the angles of the element are not conserved
+        >> scaleZ(-1) defines an axial symmetry(symmetry around an axis), with the z-axis passing through the origin (as specified by the transform-origin property)
+        >> syntax:
+            >> scaleZ(s)
+            >> s Is a <number> representing the scaling factor to apply on the z-coordinate of each point of the element
+     -->
+    <div class="scale-z">
+        <style>
+            .scale-z div {
+                width: 80px;
+                height: 80px;
+                background-color: skyblue;
+            }
+
+            .scale-z .perspective {
+                /* Includes a perspective to create a 3D space */
+                transform: perspective(400px) translateZ(-100px);
+                background-color: limegreen;
+            }
+
+            .scale-z .scaled-translated {
+                /* Includes a perspective to create a 3D space */
+                transform: perspective(400px) scaleZ(2) translateZ(-100px);
+                background-color: pink;
+            }
+        </style>
+        <div>Normal</div>
+        <div class="perspective">Translated</div>
+        <div class="scaled-translated">Scaled</div>
+    </div>
+
+    <!-- 
+        scale3d(): 
+        >> scale3d() CSS function defines a transformation that resizes an element in 3D space
+        >> Because the amount of scaling is defined by a vector, it can resize different dimensions at different scales
+        >> Its result is a <transform-function> data type
+        >> This scaling transformation is characterized by a three-dimensional vector
+        >> Its coordinates define how much scaling is done in each direction
+        >> If all three coordinates are equal, the scaling is uniform (isotropic) and the aspect ratio of the element is preserved (this is a homothetic transformation)
+        >> When a coordinate value is outside the [-1, 1] range, the element grows along that dimension; when inside, it shrinks
+        >> If it is negative, the result a point reflection in that dimension
+        >> A value of 1 has no effect
+        >> syntax: 
+        >> scale3d() function is specified with three values, which represent the amount of scaling to be applied in each direction
+        >> scale3d(sx, sy, sz)
+            >> sx: Is a <number> representing the abscissa of the scaling vector
+            >> sy: Is a <number> representing the ordinate of the scaling vector
+            >> sz: Is a <number> representing the z-component of the scaling vector
+     -->
+    <div class="scale-3d">
+        <style>
+            .scale-3d div {
+                width: 80px;
+                height: 80px;
+                background-color: skyblue;
+            }
+
+            .scale-3d .scaled {
+                transform: perspective(500px) scale3d(2, 0.7, 0.2) translateZ(100px);
+                background-color: pink;
+            }
+
+            /* Translating the origin of the transformation */
+            .scale-3d .scaled-tr-origin {
+                transform: perspective(500px) scale3d(2, 0.7, 0.2) translateZ(100px);
+                transform-origin: left;
+                background-color: pink;
+            }
+        </style>
+        <div>Normal</div>
+        <div class="scaled">Scaled</div>
+        <div class="scaled-tr-orgin">Translating t.o.o.t.t.</div>
+    </div>
+
+    <!-- 
+        translate3d():
+        >> translate3d() CSS function repositions an element in 3D space
+        >> Its result is a <transform-function> data type
+        >> This transformation is characterized by a three-dimensional vector
+        >> Its coordinates define how much the element moves in each direction
+        >> syntax: translated3d(tx, ty, tz): 
+            >> tx: Is a <length> or <percentage> representing the abscissa of the translating vector
+            >> ty: Is a <length> or <percentage> representing the ordinate of the translating vector
+            >> tz: 
+                >> Is a <length> representing the z component of the translating vector
+                >> It can't be a <percentage> value; in that case the property containing the transform is considered invalid
+     -->
+    <div class="single-axis">
+        <style>
+            .single-axis .moved {
+                /* Equivalent to perspective(500px) translateX(10px) */
+                transform: perspective(500px) translate3d(10px, 0, 0px);
+                background-color: pink;
+            }
+        </style>
+        <div>Static</div>
+        <div class="moved">Moved</div>
+        <div>Static</div>
+    </div>
+    <div class="combining-axis">
+        <style>
+            .combining-axis .moved {
+                transform: perspective(500px) translate3d(10px, 0, 100px);
+                background-color: pink;
+            }
+        </style>
+        <div>Static</div>
+        <div class="moved">Moved</div>
+        <div>Static</div>
+    </div>
+</body>
+
+</html>
