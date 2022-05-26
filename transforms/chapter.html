@@ -185,11 +185,229 @@
         >> These make the element appear twice as long in the X axis, and three times as long in the Y axis
         >> matrix() function only deals with 2D transforms, for 3d use matrix3d(), and this function accepts 16 parameters for defining a transform in three-dimensional space
         >> matrix() function is an alternative to the two-dimensional transform functions rotate(), skew(), scale(), and translate()
+     -->
 
+    <!-- 
+        Pixel Pipeline: 
+        >> There are five major areas that you need to know about and be mindful of when you work
+        >> They are areas you have the most control over, and key points in the pixels-to-screen pipeline:
+        >> javascript => style => layout => paint => composite
+            >> javascript:
+                >> Typically JavaScript is used to handle work that will result in visual changes, whether it’s jQuery’s animate function, sorting a data set, or adding DOM elements to the page
+                >> It doesn’t have to be JavaScript that triggers a visual change, though: CSS Animations, Transitions, and the Web Animations API are also commonly used
+            >> style: 
+                >> This is the process of figuring out which CSS rules apply to which elements based on matching selectors, for example, .headline or .nav > .nav__item
+                >> From there, once rules are known, they are applied and the final styles for each element are calculated
+            >> layout: 
+                >> Once the browser knows which rules apply to an element it can begin to calculate how much space it takes up and where it is on screen
+                >>  web’s layout model means that one element can affect others, for example the width of the <body> element typically affects its children’s widths and so on all the way up and down the tree, so the process can be quite involved for the browser
+            >> paint: 
+                >> Painting is the process of filling in pixels. It involves drawing out text, colors, images, borders, and shadows, essentially every visual part of the elements
+                >> drawing is typically done onto multiple surfaces, often called layers
+            >> compositing: 
+                >> Since the parts of the page were drawn into potentially multiple layers they need to be drawn to the screen in the correct order so that the page renders correctly
+                >> This is especially important for elements that overlap another, since a mistake could result in one element appearing over the top of another incorrectly
+            
+        >> Each of these parts of the pipeline represents an opportunity to introduce jank, so it's important to understand exactly what parts of the pipeline your code triggers
+        >> Sometimes you may hear the term "rasterize" used in conjunction with paint
+            >> This is because painting is actually two tasks: 1) creating a list of draw calls, and 2) filling in the pixels
+        >> You won’t always necessarily touch every part of the pipeline on every frame
+            >> In fact, there are three ways the pipeline normally plays out for a given frame when you make a visual change, either with JavaScript, CSS, or Web Animations:
+                >> JS / CSS > Style > Layout > Paint > Composit
+                    >> If you change a “layout” property, so that’s one that changes an element’s geometry, like its width, height, or its position with left or top, the browser will have to check all the other elements and “reflow” the page
+                    >> Any affected areas will need to be repainted, and the final painted elements will need to be composited back together
+                >> JS / CSS > Style > Paint > Composite
+                    >> If you changed a “paint only” property, like a background image, text color, or shadows, in other words one that does not affect the layout of the page, then the browser skips layout, but it will still do paint
+                >> JS / CSS > Style > Composite
+                    >> If you change a property that requires neither layout nor paint, and the browser jumps to just do compositing
+                    >> This final version is the cheapest and most desirable for high pressure points in an app's lifecycle, like animations or scrolling
+      -->
+
+    <!-- 
         Benefits of Transforms:
         >> In order to understand why the transform property is great, you have to be aware of CSS triggers
-        >> 
+        >> key benefit of using transform is that it occurs during composition
+        >> This makes it cheaper to use compared to many other CSS properties
+        >> Another benefit of transform is that it can be hardware-accelerated via a device’s GPU
+            >> This benefit is more prominent when it comes to transitions and animations
+    -->
+
+    <!-- 
+        Css transforms: 
+
+        transform functions: 
+        >> transform property can do a whole bunch of different things, through the use of transform functions like translate and skew
+        >> translation: 
+            >> Translation allows us to move an item around
+            >> We can use translate to shift an item along in either axis: 
+                >> x moves side to side, y moves up and dow
+                >> Positive values move down and to the right
+                >> Negative values move up and to the left
+            >> Critically, the item's in-flow position doesn't change
+            >> As far as our layout algorithms are concerned, from Flow to Flexbox to Grid, this property has no effect
+            >> When we want to move an element along a single axis, we can use translateX and translateY:.box { transform: translateY(20px); /* It's equivalent to: */ transform: translate(0px, 20px); }
+            >> When we use a percentage value in translate, that percentage refers to the element's own size, not the available space within the parent container
+            >> With the awesomeness of calc, we can even mix relative and absolute units: transform: translateX(calc(0% + 0px));
+                >> This allows us to add a "buffer", so that we can translate something by its own size plus a few extra pixels
+            
+        >> scale: 
+            >> scale allows us to grow or shrink an element
+            >> Scale uses a unitless value that represents a multiple, similar to line-height
+            >> scale(2) means that the element should be 2x as big as it would normally be
+            >> We can also pass multiple values, to scale the x and y axis independently: transform: scale(1, 1);
+            >> We aren't just transforming the size and shape of the box, we're transforming the entire element and all of its descendants
+        
+        >> rotate: 
+            >> rotate will rotate our elements: transform: rotate(0deg);
+            >> We typically use the deg unit for rotation, short for degrees
+            >> But there's another handy unit we can use, one which might be easier to reason about: a.k.a. turn, e.g. transform: rotate(0turn);
+            >> turn unit represents how many turns the element should make. 1 turn is equal to 360 degrees
+        
+        >> skew: 
+            >> skew is a seldom-used but pretty-neat transformation: transform: skew(-29deg);
+            >> As with translate, we can skew along either axis:
+                >> transform: skewX(0deg);
+                >> transform: skewY(0deg);
+            >> Skew can be useful for creating diagonal decorative elements (à la Stripe)
+            >> With the help of calc and some trigonometry, it can also be used on elements without distorting the text
+
+        Transform origin:
+        >> Every element has an origin, the anchor that the transform functions execute from
+        >> transform origin acts as a pivot point
+        >> This is useful for certain kinds of effects (for example, an element "growing out of" another one)
+        >> e.g. transform: scale(0.75); transform-origin: 0% 150%;  or transform: rotate(360deg); transform-origin: left top; and etc.
+
+        Cobining multiple transform functions: 
+        >> We can string together multiple transform functions by space-separating them: transform: translateX(0px) rotate(163deg);
+        >> order is important: the transform functions will be applied sequentially: transform: rotate(87deg) translateX(30px);
+        >> transform functions are applied from right to left, like composition in functional programming
+        >> In first example, we rotate the element in its natural position, and then translate it along the X axis
+        >> In this second example, however, we translate the element first, When we apply the rotation, it rotates around its origin, which hasn't changed
+
+        Inline elements: 
+        >> One common gotcha with transforms is that they don't work with inline elements in Flow layout
+        >> Inline elements don't enjoy being jostled
+        >> The easiest fix is to switch it to use display: inline-block, or to use a different layout mode (eg. Flexbox or Grid)
      -->
+
+    <!-- MDN full reference of transform with an example -->
+    <div class="full-reference">
+        <style>
+            main {
+                width: 400px;
+                height: 200px;
+                padding: 50px;
+                background-image: linear-gradient(135deg, white, cyan, white);
+            }
+
+            #example-element {
+                width: 100px;
+                height: 100px;
+                transform-style: preserve-3d;
+                transition: transform 1.5s;
+                transform: rotate3d(1, 1, 1, 30deg);
+            }
+
+            .face {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                backface-visibility: inherit;
+                font-size: 60px;
+                color: #fff;
+            }
+
+            .front {
+                background: rgba(90, 90, 90, .7);
+                transform: translateZ(50px);
+            }
+
+            .back {
+                background: rgba(0, 210, 0, .7);
+                transform: rotateY(180deg) translateZ(50px);
+            }
+
+            .right {
+                background: rgba(210, 0, 0, .7);
+                transform: rotateY(90deg) translateZ(50px);
+            }
+
+            .left {
+                background: rgba(0, 0, 210, .7);
+                transform: rotateY(-90deg) translateZ(50px);
+            }
+
+            .top {
+                background: rgba(210, 210, 0, .7);
+                transform: rotateX(90deg) translateZ(50px);
+            }
+
+            .bottom {
+                background: rgba(210, 0, 210, .7);
+                transform: rotateX(-90deg) translateZ(50px);
+            }
+
+            .select-form {
+                margin-top: 50px;
+            }
+        </style>
+        <main>
+            <section id="example-element">
+                <div class="face front">1</div>
+                <div class="face back">2</div>
+                <div class="face right">3</div>
+                <div class="face left">4</div>
+                <div class="face top">5</div>
+                <div class="face bottom">6</div>
+            </section>
+
+            <div class="select-form">
+                <label>Select a transform function</label>
+                <select>
+                    <option selected>Choose a function</option>
+                    <option>rotate(360deg)</option>
+                    <option>rotateX(360deg)</option>
+                    <option>rotateY(360deg)</option>
+                    <option>rotateZ(360deg)</option>
+                    <option>rotate3d(1, 1, 1, 90deg)</option>
+                    <option>scale(1.5)</option>
+                    <option>scaleX(1.5)</option>
+                    <option>scaleY(1.5)</option>
+                    <option>scaleZ(1.5)</option>
+                    <option>scale3d(1, 1.5, 1.5)</option>
+                    <option>skew(17deg, 13deg)</option>
+                    <option>skewX(17deg)</option>
+                    <option>skewY(17deg)</option>
+                    <option>translate(100px, 100px)</option>
+                    <option>translateX(100px)</option>
+                    <option>translateY(100px)</option>
+                    <option>translateZ(100px)</option>
+                    <option>translate3d(50px, 50px, 50px)</option>
+                    <option>perspective(200px)</option>
+                    <option>matrix(1, 2, -1, 1, 80, 80)</option>
+                    <option>matrix3d(1,0,0,0,0,1,3,0,0,0,1,0,50,100,0,1.1)</option>
+                </select>
+            </div>
+        </main>
+        <script>
+            const selectElem = document.querySelector('select');
+            const example = document.querySelector('#example-element');
+
+            selectElem.addEventListener('change', () => {
+                if (selectElem.value === 'Choose a function') {
+                    return;
+                } else {
+                    example.style.transform = `rotate3d(1, 1, 1, 30deg) ${selectElem.value}`;
+                    setTimeout(function () {
+                        example.style.transform = 'rotate3d(1, 1, 1, 30deg)';
+                    }, 2000)
+                }
+            })
+        </script>
+    </div>
 </body>
 
 </html>
