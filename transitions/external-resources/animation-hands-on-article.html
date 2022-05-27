@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Css animations</title>
+</head>
+
+<body>
+    <!-- 
+        moving an element:
+        >> To move an element, use the translate or rotation keyword values of the transform property
+        rotate an element: 
+        >> Items can also be rotated, in the example below 360 degrees
+        resize an element: 
+        >> To resize an element, use the scale keyword value of the transform property
+        change element's visibility: 
+        >> To show or hide an element, use opacity
+     -->
+    <div class="move-element">
+        <style>
+            body {
+                font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
+                margin: 2em;
+            }
+
+            .container {
+                border: 4px solid #777;
+                height: 70vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .box,
+            .box2,
+            .box3,
+            .box4,
+            .box-5,
+            .box-6 {
+                background-color: #165baa;
+                color: #fff;
+                width: 100px;
+                height: 100px;
+                border-radius: .5em;
+            }
+
+            /* move an element in y axis */
+            .animate {
+                animation: slide-in 0.7s both;
+            }
+
+            @keyframes slide-in {
+                0% {
+                    transform: translateY(-1000px);
+                }
+
+                100% {
+                    transform: translateY(0);
+                }
+            }
+
+            /* items can be also rotated too */
+            .animate-rotate {
+                animation: rotate 0.7s ease-in-out both;
+            }
+
+            @keyframes rotate {
+                0% {
+                    transform: rotate(0);
+                }
+
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+            /* Resize an element */
+            .animate-resize {
+                animation: scale 1.5s both;
+            }
+
+            @keyframes scale {
+                50% {
+                    transform: scale(0.5);
+                }
+
+                100% {
+                    transform: scale(1);
+                }
+            }
+
+            /* Change an element's visibility */
+            .animate-visibility {
+                animation: opacity 2.5s both;
+            }
+
+            @keyframes opacity {
+                0% {
+                    opacity: 1;
+                }
+
+                50% {
+                    opacity: 0;
+                }
+
+                100% {
+                    opacity: 1;
+                }
+            }
+        </style>
+        <p>
+            <button class="btn">
+                Animate
+            </button>
+        </p>
+        <div class="container">
+            <div class="box">
+
+            </div>
+            <div class="box2">
+
+            </div>
+            <div class="box3">
+
+            </div>
+            <div class="box4">
+
+            </div>
+        </div>
+        <script>
+            let btn = document.querySelector(".btn");
+            let item = document.querySelector(".box");
+            let item2 = document.querySelector(".box2");
+            let item3 = document.querySelector(".box3");
+            let item4 = document.querySelector(".box4");
+
+            btn.addEventListener('click', (e) => {
+                item.classList.toggle('animate');
+                item.addEventListener('animationend', animationEndCallback);
+
+                item2.classList.toggle('animate-rotate');
+                item2.addEventListener("animationend", animationEndCallback);
+
+                item3.classList.toggle('animate-resize');
+                item3.addEventListener("animationend", animationEndCallback);
+
+                item4.classList.toggle('animate-visibility');
+                item4.addEventListener("animationend", animationEndCallback);
+            });
+
+            let animationEndCallback = (e) => {
+                item.removeEventListener('animationend', animationEndCallback);
+                item.classList.remove('animate');
+
+                item2.classList.remove("animate-rotate");
+                item2.removeEventListener("animationend", animationEndCallback);
+
+                item3.classList.remove("animate-resize");
+                item3.removeEventListener("animationend", animationEndCallback);
+
+                item4.classList.remove("animate-visibility");
+                item4.removeEventListener("animationend", animationEndCallback);
+            }
+        </script>
+    </div>
+
+    <!-- 
+        Avoid properties that trigger layout or paint: 
+        >> Before using any CSS property for animation (other than transform and opacity), go to CSS Triggers to determine the property's impact on the rendering pipeline
+        >> Avoid any property that triggers layout or paint unless absolutely necessary
+        >> If you must use a property that triggers layout or paint, it is unlikely that you will be able to make the animation smooth and high-performance
+
+        Force layer creation: 
+        >> by placing elements on a new layer they can be repainted without also requiring the rest of the layout to be repainted
+        >> Browsers will often make good decisions about which items should be placed on a new layer, but you can manually force layer creation with the will-change property
+        >> As the name suggests, this property(will-change) tells the browser that this element is going to be changed in some way
+        >> As layer creation can cause other performance issues, this property should not be used as a premature optimization
+        >> Instead, you should only use it when you are seeing jank and think that promoting the element to a new layer may help
+        >> In CSS this property(will-change) can be applied to any selector: body > .sidebar { will-change: transform; }
+        >> However, the specification suggests this approach should only be taken for elements that are always about to change
+        >> If the above example was a sidebar the user could slide in and out, that might be the case
+        >> Some items on your page may not frequently change, and so it would be better to apply will-change using JavaScript at a point where it becomes likely the change will occur
+        >> You'll need to make sure to give the browser enough time to perform the optimizations needed and then remove the property once the changing has stopped
+        >> If you need a way to force layer creation in one of the rare browsers that doesn't support will-change (most likely Internet Explorer at this point), you can set transform: translateZ(0)
+
+        Debug slow or janky animations: 
+        >> Chrome DevTools and Firefox DevTools have lots of tools to help you figure out why your animations are slow or janky
+        >> Check if an animation triggers layout: 
+            >> An animation that moves an element using something other than transform, is likely to be slow
+            >> If you see a nonzero value for Rendering in the Summary tab, it may mean that your animation is causing the browser to do layout work
+        >> Check if an animation is dropping frames: 
+            >> At the top of the FPS meter UI you see the label Frames
+            >> A high-performance animation will have a high percentage, e.g. 99%
+            >> A high percentage means that few frames are being dropped and the animation will look smooth
+        >> Check if an animation triggers paint: 
+            >> When it comes to painting, some things are more expensive than others
+            >> For example, anything that involves a blur (like a shadow, for example) is going to take longer to paint than drawing a red box
+            >> In terms of CSS, however, this isn't always obvious: background: red; and box-shadow: 0, 4px, 4px, rgba(0,0,0,0.5); don't necessarily look like they have vastly different performance characteristics, but they do
+            >> Browser DevTools can help you to identify which areas need to be repainted, and performance issues related to painting
+        
+        Conclusion: 
+        >> Where possible restrict animations to opacity and transform in order to keep animations on the compositing stage of the rendering path
+        >> Use DevTools to check which stage of the path is being affected by your animations
+        >> Use the paint profiler to see if any paint operations are particularly expensive
+        >> Use the will-change property sparingly, and only if you encounter a performance issue
+     -->
+    <div class="janky-animation">
+        <style>
+            /* dont */
+            .box-5 {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                animation: move-janky 2s ease infinite;
+            }
+
+            @keyframes move-janky {
+                50% {
+                    top: calc(90vh - 160px);
+                    left: calc(90vw - 200px);
+                }
+            }
+
+            /* do */
+            .box-6 {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                animation: move-smooth 3s ease infinite;
+            }
+
+            @keyframes move-smooth {
+                50% {
+                    transform: translate(calc(90vw - 200px), calc(90vh - 160px));
+                }
+            }
+        </style>
+        <div class="box-5"></div>
+        <div class="box-6"></div>
+    </div>
+</body>
+
+</html>
