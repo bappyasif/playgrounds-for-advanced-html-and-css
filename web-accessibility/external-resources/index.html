@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessibility usecases</title>
+</head>
+
+<body>
+    <div class="using-table">
+        <table>
+            <caption>Average daily tea and coffee consumption</caption>
+            <tr>
+                <th>Person</th>
+                <th>Coffee</th>
+                <th>Tea</th>
+            </tr>
+            <tr>
+                <th>Njoki</th>
+                <td>5 cups</td>
+                <td>0 cups</td>
+            </tr>
+            <tr>
+                <th>Iesha</th>
+                <td>1 cup</td>
+                <td>2 cups</td>
+            </tr>
+            <tr>
+                <th>Léonie</th>
+                <td>0 cups</td>
+                <td>25 cups</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- 
+        ARIA Landmarks: 
+
+        General Principles: 
+        >> Landmarks provide a powerful way to identify the organization and structure of a web page
+        >> structural information conveyed visually to users should be represented programmatically in the markup using landmark roles
+        >> use of landmarks roles support keyboard navigation to the structure of a web page for screen reader users, and can be used as targets for author supplied "skip links" and browser extensions for enhanced keyboard navigation
+        >> Due to the complexity of today's web content, if using landmarks, all perceivable content should reside in a semantically meaningful landmark in order that content is not missed by the user
+        >> Step 1: Identify the logical structure: 
+            >> Break the page into perceivable areas called "areas"
+            >> Typically, designers indicate areas visually using alignment and spacing of content
+            >> Regions can be further defined into logical sub-areas as needed
+            >> An example of a sub-area is a portlet in a portal application
+        >> Step 2: Assign landmark roles to each area: 
+            >> Assign landmark roles based on the type of content in the area
+            >> banner, main, complementary and contentinfo landmarks should be top level landmarks
+            >> Landmark roles can be nested to identify parent/child relationships of the information being presented
+        >> Step 3: Label each area: 
+            >> If a specific landmark role is used more than once on a web page, it should have a unique label
+            >> If an area begins with a heading element (e.g. h1-h6), it can be used as the label for the area using aria-labelledby attribute
+            >> If an area does not have a heading element, provide a label using the aria-label attribute
+            >> Avoid using the landmark role as part of the label
+                >> For example, a navigation landmark with a label "Site Navigation" will be announced by a screen reader as "Site Navigation Navigation"
+                >> label should simply be "Site"
+     -->
+
+    <!-- 
+        Dark mode
+
+        >> we can simply let the user’s operating system do that lifting for us
+        >> many operating systems let users choose between light and dark themes directly in the system settings
+      -->
+    <div class="over-riding-os-theme">
+        <style>
+            body {
+                --text-color: #222;
+                --bkg-color: #fff;
+            }
+
+            body.dark-theme {
+                --text-color: #eee;
+                --bkg-color: #121212;
+            }
+
+            @media (prefers-color-scheme: dark) {
+
+                /* defaults to dark theme */
+                body {
+                    --text-color: #eee;
+                    --bkg-color: #121212;
+                }
+
+                body.light-theme {
+                    --text-color: #222;
+                    --bkg-color: #fff;
+                }
+            }
+
+            * {
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            body {
+                background: var(--bkg-color);
+            }
+
+            h1,
+            p {
+                color: var(--text-color);
+            }
+        </style>
+        <button class="btn-toggle">Toggle Dark-Mode</button>
+        <h1>Hey there! This is just a title</h2>
+            <p>I am just a boring text, existing here solely for the purpose of this demo</p>
+            <p>And I am just another one like the one above me, because two is better than having only one</p>
+            <script>
+                const btn = document.querySelector(".btn-toggle");
+                const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+
+                btn.addEventListener("click", function () {
+                    if (prefersDarkScheme.matches) {
+                        document.body.classList.toggle("light-theme");
+                    } else {
+                        document.body.classList.toggle("dark-theme");
+                    }
+                });
+            </script>
+    </div>
+
+    <!-- 
+        dark mode continued....
+
+        Storing a User’s Preference: 
+        >> What we’ve looked at so far definitely does what it says in the tin: swap themes based on an OS preference or a button click
+        >> This is great, but doesn’t carry over when the user either visits another page on the site or reloads the current page
+        >> We need to save the user’s choice so that it will be applied consistently throughout the site and on subsequent visits
+        >> To do that, we can save the user’s choice to the localStorage when the theme is toggled. Cookies are also well-suited for the job
+     -->
+    <div class="user-preference">
+        <style>
+            /* body, */
+            .user-preference {
+                --text-color: #222;
+                --bkg-color: #fff;
+            }
+
+            /* body.dark-theme, */
+            .user-preference.dark-theme {
+                --text-color: #eee;
+                --bkg-color: #121212;
+            }
+
+            * {
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            /* body, */
+            .user-preference {
+                background: var(--bkg-color);
+            }
+
+            h1,
+            p {
+                color: var(--text-color);
+            }
+        </style>
+        <button class="btn-toggle-ls">Toggle Dark-Mode</button>
+        <h1>Hey there! This is just a title</h2>
+            <p>I am just a boring text, existing here solely for the purpose of this demo</p>
+            <p>And I am just another one like the one above me, because two is better than having only one</p>
+    </div>
+    <script>
+        const btnEl = document.querySelector(".btn-toggle-ls");
+
+        let exampleContainer = document.querySelector(".user-preference");
+
+        const currentTheme = localStorage.getItem("theme-2");
+        if (currentTheme == "dark") {
+            // document.body.classList.add("dark-theme");
+            exampleContainer.classList.add("dark-theme");
+        }
+
+        btnEl.addEventListener("click", function () {
+            // document.body.classList.toggle("dark-theme");
+            exampleContainer.classList.toggle("dark-theme");
+
+            let theme = "light";
+            // if (document.body.classList.contains("dark-theme")) {
+            //     theme = "dark";
+            // }
+            if(exampleContainer.classList.contains("dark-theme")) {
+                theme = "dark"
+            }
+            localStorage.setItem("theme-2", theme);
+        });
+    </script>
+</body>
+
+</html>
