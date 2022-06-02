@@ -185,12 +185,194 @@
             // if (document.body.classList.contains("dark-theme")) {
             //     theme = "dark";
             // }
-            if(exampleContainer.classList.contains("dark-theme")) {
+            if (exampleContainer.classList.contains("dark-theme")) {
                 theme = "dark"
             }
             localStorage.setItem("theme-2", theme);
         });
     </script>
+
+    <!-- 
+        Handling User Agent Styles: 
+        >> To inform the browser UA stylesheet about the system color scheme preferences and tell it which color schemes are supported in the page, we can use the color-scheme meta tag
+        >> For example, let’s say the page should support both “dark” and “light” themes
+        >> We can put both of them as values in the meta tag, separated by spaces
+        >> If we only want to support a “light” theme, then we only need to use “light” as the value: <meta name="color-scheme" content="dark light">
+        >> When this meta tag is added, the browser takes the user’s color scheme preferences into consideration when rendering UA-controlled elements of the page (like a <button>)
+        >> It renders colors for the root background, form controls, and spell-check features (as well as any other UA-controlled styles) based on the user’s preference
+        >> Although themes are manually styled for the most part (which overrides the UA styles), informing the browser about the supported themes helps to avoid even the slightest chance of a potential FOIT situation
+        >> This is true for those occasions where HTML has rendered but CSS is still waiting to load
+        >> We can also set this in CSS: :root { color-scheme: light dark; /* both supported */ }
+        
+        >> Let’s combine everything and create a working demo that:
+            >> Automatically loads a dark or light theme based on system preferences
+            >> Allows the user to manually override their system preference
+            >> Maintains the user’s preferred theme on page reloads
+     -->
+    <div class="with-combined">
+        <style>
+            .with-combined {
+                --text-color: #222;
+                --bkg-color: #fff;
+            }
+
+            .with-combined.dark-theme {
+                --text-color: #eee;
+                --bkg-color: #121212;
+            }
+
+            @media (prefers-color-scheme: dark) {
+
+                /* defaults to dark theme */
+                .with-combined {
+                    --text-color: #eee;
+                    --bkg-color: #121212;
+                }
+
+                .with-combined.light-theme {
+                    --text-color: #222;
+                    --bkg-color: #fff;
+                }
+            }
+
+            * {
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            .with-combined {
+                background: var(--bkg-color);
+            }
+
+            .with-combined h1,
+            .with-combined p {
+                color: var(--text-color);
+            }
+        </style>
+        <button class="btn-toggle-combined">Toggle Dark-Mode</button>
+        <h1>Hey there! This is just a title</h2>
+            <p>I am just a boring text, existing here solely for the purpose of this demo</p>
+            <p>And I am just another one like the one above me, because two is better than having only one</p>
+            <script>
+                const btn3 = document.querySelector(".btn-toggle-combined");
+                // Check for dark mode preference at the OS level
+                const prefersDarkScheme2 = window.matchMedia("(prefers-color-scheme: dark)");
+                // container dic
+                let containerDiv = document.querySelector('.with-combined')
+
+                // Get the user's theme preference from local storage, if it's available
+                const currentTheme2 = localStorage.getItem("theme-3");
+                // If the user's preference in localStorage is dark...
+                if (currentTheme2 == "dark") {
+                    // ...let's toggle the .dark-theme class on the body
+                    containerDiv.classList.toggle("dark-theme");
+                    // Otherwise, if the user's preference in localStorage is light...
+                } else if (currentTheme2 == "light") {
+                    // ...let's toggle the .light-theme class on the body
+                    containerDiv.classList.toggle("light-theme");
+                }
+
+                // Listen for a click on the button 
+                btn3.addEventListener("click", function () {
+                    // If the user's OS setting is dark and matches our .dark-mode class...
+                    if (prefersDarkScheme2.matches) {
+                        // ...then toggle the light mode class
+                        containerDiv.classList.toggle("light-theme");
+                        // ...but use .dark-mode if the .light-mode class is already on the body,
+                        var theme = containerDiv.classList.contains("light-theme")
+                            ? "light"
+                            : "dark";
+                    } else {
+                        // Otherwise, let's do the same thing, but for .dark-mode
+                        containerDiv.classList.toggle("dark-theme");
+                        var theme = containerDiv.classList.contains("dark-theme")
+                            ? "dark"
+                            : "light";
+                    }
+                    // Finally, let's save the current preference to localStorage to keep using it
+                    localStorage.setItem("theme-3", theme);
+                });
+            </script>
+    </div>
+
+    <!-- 
+        Design Considerations
+
+        Dark Mode Images:
+        >> A good rule is to decrease the brightness and contrast of images a bit so that it looks comfortable to the eyes when it’s against a dark background
+        >> A super bright image on a super dark background can be jarring and dimming the image reduces some of that heavy contrast
+        >> CSS filter() function is more than capable of handling this for us: 
+            /* Apply the filter directly on the body tag */
+            body.dark-theme img {
+                filter: brightness(.8) contrast(1.2);
+            }
+
+            /* Or apply it via media query */
+            @media (prefers-color-scheme: dark) {
+                img {
+                    filter: brightness(.8) contrast(1.2);
+                }
+            }
+        >> We can do the same sort of thing directly in the markup using the <picture> element to load different versions of an image: 
+            <picture>
+                <-- Use this image if the user's OS setting is light or unset ->
+                <source srcset="photo-light.png" media="(prefers-color-scheme: light) or (prefers-color-scheme: no-preference)">
+                <-- Use this image if the user's OS setting is dark ->
+                <source srcset="photo-dark.png" media="(prefers-color-scheme: dark)">
+            </picture>
+            >> downside here is that it requires supplying two files where we only have to deal with one when using CSS
+            >> This also doesn’t fully account for the user toggling the color theme on the site
+        
+        Dark Mode Shadows: 
+        >> If we simply invert a dark shadow using light colors, then we get this funky thing with a light shadow on a dark background… and it’s not a good look\
+        >> It’s possible to use a dark shadow in dark mode, but the background color has to be “light” enough (like a dark gray) to provide enough contrast to actually see the shadow against it
+        >> Close elements should still be lighter and distant elements should still be darker – even in a dark UI
+        >> Use opacity to convey depth, with high opacity regions having a lower depth
+            >> That’s to say, elements that have a higher elevation should have a lower opacity than elements that are “closer” in depth to the background
+        
+        Dark Mode Typography: 
+        >> trick here is a lot like images: we’ve gotta balance the contrast
+        >> Use too heavy of a font and we get blaring text that’s makes us want to move away from the screen
+        >> Use too light of a font and we’ll strain our eyes while inching toward the screen to get a closer look
+        >> balance is somewhere in the middle, a small bit of CSS that makes a big difference in legibility
+
+        Dark Mode Icons: 
+        >> Icons fall into this “tricky” category because they’re sort of a cross between text and images
+        >> If we’re working with SVG icons, though, we can change the fill with CSS
+        >> On the other hand, if we’re using font icons, we can simply change the color property instead
+        >>  /* SVG icon */
+            body.dark-theme svg.icon path {
+                fill: #efefef;
+            }
+            /* Font icon (using Font Awesome as an example) */
+            body.dark-theme .fa {
+                color: #efefef;
+            }
+        >> A lot of the same design considerations that are true for text, are also generally applicable to icons
+        >> For example, we ought to avoid using full white and heavy outlines
+
+        Dark Mode Colors: 
+        >> Pure white text on a pure black background will look jarring
+        >> trick here is to use an off-white for the text and off-black for the background
+
+        Dark Mode Color Palettes: 
+        >> Most things boil down to one thing: contrast
+        >> That’s why the first tip before settling on any color is to run ideas through a contrast checker to ensure color ratios conform to WCAG’s guidelines for at least a AA rating, which is a contrast ratio of 4.5:1
+        >> That means desaturated colors are our friends when working with a dark mode design
+        >> They help prevent overbearingly bright images and still give us plenty of room to create an effective contrast ratio
+        >> Next, remember that accent colors are meant to be enhancements
+        >> They’re likely brighter than the dark theme background color, so using them like a primary color or the background color of a large container is just as jarring and hard on the eyes as a bright image or heavy white text
+        >> If contrast is the balance we’re trying to strike, then remember that dark mode is more than blacks and grays
+
+        Dark mode or no dark mode?
+        >> There are perfectly valid reasons on both sides
+        >> Some of those reasons even go beyond the scope of user experience and include things like timing, budget and resources
+        >> While being considerate of why you might not want to implement a dark mode, here are reasons why you might want to have one:
+            >> It’s cool and trendy
+            >> It enhances accessibility by supporting users who are sensitive to eye strain in starkly bright themes
+            >> It allows users to decide the most comfortable way to consume content while providing us a way to maintain control over the look and feel of things
+            >> It helps to preserve battery life for devices with OLED screen where brighter colors consume more energy
+            >> It’s extremely popular and appears to be going nowhere, Might as well be ready for it
+     -->
 </body>
 
 </html>
