@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alternative Text</title>
+</head>
+
+<body>
+    <!-- 
+        Introduction: 
+        >> Alternative text is a textual substitute for non-text content in web pages
+        >> Alternative text serves several functions: 
+            >> Screen readers announce alternative text in place of images, helping users with visual or certain cognitive disabilities perceive the content and function of the images
+            >> If an image fails to load or the user has blocked images, the browser will present the alternative text visually in place of the image
+            >> Search engines use alternative text and factor it into their assessment of the page purpose and content
+        >> Web page authors must provide alternative text that represents the content and function of their images
+        >> Alternative text can be presented in two ways: 
+            >> within the alt attribute of the <img> element
+            >> within visible body text near the image, or when the text equivalent cannot be presented succinctly, alternative text can be presented on a separate page, linked from either the image or a text link adjacent to the image
+        >> Thus, alternative text is about more than just the alt attribute
+        >> Every image should have an alt attribute, even if it's alt="" (sometimes called "null" alternative text)
+
+        Context is Everything: 
+        >> Assessing and summarizing an image's content can be more difficult. If the image's content is presented within the surrounding text, then alt="" may be all that's needed
+        >> The alt attribute should typically: 
+            >> be accurate and equivalent in representing content and function
+            >> be succinct. Content (if any) and function (if any) should be presented as succinctly as possible, without sacrificing accuracy. Typically, only a few words are necessary, though rarely a short sentence or two may be appropriate
+            >> not be redundant or provide the same information as text near the image
+            >> not include phrases like "image of ..." or "graphic of ...", etc.
+                >> This would be redundant since screen readers already announce "graphic" along with the alt text
+                >> If the fact that an image is a photograph or illustration, etc. is important content, it may be useful to include this in alternative text
+        
+        Functional images: 
+        >> Images are often used not only to provide content, but to provide important functions, such as navigation
+        >> When possible, avoid using "link to...", "click here for...", etc. in the alt attribute
+        >> Screen readers already announce links as links
+        >> If the icon alone was linked without the adjacent text, then the alt text would need to fully convey the content and function of the link/image combination: alt="Download the employment application in PDF format"
+        >> "PDF format" alone would not be sufficient for the linked icon, especially if the page includes many PDF links and icons—a screen reader user navigating through the linked icons would hear, "PDF format, PDF format, PDF format..."
+
+        Decorative images: 
+        >> A "decorative" image is one that: 
+            >> does not present important content
+            >> is used for layout or non-informative purposes, and
+            >> does not have a function (e.g., is not a link)
+        >> Decorative images should have alt=""
+        >> When an image is used only for decorative purposes, it is best to remove the image from the page content and instead define it as a CSS background image
+        >> This will remove the need for alternative text entirely, and will remove the image from the semantic and structural flow of the page
+        >> In many cases you can ask, "if I could not use this image, what would I put in its place?" If the answer is "nothing," then alt="" is probably sufficient
+
+        Advanced images: 
+        >> In some cases, determining alt text is more subjective. User testing—with and without a screen reader—can help you generate some ideas
+        >> Form image buttons: 
+            >> Form image buttons that merely present rasterized text should be replaced with true text, styled with CSS as desired
+            >> If an image cannot be avoided, the image needs an alt attribute that describes the function of the button
+            >> alt text should describe what the button will do when activated, such as "Search", "Submit", "Register", "Place your order", etc.
+            >> For instance, <input type="image" alt="Submit Search"> might be appropriate for an image button on a site search form
+        >> Image maps: 
+            >> When using a client-side image <map> , the main image's alt attribute must convey the content that is presented within the image, but that is not presented with the image map hot spots\
+            >> For instance, a State of New York map that has an <area> for each county might have alt="Counties of New York"
+            >> If the main image does not convey content, but is primarily just a container for the hot spots, then alt="" is appropriate
+            >> Each <area> must also have an equivalent alt attribute, because each <area> provides a function
+            >> For a New York counties image map, each <area alt> would contain the name of the county
+            >> By contrast, server-side image maps (which pass mouse click coordinates back to the server for interpretation) are not perceivable by screen readers, and are inoperable by keyboard and screen reader users
+            >> Server-side image maps should be replaced by client-side image maps
+        >> CSS images: 
+            >> CSS images should be used for decorative images which do not need alternative text
+            >> Images that convey content should not generally be defined in CSS
+            >> They should be within the page content
+            >> It is not possible to add alternative text directly to CSS or other background images, so when background images do present content, that content must be made accessible within the page markup
+            >> you could use a text replacement technique to present the content within the link:
+                <a href="application.pdf">Download the Employment Application<span class="pdficon"> (PDF)</span></a>
+            >> You would then use CSS to position the "(PDF)" text (the span class="pdficon" element) off-screen
+            >> Sighted users would see the PDF background image and screen reader users would hear the off-screen "(PDF)" text
+        >> Logos: 
+            >> Many websites link the main branding logo to the home page
+            >> Providing alternative text for the image, such as your company name (alt="Acme Company"), will usually suffice
+            >> word "logo" (alt="Acme Company Logo") is usually not an important part of the image's content or function
+            >> Similarly, it is usually not necessary to indicate that the image links to the home page (alt="Acme Company home page") because this is a common convention—hearing "Link, Graphic, Acme Company" at the top of a web page is sufficient for a screen reader user to know that it is a logo linked to the home page
+        >> Complex images: 
+            >> When an equivalent alternative for a complex image (chart, graph, map, etc.) will not fit inside a succinct alt attribute (perhaps a couple sentences in length), then the alternative must be provided elsewhere
+            >> This might be an adjacent data table on the same page, or it might be on a separate web page, linked from the page with the image
+            >> link can be adjacent to the image, or the image itself could be linked to the description page
+            >> alternative text for the image should still describe the general content of the image: 
+                <img src="sales.jpg" alt="Line chart of annual sales data"><br> 
+                <a href="salesdata.htm">View sales data</a>
+            >> best alternative text will depend on the context and intended content of the image
+        >> Figure and caption: 
+            >> <figure> element, designed to contain an <img> and a <figcaption>, is self-contained and typically referenced as a single unit from the main flow of the document
+            >> A <figure> can be separated from the main flow of the document without affecting the document's meaning
+            >> A <figure> creates a semantic association with its contained <figcaption>, which may provide a summary of or additional information about the figure and/or relate the figure back to the containing document
+            >> However, the <img> still needs alt text—and to prevent redundancy, this information should not be conveyed via the <figcaption>
+     -->
+
+    <!-- 
+        15 point checklist to keep in mind when linking text on the web: 
+
+        >> Don’t use the word “link” in your links
+            >> Screen readers tell the user when they encounter a link, so you don’t need to use the words “link” or “links to” or “goes to” in your link text
+        >> Don’t capitalize links: 
+            >> There are two problems with capitalized text in links: 
+                >> Firstly, some screen readers read capitalized text letter-by-letter
+                    >> And this occasionally even occurs when the HTML is in sentence-case and the CSS forces the capitalization
+                >> second problem is that capital letters are harder to read (for everyone, but especially people with reading disabilities)
+            >> Capitalized text has no difference in shape:
+                >> all the words are just one big rectangle
+                >> Sentence capitals have differentiated shapes based on the letters used
+            >> general rule when it comes to reading is: 
+                >> if it’s more difficult to the general public then it will be almost impossible for a person with a cognitive disability to read
+        >> Avoid ASCII characters: 
+            >> you need to provide text alternatives for things like smiley faces
+            >> They recommend using the TITLE attribute; even though it’s not well supported, or the ABBR or ACRONYM elements
+            >> However if you absolutely must use emoticons, then at least mark them up with some ARIA: 
+                <span class="sr-only">Smiley face</span>
+                <span aria-hidden="true">:-)</span>
+            >> following link text may be clear to visual users, but it’s a different story for screen reader users:
+                >> i.e. 16 – 17 years, 17 – 21 years
+                >> Some screen readers will read the above link as “link one six one seven years end link“
+                >> It is much clearer to replace the em-dash with the word “to”
+                >> In that case, screen readers will read it as “link sixteen to seventeen years end link”
+        >> Avoid using URLs as link text: 
+            >> When we see “www.londontoylibrary.co.uk”, we see the words ‘london’, ‘toy’ and ‘library’, but a screen reader is going to read the URL letter-by-letter. “Double-U, Double-U, Double-U, Dot, El-Oh-En-Dee..”
+            >> always use meaningful text as links, such as “London Toy Library”
+            >> If you really need to provide the URL in text — for example if you expect people to print out the content — then append the URL to the link text in the print style sheet with something like: 
+                @media print{ a:after{content:" (" attr(href) ") ";font-size:0.8em;font-weight:normal;} }
+        >> Keep link text concise: 
+            >> It’s a really good idea to restrict the length of your link text to a maximum of 100 characters
+            >> Screen readers have a huge array of functions that allow users to skip to the next word, next sentence, next paragraph or next heading, but they have to read the entirety of a link
+            >> So, you can imagine that if you have turned an entire paragraph into a single link (which we’re seeing more of with the advent of block-level links in HTML5), the entire link is read out by the screen reader
+        >> Restrict the number of text links on a page: 
+            >> This is important because users see links as a form of navigation: they know they are not on the right page so they are looking for links that will take them to where they want to go
+            >> If there are a lot of links on a page, it makes it that much harder to navigate a site
+            >> so how many links are too many? That’s the ‘How long is a piece of string’ question, and depends on the type of site that you have
+            >> Just bear in mind the users that are navigating from link to link when you’re constructing your pages
+            >> What about areas where additional link text or contextual information is essential?
+                >> There are three key areas where additional link text or contextual information is a must: 
+                    >> linking to downloads
+                    >> links opening in a new window
+                    >> pagination / alphabetized links
+        >> Don’t link directly to downloads: 
+            >> It is essential you properly indicate when a link activates a download – and make sure this information is in the link text
+            >> If you use a ‘PDF’ or ‘Word’ icon instead of the text, always make sure they have useful ALT attributes!
+            >> add some more detail than just the type of download, for example the size of the download too
+        >> Always alert the user when opening new windows: 
+            >> It is important to warn people with disabilities that a new window has been opened — especially people with cognitive disabilities who may not notice
+            >> best way to indicate that a link opens in a new window is to add text to the link, such as “(opens in new window)”
+            >> If you absolutely must use a character to indicate a link, then somethign like following might be handy
+                >> <a href="http://www.google.com/" target="_blank">Google 
+                    <span class="sr-only">Opens in new window</span> 
+                    <i aria-hidden="true" class="fa fa-edit fa-external-link"></i> </a>
+                >> .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
+            >> Always include the icon after the link text
+                >> Otherwise screen reader users who pull out the links of each page, will get a whole list starting with “opens in new window” instead of meaningful link text
+        >> Be aware of pagination and alphabetized links: 
+            >> If it’s an alphabetized list of links, then a heading explaining the links is best
+            >> User agents and assistive technologies now are adept at rendering adjacent links, so there’s no need to put vertical bars, like in the example above, between links any more
+            >> It is still important that there is space between adjacent links
+            >> using the CSS border property around links to make them look more like buttons, makes more sense to visual aspect of it: border: 1px solid black;
+            >> best thing to do is make the current page number plain text and the other numbers links
+            >> And make sure those links are underlined!
+                >> This way the links are visually distinct (without relying solely on color) and programmatically distinct as well
+            >> another problem with pagination and alphabetized links is that they generally present a very small target area for the user to select
+            >> This is no problem for keyboard users, however people using other input devices, such as a mouse, joystick or touch screen can find one letter links very difficult to properly select
+            >> It’s a good idea to make single character links a larger text size than the surrounding content
+            >> It’s also wise to use plenty of CSS padding around the link to increase the clickable area
+      -->
+    <div class="paginations-links">
+        <style>
+            span.pag a {
+                padding: 1em;
+                border: 1px solid black;
+                margin: 0.5em;
+                background: #ffffc3;
+                color: black;
+            }
+
+            span.current-page {
+                padding: 1em;
+                border: 1px solid black;
+                margin: 0.5em;
+                background: black;
+                color: white;
+            }
+        </style>
+        <span class="pag">
+            <a href="http://www.one.com">1</a>
+            <a href="http://www.two.com">2</a>
+            <a href="http://www.three.com">3</a>
+            <span class="current-page">4</span>
+            <a href="http://www.five.com">5</a>
+            <a href="http://www.six.com">6</a>
+        </span>
+    </div>
+    <!-- 
+        >> Be mindful when using anchor links: 
+            >> Screen readers do usually identify whether a link is an anchor by adding the phrase “in- page link”, so they at least have some feedback when activating an anchor link
+            >> But visually-challenged users, people who use magnifiers and people with cognitive disabilities may not realize they are activating an anchor link at all
+            >> using a standard preceding phrase to indicate anchor links such as “In this page:”, “Jump down to:” or “This page contains the following content:”
+        >>  case for underlining links: 
+            >> People expect links to be underlined
+            >> you should never underline text in the online world unless you are representing a link
+            >> WCAG2 does recommend that you underline your inline text links, but also allows developers to meet the accessibility criterion if they use a contrast ratio of 3:1 with surrounding text and providing additional visual cues on focus for links or controls where color alone is used to identify them
+            >> This requires that your text links contrast sufficiently with surrounding text (the W3C has a list of link colors that contrast appropriately with black text and a white background) and there is an additional visual cue when the link receives mouse or keyboard focus
+            >> This visual cue can be an underline (go on, make those links underlined!), bold, italic or increase in font size or it can be the addition of a glyph or image
+            >> It can be implemented through CSS as this only needs to be a visual indicator
+            >> But remember to add a:focus to a:hover!
+        >> Design with keyboard-only users in mind: 
+            >> extra information conveyed in the TITLE attribute of a link HREF, is not available to keyboard users
+            >> Another serious keyboard issue can be a lack of a keyboard focus indicator, which can often make a site almost impossible to use by keyboard users
+            >> only way for a keyboard user to know which link, navigation item or field has focus is if that item has a keyboard focus indicator
+            >> In almost all cases you need to add “a:focus” wherever you have “a:hover” to achieve this
+            >> Scripted links: 
+                >> Using scripting events, via JavaScript, to emulate links is also banned under the WCAG2
+                >> All links should be created using A HREF or AREA
+            >> Negative TABINDEX values: 
+                >> Negative TABINDEX values, introduced with HTML5, very clearly violates w3c rules
+        >> Be mindful when using images as links: 
+            >> There are special requirements for images that are links
+            >> ALT attribute acts as the link text
+            >> You do need to be careful when creating ALT attributes for image links, because the ALT attribute has two requirements: 
+                >> it must describe the image
+                >> it must tell the user what activating the link will do
+            >> For an image button then an ALT attribute like “Search”, “Find” or “Submit” is great, but avoid using the word “Go” as I’ve found users don’t understand that terminology (“Go where?” they ask)
+            >> If you do have a linked image next to a text link that goes to the same page, then in most cases that image needs an empty ALT attribute
+            >> It is also a requirement that one link should encompass the link text and the image, this can be done now as HTML5 allows A as a block-level element
+     -->
+     <div class="image-links">
+        <a href="/list/gm7xsjP4vD8/">
+            <span class="list-preview-item-wide">
+            <img alt="The Sopranos" src="http://ia.media-imdb.com/images/M/MV5BMTIxMjc4NTA2Nl5BMl5BanBnXkFtZTYwNTU2MzU5._V1._SX86_CR0,0,86,86_.jpg" class="loadlate" width="86" height="86"/>
+            </span>
+            <span class="list_name"><b>Top TV Series of the Past 20 Years</b></span></a>
+     </div>
+     <!-- 
+        >> Eliminate broken or empty links: 
+            >> Whatever the origin, when they are inaccessible, it's annoying to screen reader users
+        >> Make your links consistent: 
+            >> Consistency is your friend. It lets your users orient themselves quickly
+            >> Everything on your site should be consistent: your headings, field labels, buttons etc. You links are no exception to this rule
+            >> You must never use one color to indicate links on one page and then another color on another page
+        >> Test your color contrast: 
+            >> You need to ensure that the color of your link text contrasts sufficiently with the background colo
+            >> This is required whether your links are underlined or not
+            >> If you change the color of the link on mouse and keyboard focus, you need to make sure that new color also meets color contrast requirements
+      -->
+</body>
+
+</html>
