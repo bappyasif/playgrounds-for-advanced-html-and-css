@@ -413,6 +413,45 @@
         <!-- Example 2 -->
         <img src='...' alt='Odin' />
     </div>
+
+    <!-- 
+        WAI-ARIA
+        
+        Introduction: 
+        >> WAI-ARIA introduces attributes that can help make websites even more accessible by modifying the semantics and context of elements, which can give you greater control over how those elements are perceived by assistive technologies
+
+        What is WAI-ARIA?
+        >> WAI-ARIA stands for - Web Accessibility Initiative’s Accessible Rich Internet Applications specification
+        >> purpose of WAI-ARIA (often referred to as just ARIA) is to define a way to make web content more accessible when native HTML is unable to do so
+        >> It’s important to note that ARIA can only modify the semantics or context of an element
+        >> ARIA can’t: 
+            >> modify an element’s appearance,
+            >> modify an element’s behavior
+            >> add focusability, or
+            >> add keyboard event handling
+        >> When you use ARIA, you will usually have to take additional steps to add in any missing semantics or functionality
+
+        Five Rules of ARIA: 
+        >> ARIA can be extremely powerful when used correctly, but it can be equally as dangerous when used incorrectly
+        >> Because of this, you should keep in mind that no ARIA is better than bad ARIA, even when you have the best intentions
+            >> Always use native HTML elements and attributes over ARIA when possible
+            >> Never change native semantics, unless you have no other choice
+            >> All interactive ARIA controls must be usable with a keyboard
+            >> Never use role='presentation' or aria-hidden='true' on focusable elements
+            >> All interactive elements must have an accessible name
+        
+        Accessibility Tree: 
+        >> accessibility tree is based on the DOM
+        >> While the DOM represents nodes and objects that make up a web page, the accessibility tree contains only the accessibility related information that will be used by assistive technologies
+        >> way ARIA works is by modifying properties of the objects that make up this accessibility tree
+        >> For this lesson, we’re only going to focus on two of these properties: 
+            >> Name: 
+                >> Also known as the “accessible name”
+                >> this is what assistive technologies announce to a user and what separates elements of the same type from one another
+                >> name may be set by one or more native labels, including the text contents of an element, the <label> element, or the alt attribute, to name a few
+            >> Description: 
+                >> This is what assistive technologies announce in addition to its accessible name
+     -->
 </body>
 
 </html>
