@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive design</title>
+</head>
+<body>
+    <!-- 
+        Terminology: 
+        >> “Responsive Design” is the term used to describe creating websites that respond to changes in browser size in order to create something that works on any device
+        >> here we're not going to focus much on the actual design of responsive websites, but the techniques you can use to implement responsiveness on websites
+        >> There are ways to make your designs flexible enough that they work well on most screens, and there are ways to dramatically change the layout of your page at certain sizes
+        
+        What screens sizes should you support?
+        >> smallest phones in common circulation rarely get smaller than 320px, so that should serve as a reliable lower end target
+        >> If your website works as low as 320px width, then it should work on any small device
+        >> upper limit is a little harder to clarify
+        >> These days super-duper-ultra-wide monitors aren’t uncommon, so you should plan for the possibility that your site could be viewed on some ridiculously wide monitor
+        >> Often, this is accomplished by setting up a max-width for all of your content and then centering that on the page
+     -->
+
+     <!-- 
+        >> As more diverse screen sizes became available, the concept of responsive web design (RWD) appeared, a set of practices that allows web pages to alter their layout and appearance to suit different screen widths, resolutions, etc
+        >> It is an idea that changed the way we design for a multi-device web
+        
+        Historic website layouts: 
+        >> HTML is fundamentally responsive
+        >> If you create a web page containing text and resize the browser window, or display the page on a device with a smaller screen, then the browser will automatically reflow the text to fit the window
+        >> This is called a liquid layout
+            >> problem with this layout, though, is that the site would look squashed on smaller screens and have unreadably long line lengths on larger ones
+        >> alternative is to create a fixed width layout, which sets elements to a fixed size in pixels
+            >> problem with this approach is that you will get a horizontal scrollbar on screens smaller than the site width, and lots of white space at the edges of the design on larger screens
+        >> As the mobile web started to become a reality with the first feature phones, companies who wished to embrace mobile would generally create a special mobile version of their site, with a different URL (often something like m.example.com, or example.mobi)
+            >> This meant that two separate versions of the site had to be developed and kept up-to-date
+        >> In addition, these mobile sites often offered a very cut down experience
+
+        responsive design: 
+        >> term responsive design described the use of three techniques in combination: 
+            >> first was the idea of fluid grids
+            >> second technique was the idea of fluid images
+                >> Using a very simple technique of setting the max-width property to 100%, images would scale down smaller if their containing column became narrower than the image's intrinsic size, but never grow larger
+                >> This enables an image to scale down to fit in a flexibly-sized column, rather than overflow it, but not grow larger and become pixelated if the column becomes wider than the image
+            >> third key component was the media query
+                >> Media Queries enable the type of layout switch using only CSS
+                >> Rather than having one layout for all screen sizes, the layout could be changed
+                >> Sidebars could be repositioned for the smaller screen, or alternate navigation could be displayed
+        >> It is important to understand that responsive web design isn't a separate technology
+            >> it is a term used to describe an approach to web design or a set of best practices
+            >> used to create a layout that can respond to the device being used to view the content
+        
+        >> Media Queries: 
+        >> Responsive design was only able to emerge due to the media query
+        >> Media Queries allow us to run a series of tests (e.g. whether the user's screen is greater than a certain width, or a certain resolution) and apply CSS selectively to style the page appropriately for the user's needs
+        >> For example, the following media query tests to see if the current web page is being displayed as screen media (therefore not a printed document) and the viewport is at least 800 pixels wide
+            @media screen and (min-width: 800px) { .container { margin: 1em 2em; } }
+        >> You can add multiple media queries within a stylesheet, tweaking your whole layout or parts of it to best suit the various screen sizes
+        >> points at which a media query is introduced, and the layout changed, are known as breakpoints
+        >> A common approach when using Media Queries is to create a simple single-column layout for narrow-screen devices (e.g. mobile phones), then check for larger screens and implement a multiple-column layout when you know that you have enough screen width to handle it
+            >> This is often described as mobile first design
+        
+        Flexible grids: 
+        >> Responsive sites don't just change their layout between breakpoints, they are built on flexible grids
+        >> A flexible grid means that you don't need to target every possible device size that there is, and build a pixel perfect layout for it
+        >> By using a flexible grid, you only need to add in a breakpoint and change the design at the point where the content starts to look bad
+        >> In the early days of responsive design, our only option for performing layout was to use floats
+        >> Flexible floated layouts were achieved by giving each element a percentage width, and ensuring that across the layout the totals were not more than 100%
+        >> It is likely that you will come across websites using this approach in your work, so it is worth understanding it, even though you would not build a modern site using a float-based flexible grid
+        
+      -->
+</body>
+</html>
