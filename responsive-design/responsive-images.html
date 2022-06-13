@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsiveness Images</title>
+</head>
+
+<body>
+    <!-- 
+        >> Images require a little special care on responsive websites
+
+        Baiscs: 
+        >> most basic problem that you are going to face when working with responsive images is the aspect-ratio, or the relationship between width and height
+        >> If you shrink the width of an image on smaller screens, and do not also manipulate the height the image will appear distorted!
+
+        >> solution to this issue is incredibly easy, and we’ve already mentioned it in an earlier lesson: simply don’t define both a width and a height
+        >> If an image is given a flexible width, and the height is set to auto, then it should retain it’s aspect ratio correctly
+
+        background-size, background-position and object-fit: 
+        >> What if you don’t want your image to simply shrink (in both height and width)?
+            >> background-size and object-fit are two properties that can provide a little more flexibility (pun intended) with how aspect-ratios are handled
+            >> background-position and background-size are properties that work on elements with a background image, and do not work on normal img tags
+                >> you can get quite a lot of control over the display and placement of background images by working with these properties
+            >> For example, background-position: center will make sure the image is always centered in it’s container, even if the container is too small to fit the whole image
+            >> background-size: cover will resize the image so that it is always completely filling it’s container while cropping as little as possible
+     -->
+    <div class="background-isp">
+        <style>
+            .background-isp>.image-container {
+                height: 100vh;
+                margin: 0;
+                background-image: url(https://images.unsplash.com/photo-1578241561880-0a1d5db3cb8a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80);
+                background-size: cover;
+                background-position: center;
+            }
+        </style>
+        <div class="image-container"></div>
+    </div>
+
+    <!-- 
+        background-size, background-position and object-fit: contiued: 
+        >> object-fit works similarly, but is meant for img tags
+        >> With the object-fit property you can specify a width and height for your images and then tell an image how it is supposed to fit itself to those dimensions
+        >> default value for object-fit is fill, which simply stretches the image to fit the dimensions, but much like background-size you can also tell it to cover or contain the image
+     -->
+    <div class="object-fit">
+        <style>
+            .object-fit > img {
+                /* height: 300px; */
+                width: 100%;
+                object-fit: cover;
+            }
+        </style>
+        <img src="https://images.unsplash.com/photo-1578241561880-0a1d5db3cb8a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80"
+            alt="">
+    </div>
+
+    <!-- 
+        Even More Control!: 
+        >> It is also possible to literally use different images for different screen sizes
+        >> This gives you the most control over exactly how your images are displayed at various resolutions
+            >> For example, instead of just trusting object-fit to keep the subject of a photograph in frame, you could present a cropped version of it on smaller screens
+            >> There are two ways of achieving this, but the most flexible is using the <picture> tag
+        
+     -->
+</body>
+
+</html>

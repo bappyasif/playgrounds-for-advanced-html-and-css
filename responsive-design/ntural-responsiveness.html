@@ -161,7 +161,7 @@
        -->
     <div class="using-minmax">
         <style>
-            .using-minmax > .wrapper {
+            .using-minmax>.wrapper {
                 display: grid;
                 grid-gap: 10px;
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -169,7 +169,7 @@
                 color: #444;
             }
 
-            .using-minmax > .wrapper .box {
+            .using-minmax>.wrapper .box {
                 background-color: #444;
                 color: #fff;
                 border-radius: 5px;
@@ -190,6 +190,77 @@
             <div class="box i">I</div>
         </div>
     </div>
+
+    <!-- 
+        Using Percentages in CSS: 
+
+        >> most elements are already responsive to the viewport, even without using percentages
+        >> Generally, things look nice when the margin outside of an element and the padding inside the element is either the same or related
+        >> You do not need the percentage rule to make elements responsive
+        >> most html elements will expand horizontally to fill 100% of the horizontal space even if you didnt specify any width in styles
+        >> rather than using a percentage to define the width of the element, use a static margin
+            >> It’ll still be responsive but will look much nicer at most screen-sizes
+        
+        >> If you want the thing to have a smaller margin on smaller screens, that’s a perfect time to use a breakpoint (example 01)
+        
+        >> Because we want a margin on the element, we can no longer rely on margin: auto to center it, but there are many ways to center things in CSS. I like flexbox (example 02)
+        
+        >> There are obviously cases where using a percentage is the right choice
+            >> In particular, using something like height 100% to make a child component fill the entire height of its parent can be useful
+            >> as can width: 100% for elements that do not expand by default
+        
+        >> general rule: block-level elements expand, inline elements do not
+
+        >> As a rule of thumb, however, percentages are less useful than other techniques
+
+        >> Setting up evenly spaced columns, another place where percentages are commonplace is better done with flexbox or grid
+
+     -->
+
+    <style>
+        /* 
+        Example 01: 
+            >> One more great addition here is a max-width so that the element won’t exceed a certain width even on huge screens
+            >> This is much more aesthetically pleasing and consistent than the percentages or adding another breakpoint (padding: 512px) for wide screens
+         */
+        .card {
+            margin: 48px;
+            background: red;
+            padding: 48px;
+            font-size: 32px;
+        }
+
+        @media (max-width: 500px) {
+            .card {
+                padding: 16px;
+                margin: 16px;
+            }
+        }
+    </style>
+
+    <style>
+        /*  Example 02: */
+        body {
+            display: flex;
+            justify-content: center;
+        }
+
+        .card {
+            margin: 48px;
+            background: red;
+            padding: 48px;
+            font-size: 32px;
+            max-width: 500px;
+        }
+
+        @media (max-width: 500px) {
+            .card {
+                padding: 16px;
+                margin: 16px;
+            }
+        }
+    </style>
+
 </body>
 
 </html>

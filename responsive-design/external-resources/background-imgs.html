@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>background-size, background-position and object fit</title>
+</head>
+
+<body>
+    <!-- 
+        background-size: 
+
+        >> background-size CSS property sets the size of the element's background image
+        >> image can be left to its natural size, stretched, or constrained to fit the available space
+        >> Spaces not covered by a background image are filled with the background-color property
+        >> and the background color will be visible behind background images that have transparency/translucency
+
+        Syntax: 
+        /* Keyword values */
+        background-size: cover;
+        background-size: contain;
+
+        /* One-value syntax */
+        /* the width of the image (height becomes 'auto') */
+        background-size: 50%;
+        background-size: 3.2em;
+        background-size: 12px;
+        background-size: auto;
+
+        /* Two-value syntax */
+        /* first value: width of the image, second value: height */
+        background-size: 50% auto;
+        background-size: 3em 25%;
+        background-size: auto 6px;
+        background-size: auto auto;
+
+        /* Multiple backgrounds */
+        background-size: auto, auto; /* Not to be confused with `auto auto` */
+        background-size: 50%, 25%, 25%;
+        background-size: 6px, auto, contain;
+
+        /* Global values */
+        background-size: inherit;
+        background-size: initial;
+        background-size: revert;
+        background-size: revert-layer;
+        background-size: unset;
+        
+        background-size property is specified in one of the following ways: 
+            >> Using the keyword values contain or cover
+            >> Using a width value only, in which case the height defaults to auto
+            >> Using both a width and a height value, in which case the first sets the width and the second sets the height
+            >> Each value can be a <length>, a <percentage>, or auto
+        >> To specify the size of multiple background images, separate the value for each one with a comma
+        >> Values: 
+            >> contain: 
+                >> Scales the image as large as possible within its container without cropping or stretching the image
+                >> If the container is larger than the image, this will result in image tiling, unless the background-repeat property is set to no-repeat
+            >> cover: 
+                >> Scales the image (while preserving its ratio) to the smallest possible size to fill the container (that is: both its height and width completely cover the container), leaving no empty space
+                >> If the proportions of the background differ from the element, the image is cropped either vertically or horizontally
+            >> auto: 
+                >> Scales the background image in the corresponding direction such that its intrinsic proportions are maintained
+            >> <length>: 
+                >> Stretches the image in the corresponding dimension to the specified length
+                >> Negative values are not allowed
+            >> <percentage>: 
+                >> Stretches the image in the corresponding dimension to the specified percentage of the background positioning area
+                >> background positioning area is determined by the value of background-origin (by default, the padding box)
+                >> However, if the background's background-attachment value is fixed, the positioning area is instead the entire viewport
+                >> Negative values are not allowed
+        >> Intrinsic dimensions and proportions: 
+            >> computation of values depends on the image's intrinsic dimensions (width and height) and intrinsic proportions (width-to-height ratio)
+            >> These attributes are as follows: 
+                >> A bitmap image (such as JPG) always has intrinsic dimensions and proportions
+                >> A vector image (such as SVG) does not necessarily have intrinsic dimensions
+                    >> If it has both horizontal and vertical intrinsic dimensions, it also has intrinsic proportions
+                    >> If it has no dimensions or only one dimension, it may or may not have proportions
+                >> CSS <gradient>s have no intrinsic dimensions or intrinsic proportions
+                >> Background images created with the element() function use the intrinsic dimensions and proportions of the generating element
+        >> Based on the intrinsic dimensions and proportions, the rendered size of the background image is computed as follows:
+            >> If both components of background-size are specified and are not auto: 
+                >> background image is rendered at the specified size
+            >> If the background-size is contain or cover: 
+                >> While preserving its intrinsic proportions, the image is rendered at the largest size contained within, or covering, the background positioning area
+                >> If the image has no intrinsic proportions, then it's rendered at the size of the background positioning area
+            >> If the background-size is auto or auto auto: 
+                >> If the image has both horizontal and vertical intrinsic dimensions, it's rendered at that size
+                >> If the image has no intrinsic dimensions and has no intrinsic proportions, it's rendered at the size of the background positioning area
+                >> If the image has no intrinsic dimensions but has intrinsic proportions, it's rendered as if contain had been specified instead
+                >> If the image has only one intrinsic dimension and has intrinsic proportions, it's rendered at the size corresponding to that one dimension
+                    >> other dimension is computed using the specified dimension and the intrinsic proportions.
+                >> If the image has only one intrinsic dimension but has no intrinsic proportions, it's rendered using the specified dimension and the other dimension of the background positioning area
+                >> SVG images have a preserveAspectRatio attribute that defaults to the equivalent of contain; an explicit background-size causes preserveAspectRatio to be ignored
+            >> If the background-size has one auto component and one non-auto component:
+                >> If the image has intrinsic proportions, it's stretched to the specified dimension
+                    >>  unspecified dimension is computed using the specified dimension and the intrinsic proportions
+            >> If the image has no intrinsic proportions, it's stretched to the specified dimension, if there is one    
+                >> If there is no such intrinsic dimension, it becomes the corresponding dimension of the background positioning area
+            
+            >> Working with gradients: 
+                >> If you use a <gradient> as the background and specify a background-size to go with it, it's best not to specify a size that uses a single auto component, or is specified using only a width value (for example, background-size: 50%)
+                >> e.g. .gradient-example {
+                            width: 50px;
+                            height: 100px;
+                            background-image: linear-gradient(blue, red);
+
+                            /* Not safe to use */
+                            background-size: 25px;
+                            background-size: 50%;
+                            background-size: auto 50px;
+                            background-size: auto 50%;
+
+                            /* Safe to use */
+                            background-size: 25px 50px;
+                            background-size: 50% 50%;
+                        }
+                >> Note that it's particularly not recommended to use a pixel dimension and an auto dimension with a <gradient>, because it's impossible to replicate rendering
+            
+            Formal definition: 
+            >> Initial value	auto auto
+            >> Applies to	all elements
+            >> Inherited	no
+            >> Percentages	relative to the background positioning area
+            >> Computed value	as specified, but with relative lengths converted into absolute lengths
+            >> Animation type	repeatable list of simple list of length, percentage, or calc
+     -->
+
+    <!-- 
+        examples: 
+
+      -->
+    <div class="tilling-example">
+        <style>
+            .tilling-example > .tiledBackground {
+                background-image: url(https://www.mozilla.org/media/img/logos/firefox/logo-quantum.9c5e96634f92.png);
+                background-size: 150px;
+                width: 300px;
+                height: 300px;
+                border: 2px solid;
+                color: pink;
+            }
+        </style>
+        <div class="tiledBackground">
+        </div>
+    </div>
+
+</body>
+
+</html>
