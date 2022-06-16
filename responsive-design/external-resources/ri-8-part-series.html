@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive images: a 8 part series</title>
+</head>
+<body>
+    <!-- 
+        part: 2: img required: 
+
+        >> One of the main reasons why we need solutions for responsive images is because the <img> element is insufficient
+        >> It only has one src and we need multiple sources
+        >> Given that fact, it may be surprising that we’re going to start by talking about the <img> element instead of the new, shiny toys like <picture> and srcset
+        >> No matter what responsive images solution you use, <img> is required
+        >> <img> element is critical for all of the inline responsive images solutions
+        >> consider img is a box into which all of the responsive image rules are added and applied
+        >> You can use JavaScript to watch for changes in the currentSrc of the img element
+        
+        >> Do you need more than img? 
+        >> There are some scenarios where the img element alone might be enough: 
+            >> A fixed width, single density web page: 
+                >> If you don’t have a responsive design and aren’t worrying about “retina” displays, then the img element is all you need
+            >> Small differences in file size: 
+                >> For some images there isn’t much difference between the file size of the largest and smallest variants
+                >> We’ve seen this with badges, icons and other small images that don’t change much as the viewport changes
+                >> If there isn’t much difference in file size, a single img source may suffice
+            >> Using vector-based images like SVG: 
+                >> SVG image can scale without providing multiple sources
+                >> In that case, you may be able to link directly to the SVG as the single source for the img
+                >> This depends, of course, on whether the browsers you support also support SVG
+            
+        Part 3: Srcset Display Density:
+        >> Ever since Apple launched a retina display on the iPhone 4, web designers have been looking for a way to handle high density displays
+        >> That is where srcset and its display density descriptors come in
+        
+        >> Resolution switching uses srcset: 
+        >> when we’re solving for resolution switching, we want to use srcset
+        >> reason why we want to use srcset is because it gives the browser choice
+        >> When we use the media attribute provided by the <picture> element, we’re dictating to the browser what image it must use, That makes sense for art direction
+        >> But when it comes to resolution switching, the browser knows best what image will work
+        >> It can make decisions based on factors that we’re not privy to such as network conditions or user preference
+        >> So unless we are doing art direction, we should strive to give the browser options and let it make smart decisions
+
+        >> Display density descriptors: 
+        >> syntax for display density is fairly straight forward: 
+            >> <img src='cat.jpg' alt='cat pic' srcset='cat.jpg, cat.jpg 2x' />
+            >> srcset attribute is added to an <img> element
+            >> value of srcset contains a comma-separated list
+            >> Each item in the list contains the path to an image and the density of that image provided as a multiple (e.g., 1x, 2x, 3x…)
+        >> display density values—the 1x, 2x, etc.—are referred to as display density descriptors
+        >> If a display density descriptor isn’t provided, it is assumed to be 1x
+        >> It should be obvious that two sizes of an image aren’t sufficient
+        >> Sure, we could start at 320 as 1x and then rewrite our markup to look something like this: 
+            >> <img srcset="cat.jpg, cat-2X.jpg 2x, cat-3x.jpg 3x, […], cat-16x.jpg 16x">
+        >> And this highlights another reason why I find the display density descriptors to be less desirable than other solutions
+        >> I don’t have any interest in keeping track of all of the different display densities available
+        >> Not to mention what happens when you start working with flexible images, Now you have multiple densities at multiple image breakpoints
+        >> It gets messy quickly
+
+        >> Display density descriptors are best for fixed width images
+        >> moment you move beyond providing alternate densities of a fixed width img element, the display density descriptor becomes unwieldy and inadequate to the task
+
+        
+        Part 4: Srcset Width Descriptors: 
+        >> we looked at display density descriptors and concluded that they are great for fixed width images, but are insufficient for flexible images
+        >> Flexible images is where srcset’s width descriptors shine
+
+        >> Width descriptors: 
+        >> syntax for width descriptors is similar to that of display density descriptors
+        >> value of the srcset attribute is a comma-separated list of image sources and descriptors
+        >> difference is that instead of having 1x, 2x, and other values representing the density, we now list the width of the image source such as 320w, 480w, etc
+        >> <img src="cat.jpg" alt="cat" 
+            srcset="cat-160.jpg 160w, cat-320.jpg 320w, cat-640.jpg 640w, cat-1280.jpg 1280w">
+        >> width of the image source can cause some confusion
+        >> Width descriptors are looking for the resolution of the source file
+        >> In other words, if you open the image in an image editor, what does it say the resolution is? Grab the width and put it in the srcset attribute
+        
+        >> browser picks the best source? 
+        >> When you use width descriptors, you’re providing the browser with a list of images and their true widths so that it can select the best source
+        >> only thing that the browser does know is the size of the viewport while rendering
+        >> Once we move past display density descriptors, everything hinges on the size of the viewport
+        >> viewport can be a poor substitute for the actual size of the image
+        >> Knowing the size of the viewport won’t tell the browser enough information to be able to select the right image source
+        >> How do we tell the browser about the size of the image in the page so that it can download the right source from our srcset list? by using 'sizes' attribute
+
+
+        Part 5: Sizes: 
+        >> browser only knows the size of the viewport when it begins downloading images, and thence comes into view 'sizes' attrobute
+        
+        >> Sizes attribute is required!
+            >> In fact, sizes only makes sense if you’re using the width descriptors
+            >> If you’re using the display density descriptors, you don’t need the sizes attribute
+                >> browser won’t know what to do with it
+        
+        >> Sizes syntax: 
+            >> Like srcset, the sizes attribute contains a comma-separated list
+            >> This comma-separated list describes the size of the image in relation to the viewport
+            >> We’re telling the browser what size the image will be in relation to the size of the viewport
+            >> And we can tell the browser how that relationship changes as the size of the viewport changes
+            >> <img src="cat.jpg" alt="cat"
+                srcset="cat-160.jpg 160w, cat-320.jpg 320w, cat-640.jpg 640w, cat-1280.jpg 1280w"
+                sizes="(max-width: 480px) 100vw, (max-width: 900px) 33vw, 254px">
+            >> Like srcset, each comma-separated item contains two values separated by a space
+        
+        >> Media conditions: 
+        >> first value is a media condition
+        >> A media condition is similar to a media query, but not as full featured
+        >> For example, you can’t do things like ‘@media screen’, but you can do everything else you would likely want to do in sizes 
+
+        >> Lengths: 
+            >> second value in each comma-separated item is a length
+                >> This length is often expressed using the viewport width (vw) unit
+            >> Each vw unit represents 1% of the viewport width, which is a fancy way of saying that 100vw is 100% of the viewport width and 33vw is 33% of the viewport width
+            >> length doesn’t have to be expressed as a viewport width unit
+            >> It can be any length including absolute and relative length
+            >> You can even use CSS calc() to do things like auto-calculate margins dynamically
+        
+        >> How does the browser select the correct sizes value? 
+        >> When the browser starts through the comma-separated list of values, it grabs the first value where the media condition passes
+        >> <img src="cat.jpg" alt="cat"
+            srcset="cat-160.jpg 160w, cat-320.jpg 320w, cat-640.jpg 640w, cat-1280.jpg 1280w"
+            sizes="(max-width: 480px) 100vw, (max-width: 900px) 33vw, 254px">
+        >> If we translated this into a bulleted list of instructions, it might look like this: 
+        >> (max-width: 480px) 100vw: 
+            >> If the viewport is 480 pixels wide or smaller, the image will be 100% of the viewport width
+        >> (max-width: 900px) 33vw: 
+            >>  If the viewport is 480 pixels wide or smaller, this rule will never be reached because of the previous media condition
+            >> Ergo, if this rule effectively says that if the viewport is 481 pixels wide to 900px, that the image will be 33% of the viewport width
+        >> 254px: 
+            >> When there is no media condition listed, the length is assumed to be a default value used when none of the other media conditions are met
+            >> In this case, we have media conditions covering viewports up to 900 pixels
+            >> Therefore, from 901 pixels wide to infinity, the image will be 254 pixels wide
+        
+        >> But what about separation of content and presentation?
+        >> browser starts downloading image sources before the size of the image in the page is known
+        >> only way to support the pre-loader and make sure the right source gets downloaded is to provide some information about the size of the image in the markup
+
+        >> Is the pre-loader worth it?
+        >> We can’t simply throw out that web performance boon in favor of responsive images
+        >> Therefore, we have to find a compromise, sizes attribute is that compromise
+        >> It provides just enough information for the browser to do its job
+        
+        >> Srcset and sizes = Smart browsers: 
+        >> Srcset and sizes provide all of the functionality you need for the resolution switching use case
+        >> They give the browser just enough information to allow it to make smart decisions
+
+
+        Part 6: Picture Element: 
+        >> Now it is time to look at how to solve for art direction
+        >> picture element—the media attribute in particular—is designed to make art direction easy
+        >> <picture> element contains a series of <source> child elements followed by the required <img> element
+        >> source elements work similarly to the child sources of the video element
+        >>  <picture>
+                <source media="(min-width: 900px)" srcset="cat-vertical.jpg">
+                <source media="(min-width: 750px)" srcset="cat-horizontal.jpg">
+                <img src="cat.jpg" alt="cat">
+            </picture>
+        >> Each source has a required srcset attribute along with optional attributes including media, sizes and type
+        >> Both sizes and srcset on a <source> element work exactly the same as they do on an <img> element
+
+        >> Media attribute: 
+        >> value of the media attribute is a media query
+        >> Unlike the media condition that the sizes attribute uses, this is the full media query that you’ve come to know and love
+        >> As the browser looks through the list of source elements, the first source whose media query matches is the one that is used
+        >> If no media queries match, then the <img> element is used
+
+        >> Media attribute is a directive, not a suggestion: 
+        >> Unlike srcset and sizes, when you use the media attribute, you are dictating to the browser which source should be used
+        >> browser has no discretion to pick a different source
+        >> It must use the firstelement whose media attribute matches the current browser conditions
+        >> This is why the element with the media attribute is perfect for art direction
+        >> In the art direction use case, designers need to ensure that the image used at a particular viewport size is exactly the one they intend otherwise their design may break
+        >>  <picture>
+                <source srcset="homepage-person@desktop.png, homepage-person@desktop-2x.png 2x"       
+                        media="(min-width: 990px)">
+                <source srcset="homepage-person@tablet.png, homepage-person@tablet-2x.png 2x" 
+                        media="(min-width: 750px)">
+                <img srcset="homepage-person@mobile.png, homepage-person@mobile-2x.png 2x" 
+                    alt="Shopify Merchant, Corrine Anestopoulos">
+            </picture>
+        >> Looking at the code in more detail, what we see is that has three different image breakpoints
+        >> image is a fixed width at each breakpoint—it jumps from size to size instead of flexing between breakpoints
+        >> Because the image is fixed width, srcset display density descriptors make sense
+        >>  So for each breakpoint, source example has defined a 1x and 2x source file, It breaks down like this: 
+        >> <source … media=”(min-width: 990px)”>
+            >> largest image size, which source example calls desktop, is the first source
+            >> media attribute tells the browser that this source should only be used if the viewport is larger than or equal to 990 pixels wide
+        >> <source … media=”(min-width: 750px)”> 
+            >> second source, the “tablet” image, will be used for viewports larger than or equal to 750 pixels
+            >> Because the first source takes effect at 990 pixels and the browser selects the first source that matches, the effective range of the second source is from 750 to 989 pixels
+        >> <img> 
+        >> If there are no matches for the two sources, then the viewport must be smaller than 750 pixels wide
+        >> When that is the case, the srcset on the <img> element will be used
+        >> This “mobile” image is the cropped image used for small screens
+        >> If the images were flexible instead of fixed width, Shopify could have used <picture> with srcset width descriptors instead of display density descriptors
+        
+
+        
+        Part 7: Type: 
+        
+        >> Type attribute: 
+        >> type attribute can be added to <source> elements inside a <picture> element and allows you to declare different image types that the browser can choose from: 
+            >>  <picture>
+                    <source type="image/svg+xml" srcset="logo.xml">
+                    <source type="image/webp" srcset="logo.webp"> 
+                    <img src="logo.png" alt="ACME Corp">
+                </picture>
+        >> This new type attribute is modeled on the <video> element’s type attribute and works the same way
+        >> browser will pick the first source where the declared image type is one that it supports
+        >> If it doesn’t recognize any of the source types, it will use the <img> element’s src or srcset declarations
+        >> value is a MIME type for the image format being referenced in the srcset attribute
+        >> If you have multiple image URIs listed in the srcset attribute, they should all match the declared image MIME type
+        >> Of course, you can combine type with the sizes and/or the media attributes as well
+        >> All three of these attributes are optional and can be combined to accomplish whatever you need
+        >> srcset attribute is required for all <source> elements
+        >> Both display density and width descriptors can be used with the type attribute
+
+        Do you need the media attribute? 
+        >> Most images on the web fit the resolution switching use case
+        >> When you’ve got a resolution switching use case, you want to empower the browser to make the best choice possible
+            >> This is what srcset is designed to do
+        >> When you use the <picture> element with media attributes, you’re dictating to the browser what images it should use
+        >> Therefore, you can and should use <picture> when you want both resolution switching and to support multiple image formats
+        >> Just leave off the media attribute so that the browser can do its thing
+
+        Progressive enhancement for image formats: 
+        >> We can use progressive enhancement for image formats right now with <picture>
+        >> If you can find browsers that support an image format and you believe it can provide some value to your users, then there is no reason not to use that format so long as you provide alternatives
+     -->
+
+     <!-- 
+        Art direction with fallback
+
+        >> You can take this even further and provide multiple fallback images that take screen resolution into account; to do that you can specify those images using the srcset attribute on the <img>
+            >>  <picture>
+                    <source type="image/svg+xml" srcset="path/to/logo.svg">
+                    <img src="path/to/logo-1x.png" srcset="path/to/logo-2x.png 2x, path/to/logo-3x.png 3x" alt="Logo description">
+                </picture>
+        >> browser can then choose the image it finds appropriate based on the screen resolution
+        >>  This is useful for when you are serving the same image size (for example, a one-size logo) but want to provide 2x and 3x versions for higher resolutions
+        >> But if you want you can take it even further. With the help of the sizes attribute, you can use media queries on the <img> to change the fallback image size on different screen sizes, providing a bigger image for bigger screens and a smaller one for small screens
+            >>  <picture>
+                    <source type="image/svg+xml" srcset="path/to/banner.svg">
+                    <img
+                    sizes="(min-width: 640px) 80vw, 100vw"
+                    srcset="banner-300.jpg 300w,
+                            banner-400.jpg 400w,
+                            banner-700.jpg 700w,
+                            banner-1200.jpg 1200w,
+                            banner-1600.jpg 1600w,
+                            banner-2000.jpg 2000w"
+                    src="banner-default-fallback.jpg"
+                    alt="Banner description">
+                </picture>
+            >> What we’ve done here is we told the browser in the sizes attribute what size our image will occupy on the page
+            >> In this case, if the width of the viewport is 640px or more, the image will be 80% the width of the viewport, and 100% the width otherwise
+            >> Then, in the srcset attribute, we provided the browser with a list of images—they are all the same image, but in different sizes
+                >> Based on the sizes specified in sizes, the browser will pick the best fit among these images and display it
+            >> If a browser does not support srcset on <img>, it will simply display the fallback specified in the src attribute.
+
+
+            Art Direction: Loading a Different SVG on Different Screen Sizes: 
+            >> <source> element we use to specify the image(s) we want comes with another attribute: media
+            >> Since we’re serving an SVG image, we don’t need to serve multiple versions of the image for different screen resolutions because of the infinitely scalable nature of SVG which makes it look great on any resolution
+            >> you can specify different SVGs to load on different media conditions using the media attribute on the <source>
+            >> In the media attribute, you specify the media conditions similar to how you do it in CSS media queries
+                >>  <picture>
+                        <source
+                            media="(max-width: 640px)"
+                            srcset="header--small.svg"
+                            type="image/svg+xml">
+                        <source
+                            media="(max-width: 1024px)"
+                            srcset="header--medium.svg"
+                            type="image/svg+xml">
+                        <source
+                            srcset="header--full.svg"
+                            type="image/svg+xml">
+
+                        <img src="header--default-fallback.jpg" alt="Header description..">
+                    </picture>
+            
+            >> Foreground SVG Images with Interactivity and Styleability: 
+            >> <img> element, and naturally the <picture> element, only allow you to load a static SVG image, or an SVG with animations defined internally
+            >> If you need to load a foreground image and you want that image to be interactive and styleable, you can use one of four available ways: <object>, <iframe>, <embed> and inline <svg>
+            >> Both the <iframe> and <object> come with a default fallback mechanism
+            >> An inline <svg> requires a different approach to provide fallbacks; one such approach uses the <foreignObject> element
+      -->
+</body>
+</html>
