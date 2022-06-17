@@ -288,5 +288,164 @@
             >> Both the <iframe> and <object> come with a default fallback mechanism
             >> An inline <svg> requires a different approach to provide fallbacks; one such approach uses the <foreignObject> element
       -->
+
+    <!-- 
+        Part 8: CSS Images: 
+        >> before <picture> and srcset there were no good solutions for inline responsive images
+        >> When it comes to CSS images, we could always use media queries
+
+        >> image-set() for resolution switching: 
+        >> Just like when we’re working with inline images, one of the first questions we’ll need to ask ourselves is whether we’re dealing with the resolution switching or art direction use case
+        >> For resolution switching, we should strive to provide the browser with options and let the browser pick the best possible image
+            >> browser is in a better position to know what image will work best based on user preference, network conditions, etc
+        >> To provide the browser with options, we should use the image-set() syntax
+            >> background-image: image-set( "foo.png" 1x, "foo-2x.png" 2x);
+            >> srcset was modeled after image-set()
+            >> Like srcset, image-set’s value contains a comma-separated list of image URIs along with a display density descriptor
+            >> If a display density descriptor isn’t provided, it is assumed to be 1x
+            >> While most of the examples you will see for image-set() show it applied to background-image, it can be applied to any CSS property that accepts images
+        
+        >> image-set(): The forgotten responsive images standard: 
+        >> image-set() was the first responsive images specific syntax, and as mentioned, it was the foundation for srcset
+        >> However, because we had solutions for CSS responsive images using media queries, image-set() was ignored by nearly everyone
+        >> When image-set() is widely supported, we should use it for all of the same reasons we use srcset instead of <picture> with the media attribute when we’re dealing with resolution switching
+        >> Until image-set() is widely supported, you’ll probably end up using the CSS art direction solution for resolution switching
+
+        >> Art direction: 
+        >> What is the CSS solution for art direction? Media queries
+        >> make sure your media queries for images don’t overlap or you’ll end up with duplicate downloads
+
+        >> Resolution media queries: 
+        >> If you want to support high density displays in art direction, you’ll probably want to use the new resolution media queries
+        >> resolution media query allows you to apply specific CSS rules to devices that meet the display density that you define
+        >> @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { /* High density stuff here */ }
+        >> first thing you’ll notice in the syntax above is that we’re including a -webkit prefixed media query
+        >> This is for devices that support the old device-pixel-ratio syntax
+        >> syntax going forward is the resolution media query
+        >> In our example, we’re using min-resolution, but as you probably guessed, there is a complimentary max-resolution feature that can be used instead
+        >> resolution media query can check one of three things: 
+            >> dpi — dots per inch
+            >> dpcm — dots per centimeter
+            >> dppx — dots per px unit
+        
+
+        
+        Part 9: Image Breakpoints: 
+
+        >> What are responsive image breakpoints? 
+        >> In our responsive layouts, breakpoints refer to the viewport sizes at which we make changes to the layout or functionality of a page
+            >> These typically map to media queries
+        >> Responsive image breakpoints are similar, but slightly different
+        >> When I think about image breakpoints, I’m trying to answer two questions: 
+            >> How many image sources do I need to provide to cover the continuum of sizes that this image will be used for?
+            >> Where and when should the various image sources be used?
+        >> answers to these questions lead to different breakpoints than the criteria we use to select breakpoints for our responsive layouts
+        >> We resize the browser until the page looks bad and then BOOOOM, we need a breakpoint
+        >> With the exception of art direction, the main reason why we need multiple image sources has nothing to do with where the images look bad
+        >> We want to provide multiple image sources because of performance concerns, different screen densities, etc
+        >> So we can’t simply reuse our responsive layout breakpoints for our images
+            >> but if we do so, we’re not really addressing the fundamental reasons why we wanted responsive images in the first place
+        
+        >> Image breakpoints for art direction is relatively easy: 
+        >> In situations where the image falls under the art direction use case, the art direction itself will often tell us how many image sources we need and when they should be used
+        >> What if one of the art directed images covers a large range of sizes
+        >> We may find that we still need to have multiple sources that don’t map to the art direction switch
+        >> Despite the fact that the image only has one major art direction change—from the full image to the cropped one—Shopify example from previous examples still provided six image sources to account for file size and display density
+        >>  <picture>
+                <source srcset="homepage-person@desktop.png, homepage-person@desktop-2x.png 2x"       
+                        media="(min-width: 990px)">
+                <source srcset="homepage-person@tablet.png, homepage-person@tablet-2x.png 2x" 
+                        media="(min-width: 750px)">
+                <img srcset="homepage-person@mobile.png, homepage-person@mobile-2x.png 2x" 
+                    alt="Shopify Merchant, Corrine Anestopoulos">
+            </picture>
+        >> So knowing that an image falls under the art direction use case can give us some clues, but it doesn’t answer all of our questions about the necessary image breakpoints
+
+        >> What about resolution switching breakpoints: 
+        >> art direction provides us with some hints about how many image sources might be needed
+        >> So long as we’re downscaling flexible images, they will always look good
+        >> We can’t rely on them looking bad to tell us when we need to change image sources
+        >> Each smaller image source offers the potential for substantial savings over the previous large size
+        >> If we keep on this track, we eventually end up with an image source that is the exact size of the image in the page
+        >> How do I know when an image source is too big for the size that the image is being used in the page?
+            >> answer is that unless the image source matches exactly the size that the image is being displayed in the page, it is always going to be too big
+            >> There is always going to be an opportunity to optimize it further by providing a smaller image
+        
+        >> Why not provide the exact size of the image? 
+            >> First, the whole point of flexible images in responsive design is to provide images that scale as the size of the viewport changes
+                >> If we provided images that were exactly the size used in the page, we’d likely need to download new images whenever the viewport size changes or the device was rotated
+            >> Second, it is unrealistic to provide images at any size imaginable
+                >> Yes, we can dynamically resize images, but when we resize images, the server needs to do that work which slows down delivery of that image to the browser
+            >> For this reason, most larger sites cache images on content delivery networks (CDN)
+            >> Caching every image size possible on the CDN would be incredibly expensive
+            >> Finally, the browser doesn’t know the exact size of the image in the page when it starts downloading
+            >> That’s what got us to new responsive images standards in the first place!
+
+        >> Possible ways to pick image breakpoints: 
+        >> here are some different ways of looking at the problem that may help inform your decisions: 
+            >> Winging it (aka, matching your layout breakpoints): 
+                >> Perhaps you or your organization still thinks about mobile, tablet and desktop which makes small, medium and large make sense
+                >> Or maybe you take a look at the range that the image will be displayed and make your best guess
+                >> Perhaps you simply look at the number of major layout breakpoints and decide to do the same for your image breakpoints
+                >> And this is better than providing one huge image for all viewports
+                >> But it sure would be nice to have more logic behind our decisions
+            >> But it sure would be nice to have more logic behind our decisions
+        
+            >> Testing representative images: 
+                >> We can take a look at some representative images and figure out how many breakpoints they need
+                >> hardest part of doing this is determining representative images, or figuring out if you have any at all
+                >> Pick a few images and then resize them and save them at sizes ranging between the largest and the smallest images until you feel like you’ve got decent coverage
+                >> Of course, if your site has a diversity of image styles, finding representative images can be nearly impossible
+            
+            >> Memory usage influencing the distribution of image breakpoints: 
+                >> as an image gets bigger, the impact of resizing an image gets larger
+                >> Knowing this tells us a bit about how we should pick our breakpoints
+                >> Instead of spacing out breakpoints evenly, we should have more breakpoints as the image gets larger
+                >> Unfortunately, while this tells us that we should have more breakpoints at larger sizes, it doesn’t tell us where those breakpoints should be
+            
+            >> Setting image breakpoints based on a performance budget: 
+                >> We’d start by defining a budget for the amount of wasted bytes that the browser would be allowed to download above what is needed to fit the size of the image in the page
+                >> So say that we decided that we had a performance budget of 20K for each responsive image
+                >> That would mean that we would need to make sure that the various sources that we’ve defined for the image are never more than 20K apart
+                >> When we do this, we find that the number of image breakpoints change wildly based on the visual diversity of the image and the compression being used
+
+            >> Setting image breakpoints based on most frequent requests: 
+            >> Not only do companies like Akamai and Google want to reduce the number of images stored at the edge, but the whole purpose of their content delivery networks is to reduce the amount of time it takes for people to render a web page
+            >> Therefore, if they can cache the most commonly requested image sizes at the edge, they will deliver the fastest experience for the majority of their users
+            >> For these organizations, they can tie their image processing and breakpoints logic to their analytics and change the size of the images over time if they find that new image sizes are getting requested more frequently
+            
+            >> Humans shouldn’t be doing this: 
+            >> hopefully in a few years time, no one will be talking about how to pick responsive image breakpoints because no one will be doing it manually
+            >> Sure, we may still make decisions for images that fall into the art direction use case, but even then, we’re probably not going to make finite decisions about every image source
+            >> We’ll handle the places that require our intervention and let our image processing services handle the rest
+            >> There is a ton of benefit to either picking image sources based on a performance budget or based on the frequency with which different sizes of the image are requested
+            >> But either of these solutions are untenable as part of a manual workflow
+
+
+
+            Part 10: Conclusion: 
+
+            >> Responsive image audits: 
+            >> It is the first thing we do when we start looking at how to convert a site to responsive images
+            
+            >> Compatibility: 
+            >> Browser support for responsive images standards is growing rapidly
+            >> When it comes to image-set(), there is still a lot more work to be done
+
+            >> PictureFill: 
+            >> But even if all the browsers currently supported the responsive images standards, we’d still need a way to help older browsers understand the new syntax
+                >> That’s where the PictureFill polyfill comes in
+            >> PictureFill will allow you to use the new responsive images syntax now
+
+            >> Automating your image processing: 
+            >> goal for most organizations should be to centralize image resizing and processing and automate as much of their responsive images as possible
+            >> a responsive images workflow for resolution switching would look something like this: 
+                >> Where possible, use resolution independent SVG images
+                >> When creating or modifying the design of templates, the template author provides the sizes attribute for the various images in the template
+                >> srcset attribute with width descriptors is inserted by the server which does all of the heavy lifting of figuring out what image breakpoints to choose for each image
+                >> Content authors never worry about any of this, Their only responsibility is to upload the highest quality source available and let the image resizing service take care of the rest
+            >> And many content management systems are starting to look for ways to incorporate responsive images
+            >> only thing these image resizing services need to add is support for figuring out how many image sources to supply for a given image and to output the proper markup for those image sources
+     -->
 </body>
 </html>
