@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide to responsive images</title>
+</head>
+<body>
+    <!-- 
+        >> responsive images syntax is about serving one image from multiple options based on rules and circumstances
+        >> There are two forms of responsive images, and they’re for two different things: 
+            >> Increased performance: 
+                >> Image weight has a huge impact on pages’ overall performance, and responsive images are one of the best things that you can do to cut image weight
+                >> i.e. <img srcset="" src="" alt="" >
+            >> Design control: 
+                >> Another perfectly legit goal with responsive images is not just to serve different sizes of the same image, but to serve different images
+                >> i.e. <picture>
+                            <source srcset="" media="">
+                            <source srcset="" media="">
+                            <img src="" alt="">
+                        </picture>
+        >> lets look at those two syntaxes in depth
+
+        Using srcset: 
+        >> <img srcset="" src="" alt=""> syntax is for serving differently-sized versions of the same image
+        >> You could try to serve entirely different images using this syntax, but browsers assume that everything in a srcset is visually-identical and will choose whichever size they think is best, in impossible-for-you-to-predict ways
+        >> Perhaps the easiest-possible responsive images syntax is adding a srcset attribute with x descriptors on the images to label them for use on displays with different pixel-densities
+            >>  <img 
+                    alt="A baby smiling with a yellow headband."
+                    src="baby-lowres.jpg"
+                    srcset="baby-highres.jpg 2x"
+                >
+            >> Here, we’ve made the default (the src) the “low res” (1×) copy of the image
+            >> Defaulting to the smallest/fastest resources is usually the smart choice
+            >> We also provide a 2× version
+            >> If the browser knows it is on a higher pixel-density display (the 2x part), it will use that image instead
+        >> You can do as many pixel-density variants as you like
+            >>  <img 
+                    alt="A baby smiling with a yellow headband."
+                    src="baby-lowres.jpg"
+                    srcset="
+                        baby-high-1.jpg 1.5x,
+                        baby-high-2.jpg 2x,
+                        baby-high-3.jpg 3x,
+                        baby-high-4.jpg 4x,
+                        baby-high-5.jpg 100x
+                    "
+                >
+        >> While this is cool and useful, x descriptors only account for a small percentage of responsive images usage
+        >> because they only let browsers adapt based on one thing: display pixel-density
+        >> browser needs to make decisions based on two things: the pixel-density of the screen, and the layout size of the image
+            >> That’s where w descriptors and the sizes attribute come in
+        
+        Using srcset / w + sizes: 
+        >> This accounts for around 85% of responsive images usage on the web
+        >> We’re still serving the same image at multiple sizes, only we’re giving the browser more information so that it can adapt based on both pixel-density and layout size
+        >>  <img 
+                alt="A baby smiling with a yellow headband."
+                srcset="
+                    baby-s.jpg  300w,
+                    baby-m.jpg  600w,
+                    baby-l.jpg  1200w,
+                    baby-xl.jpg 2000w
+                "
+                sizes="70vmin"
+            >
+        >> We’re still providing multiple copies of the same image and letting the browser pick the most appropriate one
+        >> But instead of labeling them with a pixel density (x) we’re labelling them with their resource width, using w descriptors
+        >> Using srcset with width (w) descriptors like this means that it will need to be paired with the sizes attribute so that the browser will know how large of a space the image will be displaying in
+        >> Without this information, browsers can’t make smart choices
+        
+        Creating accurate sizes: 
+        >> sizes attribute describes the width that the image will display within the layout of your specific site, meaning it is closely tied to your CSS
+        >> width that images render at is layout-dependent rather than just viewport dependent
+
+        Being more chill about sizes: 
+        >> Another option is use the Horseshoes & Hand Grenades Method™ of sizes (or, in other words, close counts)
+        >> For example, sizes="96vw" says, “This image is going to be pretty big on the page — almost the full width — but there will always be a little padding around the edges, so not quite
+        >> Or sizes="(min-width: 1000px) 33vw, 96vw" says, “This image is in a three-column layout on large screens and close to full-width otherwise.”
+        >> Practicality-wise, this can be a sane solution
+
+        Abstracting sizes: 
+        >> It may be smart for you to abstract it using a templating language or content filter so that you can change the value across all of your images more easily
+        >> I’m essentially talking about setting a sizes value in a variable once, and using that variable in a bunch of different <img> elements across your site
+        >> Native HTML doesn’t offer that, but any back end language does
+        >> for instance, PHP constants, Rails config variables, the React context API used for a global state variable, or variables within a templating language like Liquid can all be used to abstract sizes
+
+        Browser’s choice: 
+        >> Now that we have a sizes attribute in place, the browser knows what size (or close to it) the image will render at 
+        >> That is, it can do some math that factors in the pixel density of the screen, and the size that the image will render at, then pick the most appropriately-sized image
+        >> A browser might factor more things into this equation if it chooses to
+            >> For example, it could consider the user’s current network speeds, or whether or not the user has flipped on some sort of “data saver” preference
+        >> What some browsers sometimes choose to do is pull from cache
+            >> f the math shows they should be using a 300px image, but they already have a 600px in local cache, they will just use that
+        >> Room for this sort of thing is a strength of the srcset/sizes syntax
+        >> It’s also why you always use different sizes of the same image, within srcset: you’ve got no way to know which image is going to be selected
+        >> It’s the browser’s choice
+
+        Doesn’t the browser already know this stuff? 
+        >> Well, it does, but only after it’s downloaded your HTML and CSS and laid everything out
+        >> The sizes attribute is about speed
+            >> It gives the browser enough information to make a smart choice as soon as it sees your <img>
+        
+        sizes can be bigger than the viewport: 
+        >> Say you have an effect on your site so that an image “zooms in” when it’s clicked. Maybe it expands to fill the whole viewport, or maybe it zooms even more, so that you can see more detail
+        >> In the past, we might have had to swap out the src on click in order to switch to a higher-res version
+        >> But now, assuming a higher-res source is already in the srcset, you can just change the sizes attribute to something huge, like 200vw or 300vw, and the browser should download the super-high-res source automatically for you
+     -->
+
+     <!-- 
+        Using <picture>: 
+        
+        >> as we've seen <img srcset="" sizes="" alt=""> is for serving differently-sized versions of the same image
+        >> <picture> syntax can do that too, but the difference here is that the browser must respect the rules that you set
+        >> That’s useful when you want to change more than just the resolution of the loaded image to fit the user’s situation
+        >> This intentional changing of the image is usually called “art direction.”
+
+        Art Direction: 
+        >> example: 
+            <picture>
+                <source 
+                    srcset="baby-zoomed-out.jpg"
+                    media="(min-width: 1000px)"
+                />
+                <source 
+                    srcset="baby.jpg"
+                    media="(min-width: 600px)"
+                />
+                <img 
+                    src="baby-zoomed-in.jpg" 
+                    alt="Baby Sleeping"
+                />
+            </picture>
+        >> This code block is an example of what it might look like to have three stages of an “art directed” image
+            >> On large screens, show a zoomed-out photo
+            >> On medium screens, show that same photo, zoomed in a bit
+            >> On small screens, zoom in even more
+        >> browser must respect our media queries and will swap images at our exact breakpoints
+        >> That way, we can be absolutely sure that nobody on a small screen will see a tiny, zoomed-out image, which might not have the same impact as one of the zoomed-in versions
+
+        Art direction can do a lot more than just cropping: 
+        >> Although cropping and zooming like this is the most common form of art direction by far, you can do a lot more with it, you cxan do more with it: 
+            >> Dark-ify™ images for users in dark mode
+            >> avoid sending animated GIFs to users with a “prefers reduced motion” accessibility preference
+            >> re-arrange image content so that it all fits “above the fold” on short viewports
+            >> set a maximum resolution cap, to save users on 3×-plus devices a lot of bytes
+            >> send static, high-res, monochrome images to printers and e-ink devices
+        >> and many more....
+
+        Combining source and srcset: 
+        >> Because <source> also uses the srcset syntax, they can be combined
+        >> This means that you can still reap the performance benefits of srcset even while swapping out visually-different images with <source>
+        >> It gets pretty verbose though!
+            >>  <picture>
+                    <source 
+                        srcset="
+                        baby-zoomed-out-2x.jpg 2x,
+                        baby-zoomed-out.jpg
+                        "
+                        media="(min-width: 1000px)"
+                    />
+                    <source 
+                        srcset="
+                        baby-2x.jpg 2x,
+                        baby.jpg
+                        "
+                        media="(min-width: 600px)"
+                    />
+                    <img 
+                        srcset="
+                        baby-zoomed-out-2x.jpg 2x
+                        "
+                        src="baby-zoomed-out.jpg"
+                        alt="Baby Sleeping"
+                    />
+                </picture>
+        >> more variations you create and the more resized versions you create per variation, the more verbose this code has to get
+        
+        Fallbacks for modern image formats: 
+        >> <picture> element is uniquely suited to being able to handle “fallbacks”
+        >> That is, images in cutting-edge formats that not all browsers might be able to handle, with alternative formats for browsers that can’t load the preferred, fancy one
+        >> <picture>
+                <source srcset="party.webp">
+                <img src="party.jpg" alt="A huge party with cakes.">
+            </picture>
+        >> This succeeds in serving a WebP image to browsers that support it, and falls back to a JPEG image, which is definitely supported by all browsers
+
+        Automated responsive images: 
+        >> syntax of responsive images is complex to the point that doing it by hand is often out of the question
+        >> recommendation is automating and abstracting as much of this away as possible
+
+        What about responsive images in CSS with background images? 
+        >> trick is to use @media queries to change the background-image source
+        >> .img {
+                background-image: url(small.jpg);
+            }
+            @media 
+            (min-width: 468px),
+            (-webkit-min-device-pixel-ratio: 2), 
+            (min-resolution: 192dpi) {
+            .img {
+                background-image: url(large.jpg);
+                }
+            }
+        >> With this CSS syntax, depending on the browser conditions, the browser will only download one of the two images, which achieves the same performance goal that the responsive images syntax in HTML does
+        >> If it helps, think of the above as the CSS equivalent of the <picture> syntax: the browser must follow your rules and display what matches
+        >> If you’re looking to let the browser choose the best option, like srcset/sizes, but in CSS, the solution is ultimately going to be the image-set() function
+        >> There’s two problems with image-set(), today, though: 
+            >> Support for it isn’t there yet
+            >> it only supports x descriptors (no w, yet)
+        >> Best to just use media queries for now
+
+        Other important image considerations: 
+        >> Optimizing quality: 
+            >> point of responsive images is loading the smallest, most impactful resource that you can
+            >> You can’t achieve that without effectively compressing your image
+        >> Serving from CDNs: 
+            >> Speaking of image hosting services, speed comes in many forms
+            >> Fast servers that are geographically close to the user are an important speed factor as well
+        >> Caching: 
+            >> What’s better than loading less data over the network?
+            >> or no data at all
+            >> That’s what HTTP caching is for
+            >> Using the Cache-Control header, you can tell the browser to hang on to images so that if the same image is needed again, the browser doesn’t have to go over the network to get it, which is a massive performance boost for repeat viewings
+        >> Lazy loading: 
+            >> This is another way to avoid loading images entirely
+            >> Lazy loading means waiting to download an image until it is in or near the viewport
+            >> So, for example, an image way far down the page won’t load if the user never scrolls there
+      -->
+</body>
+</html>
