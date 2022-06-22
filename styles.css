@@ -1,0 +1,184 @@
+@font-face {
+    font-family: 'fair-display-regular';
+    src: url('./portfolio-assests/fonts/PlayfairDisplay-Black.ttf');
+}
+
+@font-face {
+    font-family: 'fair-display-bold';
+    src: url('./portfolio-assests/fonts/PlayfairDisplay-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'roboto-regular';
+    src: url('./portfolio-assests/fonts/Roboto-Black.ttf');
+}
+
+@font-face {
+    font-family: 'roboto-bold';
+    src: url('./portfolio-assests/fonts/Roboto-Bold.ttf');
+}
+
+p, ul, li, h1, h2, h3, h4, h5, h6, body {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary-clr: green;
+    --secondary-clr: maroon;
+    --text-clr: whitesmoke;
+    --special-clr: purple;
+    --background-clr: aquamarine;
+    --bg-clr: springgreen;
+}
+
+body {
+    text-align: center;
+    margin: 0 auto;
+    width: 96vw;
+}
+
+header {
+    display: flex;
+    position: relative;
+    background: linear-gradient(90deg, var(--text-clr), var(--bg-clr));
+}
+
+.user-np img {
+    max-width: 40vw;
+    min-height: 33vh;
+}
+
+.user-np {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-np h1 {
+    font-size: xxx-large;
+    position: absolute;
+    bottom: 0;
+    color: var(--text-clr);
+    margin: auto;
+}
+
+.about-me {
+    text-align: justify;
+    margin: auto 20px;
+}
+
+.about-me h2 {
+    font-size: xxx-large;
+}
+
+.about-me p {
+    font-family: 'fair-display-bold';
+}
+
+.about-me .social-ml {
+    text-align: right;
+    margin-top: 2vh;
+}
+
+.about-me .social-ml i {
+    margin: 0 0 0 8px;
+    outline: var(--special-clr) 1px solid;
+    padding: 8.1px;
+    border-radius: 50%;
+    font-size: x-large;
+}
+
+.all-project-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 31px;
+    justify-content: center;
+}
+
+main h3 {
+    text-align: left;
+    margin: 20px 0 20px 0px;
+    font-size: xx-large;
+    font-family: 'roboto-regular';
+}
+
+.project-card {
+    min-height: 346px;
+    max-width: 400px;
+    outline: solid;
+    text-align: justify;
+}
+
+.project-card .screenshot {
+    background: linear-gradient(var(--primary-clr), var(--secondary-clr));
+    min-height: 20vh;
+}
+
+.project-card .card-details {
+    position: relative;
+    margin: 0 6px;
+}
+
+.project-card .card-details h4 {
+    font-size: x-large;
+    margin: 1.1vh 0;
+    font-family: 'roboto-regular';
+}
+
+.project-card .card-details p {
+    font-family: 'fair-display-bold';
+    opacity: .6;
+}
+
+.project-card .card-details .actionable-links {
+    font-size: xx-large;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.contact-details {
+    text-align: justify;
+    margin: 0 20px 0 0;
+}
+
+.contact-details h5 {
+    font-size: xxx-large;
+    font-family: 'fair-display-regular';
+}
+
+.contact-details > p {
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+}
+
+.contact-details > p span {
+    margin: 0 0 0 11px;
+}
+
+.contact-details .address-lines,
+.contact-details > p {
+    font-size: x-large;
+    font-family: 'fair-display-bold';
+}
+
+.contact-details .address-lines {
+    opacity: .6;
+}
+
+footer {
+    display: flex;
+    margin: 2vw auto;
+    justify-content: space-between;
+    padding: 20px 4px;
+    background: linear-gradient(45deg, var(--background-clr), var(--special-clr));
+}
+
+footer img {
+    max-width: 40vw;
+}
