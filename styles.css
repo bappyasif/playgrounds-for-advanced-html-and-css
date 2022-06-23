@@ -18,7 +18,16 @@
     src: url('./portfolio-assests/fonts/Roboto-Bold.ttf');
 }
 
-p, ul, li, h1, h2, h3, h4, h5, h6, body {
+p,
+ul,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+body {
     margin: 0;
     padding: 0;
 }
@@ -40,11 +49,11 @@ body {
 
 header {
     display: flex;
-    position: relative;
     background: linear-gradient(90deg, var(--text-clr), var(--bg-clr));
 }
 
-.user-np img {
+.user-np>img,
+footer>img {
     max-width: 40vw;
     min-height: 33vh;
 }
@@ -54,6 +63,7 @@ header {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .user-np h1 {
@@ -105,7 +115,7 @@ main h3 {
 }
 
 .project-card {
-    min-height: 346px;
+    min-height: 400px;
     max-width: 400px;
     outline: solid;
     text-align: justify;
@@ -151,18 +161,18 @@ main h3 {
     font-family: 'fair-display-regular';
 }
 
-.contact-details > p {
+.contact-details>p {
     margin: 20px 0;
     display: flex;
     align-items: center;
 }
 
-.contact-details > p span {
+.contact-details>p span {
     margin: 0 0 0 11px;
 }
 
 .contact-details .address-lines,
-.contact-details > p {
+.contact-details>p {
     font-size: x-large;
     font-family: 'fair-display-bold';
 }
@@ -179,6 +189,185 @@ footer {
     background: linear-gradient(45deg, var(--background-clr), var(--special-clr));
 }
 
-footer img {
-    max-width: 40vw;
+/* hover effects */
+.actionable-links>.devicon-github-original,
+.actionable-links>.oint {
+    position: relative;
+    /* opacity: 0; */
+    /* font-size: small; */
+}
+
+.actionable-links .gh-tooltips {
+    position: absolute;
+    bottom: -39px;
+    left: 0;
+    background-color: blue;
+    padding: 0 8px 11px;
+
+    font-size: large;
+    opacity: 0;
+    transition-property: opacity, font-size;
+    transition-duration: 4s;
+}
+
+/* .actionable-links>.devicon-github-original:hover::after, */
+/* .actionable-links>.devicon-github-original:hover+.actionable-links .gh-tooltips */
+/* .actionable-links>.devicon-github-original:hover + .gh-tooltips, */
+/* .actionable-links .devicon-github-original:hover ~ .gh-tooltips  */
+/* .actionable-links .devicon-github-original:hover  */
+/* .actionable-links .devicon-github-original:hover ~ .actionable-links .gh-tooltips  */
+/* .actionable-links > i:hover */
+.actionable-links>.devicon-github-original:hover
+ {
+    /* content: 'github'; */
+    color: aqua;
+    /* position: absolute;
+    bottom: -39px;
+    left: 0;
+    background-color: blue;
+    padding: 0 8px 11px; */
+    /* font-size: x-large;
+    opacity: 1; */
+}
+
+/* #fu:hover {
+    color: aqua;
+} */
+
+/* .actionable-links > img:hover + .actionable-links ~ .oint-tooltips */
+/* .actionable-links > .oint:hover::after, */
+/* .actionable-links .oint:hover + .actionable-links .oint-tooltips::after {
+    color: aqua;
+    content: 'open in new tab';
+} */
+
+/* .actionable-links > .oint-tooltips {
+    display: none;
+} */
+
+.actionable-links>.oint {
+    background-image: url('portfolio-assests/images/open-in-new.png');
+    height: 35px;
+    width: 35px;
+}
+
+/* .actionable-links>.oint {
+    opacity: 0;
+    font-size: small;
+} */
+
+/* .actionable-links > .oint:hover, */
+.actionable-links .oint-tooltips {
+    /* display: none; */
+    position: absolute;
+    width: max-content;
+    bottom: -29px;
+    left: 0;
+    background-color: blueviolet;
+    padding: 0 8px 2px;
+    /* font-size: x-large; */
+    font-size: large;
+    z-index: 99;
+    opacity: 0;
+    transition-property: opacity, font-size;
+    transition-duration: 1.3s;
+}
+
+/* .actionable-links > .oint:hover::after .oint-tooltips */
+.actionable-links>.oint:hover .oint-tooltips,
+.actionable-links>.oint:hover+.oint-tooltips {
+    /* display: block; */
+    /* transform: scale(2); */
+    opacity: 1;
+    font-size: x-large;
+}
+
+/* .actionable-links > .oint:hover */
+/* .actionable-links > .oint:hover::after + .actionable-links .oint-tooltips */
+/* .actionable-links > .oint:hover::after, */
+/* .actionable-links > .oint:hover ~ .actionable-links > .oint-tooltips::after {
+    transform: scale(2);
+    content: 'open in new tab';
+} */
+
+.social-ml i {
+    position: relative;
+}
+
+.social-ml i span {
+    /* display: none; */
+    opacity: 0;
+    font-size: small;
+}
+
+.show-me {
+    position: absolute;
+    bottom: -39px;
+    width: max-content;
+    left: 0px;
+    background-color: burlywood;
+    padding: 0 11px 6px;
+    /* opacity: 0; */
+    /* font-size: small; */
+    /* transition-property: font-size; */
+    
+    transition-property: opacity, font-size;
+    transition-duration: 1.3s;
+}
+
+/* .social-ml i span */
+/* .social-ml > i:hover .show-me  */
+.social-ml>i:hover .show-me {
+    /* display: block; */
+    opacity: 1;
+    font-size: x-large;
+}
+
+/* tooltips animations */
+
+
+/* media queries */
+@media (max-width: 749px) {
+
+    header,
+    footer {
+        flex-direction: column;
+    }
+
+    .user-np>img,
+    footer>img {
+        max-width: -webkit-fill-available;
+    }
+
+    .about-me .social-ml {
+        margin-bottom: 2vh;
+    }
+
+    footer {
+        margin: 3.1vh auto;
+    }
+}
+
+@media (max-width: 499px) {
+
+    .user-np h1,
+    .about-me h2,
+    .contact-details h5 {
+        font-size: xx-large;
+    }
+
+    .contact-details>p,
+    .contact-details .address-lines {
+        font-size: larger;
+    }
+
+    .contact-details>p {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .contact-details>p span {
+        margin: 0;
+        font-size: smaller;
+    }
 }
