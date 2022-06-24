@@ -101,10 +101,12 @@ footer>img {
 .about-me .social-ml {
     text-align: right;
     margin-top: 2vh;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .about-me .social-ml i {
-    margin: 0 0 0 8px;
+    margin: 0 0 0 2px;
     /* outline: var(--special-clr) 1px solid; */
     padding: 8.1px;
     border-radius: 50%;
@@ -112,7 +114,9 @@ footer>img {
 }
 
 .about-me .social-ml a {
+    margin: none;
     text-decoration: none;
+    display: flex;
 }
 
 .about-me .social-ml i:focus,
