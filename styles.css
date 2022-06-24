@@ -50,12 +50,23 @@ body {
 header {
     display: flex;
     background: linear-gradient(90deg, var(--text-clr), var(--bg-clr));
+    padding: 2px 0 8px;
+}
+
+i {
+    outline: none;
+}
+
+i:focus,
+.oint:focus {
+    outline: solid;
+    border-radius: 6px;
 }
 
 .user-np>img,
 footer>img {
     max-width: 40vw;
-    min-height: 33vh;
+    /* min-height: 33vh; */
 }
 
 .user-np {
@@ -94,11 +105,25 @@ footer>img {
 
 .about-me .social-ml i {
     margin: 0 0 0 8px;
-    outline: var(--special-clr) 1px solid;
+    /* outline: var(--special-clr) 1px solid; */
     padding: 8.1px;
     border-radius: 50%;
-    font-size: x-large;
+    font-size: xx-large;
 }
+
+.about-me .social-ml a {
+    text-decoration: none;
+}
+
+.about-me .social-ml i:focus,
+.about-me .social-ml a:focus {
+    outline: solid;
+    border-radius: 50%;
+}
+
+/* .about-me .social-ml i:not(:focus) {
+    outline: none;
+} */
 
 .all-project-cards {
     display: flex;
@@ -116,19 +141,21 @@ main h3 {
 
 .project-card {
     min-height: 400px;
-    max-width: 400px;
+    /* max-width: 400px; */
+    /* flex-basis: 449px; */
+    flex-basis: 48.3%;
     outline: solid;
     text-align: justify;
 }
 
 .project-card .screenshot {
     background: linear-gradient(var(--primary-clr), var(--secondary-clr));
-    min-height: 20vh;
+    min-height: 290px;
 }
 
 .project-card .card-details {
     position: relative;
-    margin: 0 6px;
+    margin: 0 6px 6px;
 }
 
 .project-card .card-details h4 {
@@ -140,6 +167,8 @@ main h3 {
 .project-card .card-details p {
     font-family: 'fair-display-bold';
     opacity: .6;
+    font-size: larger;
+    margin: 20px 0;
 }
 
 .project-card .card-details .actionable-links {
@@ -154,6 +183,8 @@ main h3 {
 .contact-details {
     text-align: justify;
     margin: 0 20px 0 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .contact-details h5 {
@@ -189,6 +220,10 @@ footer {
     background: linear-gradient(45deg, var(--background-clr), var(--special-clr));
 }
 
+footer #contact-me-image {
+    max-width: 42vw;
+}
+
 /* hover effects */
 .actionable-links>.devicon-github-original,
 .actionable-links>.oint {
@@ -197,17 +232,25 @@ footer {
     /* font-size: small; */
 }
 
+.actionable-links>.devicon-github-original {
+    padding: 2px;
+    margin-right: 6px;
+}
+
 .actionable-links .gh-tooltips {
+    pointer-events: none;
     position: absolute;
-    bottom: -39px;
-    left: 0;
+    bottom: -35px;
+    left: 27px;
     background-color: blue;
-    padding: 0 8px 11px;
+    padding: 0 8px 4px;
+    width: 159px;
 
     font-size: large;
     opacity: 0;
     transition-property: opacity, font-size;
-    transition-duration: 4s;
+    transition-duration: 1.5s;
+    z-index: 99;
 }
 
 /* .actionable-links>.devicon-github-original:hover::after, */
@@ -217,8 +260,8 @@ footer {
 /* .actionable-links .devicon-github-original:hover  */
 /* .actionable-links .devicon-github-original:hover ~ .actionable-links .gh-tooltips  */
 /* .actionable-links > i:hover */
-.actionable-links>.devicon-github-original:hover
- {
+.actionable-links>.devicon-github-original:hover~.gh-tooltips,
+.actionable-links>.devicon-github-original:focus~.gh-tooltips {
     /* content: 'github'; */
     color: aqua;
     /* position: absolute;
@@ -226,8 +269,8 @@ footer {
     left: 0;
     background-color: blue;
     padding: 0 8px 11px; */
-    /* font-size: x-large;
-    opacity: 1; */
+    font-size: x-large;
+    opacity: 1;
 }
 
 /* #fu:hover {
@@ -247,7 +290,7 @@ footer {
 
 .actionable-links>.oint {
     background-image: url('portfolio-assests/images/open-in-new.png');
-    height: 35px;
+    height: 36px;
     width: 35px;
 }
 
@@ -262,7 +305,7 @@ footer {
     position: absolute;
     width: max-content;
     bottom: -29px;
-    left: 0;
+    left: 71px;
     background-color: blueviolet;
     padding: 0 8px 2px;
     /* font-size: x-large; */
@@ -275,7 +318,8 @@ footer {
 
 /* .actionable-links > .oint:hover::after .oint-tooltips */
 .actionable-links>.oint:hover .oint-tooltips,
-.actionable-links>.oint:hover+.oint-tooltips {
+.actionable-links>.oint:hover+.oint-tooltips,
+.actionable-links>.oint:focus+.oint-tooltips {
     /* display: block; */
     /* transform: scale(2); */
     opacity: 1;
@@ -302,22 +346,25 @@ footer {
 
 .show-me {
     position: absolute;
-    bottom: -39px;
+    bottom: -29px;
     width: max-content;
-    left: 0px;
+    left: 13px;
     background-color: burlywood;
     padding: 0 11px 6px;
     /* opacity: 0; */
     /* font-size: small; */
     /* transition-property: font-size; */
-    
+
     transition-property: opacity, font-size;
     transition-duration: 1.3s;
 }
 
 /* .social-ml i span */
 /* .social-ml > i:hover .show-me  */
-.social-ml>i:hover .show-me {
+.social-ml>i:hover .show-me,
+.social-ml>i:focus .show-me,
+.social-ml>a:hover .show-me,
+.social-ml>a:focus .show-me  {
     /* display: block; */
     opacity: 1;
     font-size: x-large;
@@ -327,6 +374,91 @@ footer {
 
 
 /* media queries */
+@media (min-width: 1338px) {
+    .about-me p {
+        font-size: x-large;
+    }
+
+    .all-project-cards {
+        justify-content: space-between;
+    }
+
+    .project-card {
+        flex-basis: 22vw;
+    }
+
+    footer #contact-me-image {
+        max-height: 351px;
+        width: 767px;
+    }
+
+    footer * {
+        font-size: larger;
+    }
+}
+
+@media (max-width: 1336px) {
+    /* footer {
+        flex-direction: column;
+    } */
+
+    /* .all-project-cards {
+        justify-content: center;
+    } */
+    .about-me p {
+        font-size: larger;
+    }
+
+    .user-np>img {
+        min-height: 36vh;
+    }
+
+    /* .user-np>img */
+    /* footer #contact-me-image {
+        max-width: -webkit-fill-available;
+        max-height: auto;
+    } */
+}
+
+@media (max-width: 1280px) {
+    /* .project-card {
+        max-width: 449px;
+        width: minmax(449px, 42vw);
+        width: minmax(449px, auto);
+        flex-basis: 449px;
+    } */
+
+    footer #contact-me-image {
+        /* max-width: -webkit-fill-available; */
+        min-height: 42vh;
+    }
+}
+
+@media (max-width: 960px) {
+    .project-card {
+        flex-basis: 95.1vw;
+    }
+
+    footer {
+        flex-direction: column;
+    }
+
+    footer #contact-me-image {
+        min-width: -webkit-fill-available;
+        min-height: 42vh;
+    }
+}
+
+@media(max-width: 890px) {
+    .about-me p {
+        font-size: medium;
+    }
+
+    .project-card {
+        max-width: 95.1vw;
+    }
+}
+
 @media (max-width: 749px) {
 
     header,
@@ -334,8 +466,13 @@ footer {
         flex-direction: column;
     }
 
+    .about-me p {
+        font-size: medium;
+    }
+
     .user-np>img,
-    footer>img {
+    footer>img,
+    footer #contact-me-image {
         max-width: -webkit-fill-available;
     }
 

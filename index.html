@@ -11,9 +11,17 @@
 </head>
 
 <body>
-    <header>
+    <header aria-label="header landmark">
         <section class="user-np" aria-label="user name and photo">
-            <img src="portfolio-assests/images/ppp-img.jpg" alt="Liberty Lebowski">
+            <!-- <img src="portfolio-assests/images/ppp-img.jpg" alt="Liberty Lebowski"> -->
+            <img sizes="(max-width: 1400px) 100vw, 1400px" srcset="portfolio-assests/images/ri-files/ppp-img_p9vr33_c_scale,w_200.jpg 200w,
+                    portfolio-assests/images/ri-files/ppp-img_p9vr33_c_scale,w_668.jpg 668w,
+                    portfolio-assests/images/ri-files/ppp-img_p9vr33_c_scale,w_985.jpg 985w,
+                    portfolio-assests/images/ri-files/ppp-img_p9vr33_c_scale,w_1250.jpg 1250w,
+                    portfolio-assests/images/ri-files/ppp-img_p9vr33_c_scale,w_1372.jpg 1372w,
+                    portfolio-assests/images/ri-files/ppp-img_p9vr33_c_scale,w_1400.jpg 1400w"
+                src="portfolio-assests/images/ri-files/ppp-img_p9vr33_c_scale,w_1400.jpg"
+                alt="Liberty Lebowski is sitting in office infront of a laptop">
             <h1>Liberty Lebowski</h1>
         </section>
         <section class="about-me" aria-label="about me short description">
@@ -24,105 +32,149 @@
                 sapiente explicabo? Voluptatem doloribus esse ut. Reprehenderit numquam iusto est ea voluptate, dolorem
                 aliquam atque nam?</p>
             <div class="social-ml">
-                <i class="devicon-github-original" aria-label="github icon"><span class="show-me">github profile</span></i>
-                <i class="devicon-linkedin-plain" aria-label="linked-in icon"><span class="show-me">linkedin profile</span></i>
-                <i class="devicon-twitter-original" aria-label="twitter icon"><span class="show-me">twitter profile</span></i>
+                <a href="" target="_blank"><i class="devicon-github-original" aria-label="github icon" role="img"><span
+                            class="show-me">github profile</span></i></a>
+                <!-- <span class="show-me">github profile</span> -->
+
+                <a href="" target="_blank">
+                    <i class="devicon-linkedin-plain" aria-label="linked-in icon" role="img"><span
+                            class="show-me">linkedin
+                            profile</span></i></a>
+                <a href="" target="_blank" tabindex="-1">
+                    <i class="devicon-twitter-original" aria-label="twitter icon" role="link" tabindex="0"><span
+                            class="show-me">twitter
+                            profile</span></i></a>
             </div>
+            <!-- <div class="social-ml">
+                <i class="devicon-github-original" aria-label="github icon" role="link" tabindex="0"><span class="show-me">github
+                        profile</span></i></a>
+                <i class="devicon-linkedin-plain" aria-label="linked-in icon" role="link" tabindex="0"><span class="show-me">linkedin
+                        profile</span></i>
+                <i class="devicon-twitter-original" aria-label="twitter icon" role="link" tabindex="0"><span class="show-me">twitter
+                        profile</span></i>
+            </div> -->
         </section>
     </header>
-    <main>
+    <main aria-label="main landmark">
         <h3>Featured Projects</h3>
-        <div class="all-project-cards">
+        <div class="all-project-cards" aria-label="list of my projects" role="list">
             <!-- <h3>Featured Projects</h3> -->
-            <div class="project-card">
+            <section class="project-card" aria-label="First project card view">
                 <div class="screenshot"></div>
                 <div class="card-details">
                     <h4 class="proj-name">Project Name</h4>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut quia nesciunt quidem, neque ex
+                    <p aria-label="project description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut
+                        quia nesciunt quidem, neque ex
                         laboriosam tenetur accusamus? Cum vitae qui enim vero, minima velit, hic laborum nostrum
                         recusandae
                         cumque ducimus.</p>
                     <div class="actionable-links">
-                        <i class="devicon-github-original" aria-label="github icon"></i>
-                        <div class="gh-tooltips">Github repo link</div>
-                        <img class="oint" src="portfolio-assests/images/open-in-new.png" alt="open in new tab" />
-                        <div class="oint-tooltips">Open in new window</div>
+                        <i class="devicon-github-original" aria-label="github icon" role="img" tabindex="0"></i>
+                        <span class="gh-tooltips" role="tooltip">Github repo link</span>
+                        <img class="oint" src="portfolio-assests/images/open-in-new.png" alt="open in new tab"
+                            tabindex="0" />
+                        <span class="oint-tooltips" role="tooltip">Open in new window</span>
                         <!-- <div class="oint" aria-label="open in new tab"><div class="oint-tooltips">Show me</div></div> -->
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <div class="project-card">
+            <section class="project-card" aria-label="Second project card view">
                 <div class="screenshot"></div>
                 <div class="card-details">
                     <h4 class="proj-name">Project Name</h4>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut quia nesciunt quidem, neque ex
+                    <p aria-label="project description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut
+                        quia nesciunt quidem, neque ex
                         laboriosam tenetur accusamus? Cum vitae qui enim vero, minima velit, hic laborum nostrum
                         recusandae
                         cumque ducimus.</p>
                     <div class="actionable-links">
-                        <i class="devicon-github-original" aria-label="github icon"></i>
-                        <div class="gh-tooltips">Github repo link</div>
+                        <i class="devicon-github-original" aria-label="github icon" role="link" tabindex="0"></i>
+                        <div class="gh-tooltips" role="tooltip">Github repo link</div>
                         <!-- <img src="portfolio-assests/images/open-in-new.png" alt="open in new tab" /> -->
-                        <div class="oint" aria-label="open in new tab"><div class="oint-tooltips">Open in new window</div></div>
+                        <div class="oint" aria-label="open in new tab" role="link" tabindex="0">
+                            <!-- <div class="oint-tooltips" role="tooltip">Open in new window</div> -->
+                        </div>
+                        <div class="oint-tooltips" role="tooltip">Open in new window</div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <div class="project-card">
+            <section class="project-card" aria-label="Third project card view">
                 <div class="screenshot"></div>
                 <div class="card-details">
                     <h4 class="proj-name">Project Name</h4>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut quia nesciunt quidem, neque ex
+                    <p aria-label="project description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut
+                        quia nesciunt quidem, neque ex
                         laboriosam tenetur accusamus? Cum vitae qui enim vero, minima velit, hic laborum nostrum
                         recusandae
                         cumque ducimus.</p>
                     <div class="actionable-links">
-                        <i class="devicon-github-original" aria-label="github icon"></i>
-                        <div class="gh-tooltips">Github repo link</div>
+                        <i class="devicon-github-original" aria-label="github icon" role="link" tabindex="0"></i>
+                        <div class="gh-tooltips" role="tooltip">Github repo link</div>
                         <!-- <img src="portfolio-assests/images/open-in-new.png" alt="open in new tab" /> -->
-                        <div class="oint" aria-label="open in new tab"><div class="oint-tooltips">Open in new window</div></div>
+                        <div class="oint" aria-label="open in new tab" role="link" tabindex="0">
+                            <!-- <div class="oint-tooltips" role="tooltip">Open in new window</div> -->
+                        </div>
+                        <div class="oint-tooltips" role="tooltip">Open in new window</div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <div class="project-card">
+            <section class="project-card" aria-label="Fourth project card view">
                 <div class="screenshot"></div>
                 <div class="card-details">
                     <h4 class="proj-name">Project Name</h4>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut quia nesciunt quidem, neque ex
+                    <p aria-label="project description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut
+                        quia nesciunt quidem, neque ex
                         laboriosam tenetur accusamus? Cum vitae qui enim vero, minima velit, hic laborum nostrum
                         recusandae
                         cumque ducimus.</p>
                     <div class="actionable-links">
-                        <i class="devicon-github-original" aria-label="github icon"></i>
-                        <div class="gh-tooltips">Github repo link</div>
+                        <i class="devicon-github-original" aria-label="github icon" role="link" tabindex="0"></i>
+                        <div class="gh-tooltips" role="tooltip">Github repo link</div>
                         <!-- <img src="portfolio-assests/images/open-in-new.png" alt="open in new tab" /> -->
-                        <div class="oint" aria-label="open in new tab"><div class="oint-tooltips">Open in new window</div></div>
+                        <div class="oint" aria-label="open in new tab" role="link" tabindex="0">
+                            <!-- <div class="oint-tooltips" role="tooltip">Open in new window</div> -->
+                        </div>
+                        <div class="oint-tooltips" role="tooltip">Open in new window</div>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
         <!-- <h3>Featured Projects</h3> -->
     </main>
-    <footer>
-        <section class="contact-details">
+    <footer aria-label="footer landmark">
+        <section class="contact-details" aria-label="contact details">
             <h5>Contact me</h5>
-            <p>Please get in touch if you think our work could be mutually beneficial!</p>
+            <p aria-label="conluding sentence from LL">Please get in touch if you think our work could be mutually
+                beneficial!</p>
             <div class="address-lines">
-                <p>Rondom Straat Nummer 4567</p>
-                <p>Leuke Staad, Gronningen 6789</p>
+                <p aria-label="address line one">Rondom Straat Nummer 4567</p>
+                <p aria-label="address line two">Leuke Staad, Gronningen 6789</p>
             </div>
-            <p>
+            <p aria-label="call me">
                 <img src="portfolio-assests/images/phone-outline.png" alt="telephone reciever">
-                <span>444-4444-4444</span>
+                <span aria-label="reach me at tele">444-4444-4444</span>
             </p>
-            <p>
+            <p aria-label="email me">
                 <img src="portfolio-assests/images/email-outline.png" alt="picture of an envelope">
-                <span>libert.lebowsky.is.here@ll.net</span>
+                <span aria-label="reach me at email">libert.lebowsky.is.here@ll.net</span>
             </p>
         </section>
-        <img src="portfolio-assests/images/pcm-img.jpg" alt="liberty lebowski in restaurant">
+        <!-- <img src="portfolio-assests/images/pcm-img.jpg" alt="liberty lebowski in restaurant"> -->
+        <picture>
+            <img aria-label="another picture of Liberty" id="contact-me-image" sizes="(max-width: 1400px) 100vw, 1400px"
+                srcset="portfolio-assests/images/ri-files/pcm-img_ukfbs4_c_scale,w_200.jpg 200w,
+                        portfolio-assests/images/ri-files/pcm-img_ukfbs4_c_scale,w_527.jpg 527w,
+                        portfolio-assests/images/ri-files/pcm-img_ukfbs4_c_scale,w_758.jpg 758w,
+                        portfolio-assests/images/ri-files/pcm-img_ukfbs4_c_scale,w_931.jpg 931w,
+                        portfolio-assests/images/ri-files/pcm-img_ukfbs4_c_scale,w_1101.jpg 1101w,
+                        portfolio-assests/images/ri-files/pcm-img_ukfbs4_c_scale,w_1287.jpg 1287w,
+                        portfolio-assests/images/ri-files/pcm-img_ukfbs4_c_scale,w_1400.jpg 1400w"
+                src="portfolio-assests/images/ri-files/pcm-img_ukfbs4_c_scale,w_1400.jpg"
+                alt="liberty lebowski is sitting in a restaurant and smiling at somebody">
+        </picture>
     </footer>
 </body>
 
