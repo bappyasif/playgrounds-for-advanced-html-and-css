@@ -39,6 +39,8 @@ body {
     --special-clr: purple;
     --background-clr: aquamarine;
     --bg-clr: springgreen;
+    --icon-clr: black;
+    --section-bg: gainsboro;
 }
 
 body {
@@ -88,6 +90,8 @@ footer>img {
 .about-me {
     text-align: justify;
     margin: auto 20px;
+    background-color: var(--section-bg);
+    padding: 20px;
 }
 
 .about-me h2 {
@@ -117,6 +121,7 @@ footer>img {
     margin: none;
     text-decoration: none;
     display: flex;
+    color: var(--icon-clr);
 }
 
 .about-me .social-ml i:focus,
@@ -182,6 +187,12 @@ main h3 {
     position: absolute;
     top: 0;
     right: 0;
+}
+
+.project-card .card-details .actionable-links a {
+    text-decoration: none;
+    display: flex;
+    color: var(--icon-clr);
 }
 
 .contact-details {
@@ -264,8 +275,10 @@ footer #contact-me-image {
 /* .actionable-links .devicon-github-original:hover  */
 /* .actionable-links .devicon-github-original:hover ~ .actionable-links .gh-tooltips  */
 /* .actionable-links > i:hover */
-.actionable-links>.devicon-github-original:hover~.gh-tooltips,
-.actionable-links>.devicon-github-original:focus~.gh-tooltips {
+/* .actionable-links>.devicon-github-original:hover~.gh-tooltips,
+.actionable-links>.devicon-github-original:focus~.gh-tooltips, */
+.project-card .card-details .actionable-links a:focus~.gh-tooltips,
+.project-card .card-details .actionable-links a:hover~.gh-tooltips {
     /* content: 'github'; */
     color: aqua;
     /* position: absolute;
@@ -321,9 +334,11 @@ footer #contact-me-image {
 }
 
 /* .actionable-links > .oint:hover::after .oint-tooltips */
-.actionable-links>.oint:hover .oint-tooltips,
-.actionable-links>.oint:hover+.oint-tooltips,
-.actionable-links>.oint:focus+.oint-tooltips {
+/* .actionable-links>.oint:hover .oint-tooltips, */
+/* .actionable-links>.oint:hover+.oint-tooltips,
+.actionable-links>.oint:focus+.oint-tooltips, */
+.project-card .card-details .actionable-links > .oint-link:hover ~.oint-tooltips,
+.project-card .card-details .actionable-links > .oint-link:focus ~.oint-tooltips {
     /* display: block; */
     /* transform: scale(2); */
     opacity: 1;
