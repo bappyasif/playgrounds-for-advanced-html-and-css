@@ -41,18 +41,20 @@ body {
     --bg-clr: springgreen;
     --icon-clr: black;
     --section-bg: gainsboro;
+    --body-bg: whitesmoke;
 }
 
 body {
     text-align: center;
     margin: 0 auto;
     width: 96vw;
+    background-color: var(--body-bg);
 }
 
 header {
     display: flex;
     background: linear-gradient(90deg, var(--text-clr), var(--bg-clr));
-    padding: 2px 0 8px;
+    padding: 42px 0 8px;
     position: relative;
 }
 
@@ -72,6 +74,16 @@ header::before {
 
     /* clip-path: circle(25% at 25% 25%); */
     clip-path: polygon(0 0, 100% 0, 100% 40%, 0% 85%);
+}
+
+header>button {
+    position: absolute;
+    right: 0;
+    z-index: 101;
+    top: 0;
+    line-height: 2em;
+    font-size: large;
+    border: none;
 }
 
 i {
@@ -117,6 +129,7 @@ footer>img {
     background-color: var(--section-bg);
     padding: 20px;
     z-index: 99;
+    color: var(--text-clr);
 }
 
 .about-me h2 {
@@ -362,8 +375,8 @@ footer #contact-me-image {
 /* .actionable-links>.oint:hover .oint-tooltips, */
 /* .actionable-links>.oint:hover+.oint-tooltips,
 .actionable-links>.oint:focus+.oint-tooltips, */
-.project-card .card-details .actionable-links > .oint-link:hover ~.oint-tooltips,
-.project-card .card-details .actionable-links > .oint-link:focus ~.oint-tooltips {
+.project-card .card-details .actionable-links>.oint-link:hover~.oint-tooltips,
+.project-card .card-details .actionable-links>.oint-link:focus~.oint-tooltips {
     /* display: block; */
     /* transform: scale(2); */
     opacity: 1;
@@ -408,13 +421,49 @@ footer #contact-me-image {
 .social-ml>i:hover .show-me,
 .social-ml>i:focus .show-me,
 .social-ml>a:hover .show-me,
-.social-ml>a:focus .show-me  {
+.social-ml>a:focus .show-me {
     /* display: block; */
     opacity: 1;
     font-size: x-large;
 }
 
 /* tooltips animations */
+
+
+/* theme toggler */
+@media(prefers-color-scheme: dark) {
+    :root {
+        /* --bg-clr: red; */
+        --primary-clr: green;
+        --secondary-clr: #c9cbd6;
+        --text-clr: #0ab63a;
+        --special-clr: #1aff02;
+        --background-clr: #ddefdb;
+        --bg-clr: springgreen;
+        --icon-clr: #487b05;
+        --section-bg: gainsboro;
+        --body-bg: #40cb9b;
+    }
+
+    body.light-theme {
+        /* --bg-clr: yellow; */
+        --primary-clr: #6d8000;
+        --secondary-clr: #006a80;
+        --text-clr: darkgreen;
+        --special-clr: #1a1827;
+        --background-clr: aquamarine;
+        --bg-clr: rgb(79, 110, 79);
+        --icon-clr: #136731;
+        --section-bg: #92afad;
+        --body-bg: rgb(72, 93, 80);
+    }
+}
+
+@media(prefers-color-scheme: light) {
+    :root {
+        --bg-clr: lime;
+    }
+}
 
 
 /* media queries */
@@ -453,7 +502,7 @@ footer #contact-me-image {
     .about-me {
         margin: auto 40px auto 20px;
     }
-    
+
     .about-me p {
         font-size: larger;
     }

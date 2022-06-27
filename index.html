@@ -12,6 +12,7 @@
 
 <body>
     <header aria-label="header landmark">
+        <button class="theme-toggler">toggle theme</button>
         <section class="user-np" aria-label="user name and photo">
             <!-- <img src="portfolio-assests/images/ppp-img.jpg" alt="Liberty Lebowski"> -->
             <img sizes="(max-width: 1400px) 100vw, 1400px" srcset="portfolio-assests/images/ri-files/ppp-img_p9vr33_c_scale,w_200.jpg 200w,
@@ -69,9 +70,11 @@
                         recusandae
                         cumque ducimus.</p>
                     <div class="actionable-links">
-                        <a href="" target="_blank"><i class="devicon-github-original" aria-label="github icon" role="img"></i></a>
+                        <a href="" target="_blank"><i class="devicon-github-original" aria-label="github icon"
+                                role="img"></i></a>
                         <span class="gh-tooltips" role="tooltip">Github repo link</span>
-                        <a href="" target="_blank" class="oint-link" ><img class="oint" src="portfolio-assests/images/open-in-new.png" alt="open in new tab" /></a>
+                        <a href="" target="_blank" class="oint-link"><img class="oint"
+                                src="portfolio-assests/images/open-in-new.png" alt="open in new tab" /></a>
                         <span class="oint-tooltips" role="tooltip">Open in new window</span>
                         <!-- <div class="oint" aria-label="open in new tab"><div class="oint-tooltips">Show me</div></div> -->
                     </div>
@@ -89,12 +92,14 @@
                         cumque ducimus.</p>
                     <div class="actionable-links">
                         <!-- <i class="devicon-github-original" aria-label="github icon" role="link" tabindex="0"></i> -->
-                        <a href="" target="_blank"><i class="devicon-github-original" aria-label="github icon" role="img"></i></a>
+                        <a href="" target="_blank"><i class="devicon-github-original" aria-label="github icon"
+                                role="img"></i></a>
                         <div class="gh-tooltips" role="tooltip">Github repo link</div>
                         <!-- <img src="portfolio-assests/images/open-in-new.png" alt="open in new tab" /> -->
-                        <a href="" target="_blank" class="oint-link" ><img class="oint" src="portfolio-assests/images/open-in-new.png" alt="open in new tab" /></a>
+                        <a href="" target="_blank" class="oint-link"><img class="oint"
+                                src="portfolio-assests/images/open-in-new.png" alt="open in new tab" /></a>
                         <!-- <div class="oint" aria-label="open in new tab" role="link" tabindex="0"> -->
-                            <!-- <div class="oint-tooltips" role="tooltip">Open in new window</div> -->
+                        <!-- <div class="oint-tooltips" role="tooltip">Open in new window</div> -->
                         <!-- </div> -->
                         <div class="oint-tooltips" role="tooltip">Open in new window</div>
                     </div>
@@ -112,13 +117,15 @@
                         cumque ducimus.</p>
                     <div class="actionable-links">
                         <!-- <i class="devicon-github-original" aria-label="github icon" role="link" tabindex="0"></i> -->
-                        <a href="" target="_blank"><i class="devicon-github-original" aria-label="github icon" role="img"></i></a>
+                        <a href="" target="_blank"><i class="devicon-github-original" aria-label="github icon"
+                                role="img"></i></a>
                         <div class="gh-tooltips" role="tooltip">Github repo link</div>
                         <!-- <img src="portfolio-assests/images/open-in-new.png" alt="open in new tab" /> -->
-                        
-                        <a href="" target="_blank" class="oint-link" ><img class="oint" src="portfolio-assests/images/open-in-new.png" alt="open in new tab" /></a>                        
+
+                        <a href="" target="_blank" class="oint-link"><img class="oint"
+                                src="portfolio-assests/images/open-in-new.png" alt="open in new tab" /></a>
                         <!-- <div class="oint" aria-label="open in new tab" role="link" tabindex="0"> -->
-                            <!-- <div class="oint-tooltips" role="tooltip">Open in new window</div> -->
+                        <!-- <div class="oint-tooltips" role="tooltip">Open in new window</div> -->
                         <!-- </div> -->
                         <div class="oint-tooltips" role="tooltip">Open in new window</div>
                     </div>
@@ -136,13 +143,15 @@
                         cumque ducimus.</p>
                     <div class="actionable-links">
                         <!-- <i class="devicon-github-original" aria-label="github icon" role="link" tabindex="0"></i> -->
-                        <a href="" target="_blank"><i class="devicon-github-original" aria-label="github icon" role="img"></i></a>
+                        <a href="" target="_blank"><i class="devicon-github-original" aria-label="github icon"
+                                role="img"></i></a>
                         <div class="gh-tooltips" role="tooltip">Github repo link</div>
                         <!-- <img src="portfolio-assests/images/open-in-new.png" alt="open in new tab" /> -->
-                        
-                        <a href="" target="_blank" class="oint-link" ><img class="oint" src="portfolio-assests/images/open-in-new.png" alt="open in new tab" /></a>
+
+                        <a href="" target="_blank" class="oint-link"><img class="oint"
+                                src="portfolio-assests/images/open-in-new.png" alt="open in new tab" /></a>
                         <!-- <div class="oint" aria-label="open in new tab" role="link" tabindex="0"> -->
-                            <!-- <div class="oint-tooltips" role="tooltip">Open in new window</div> -->
+                        <!-- <div class="oint-tooltips" role="tooltip">Open in new window</div> -->
                         <!-- </div> -->
                         <div class="oint-tooltips" role="tooltip">Open in new window</div>
                     </div>
@@ -183,6 +192,18 @@
                 alt="liberty lebowski is sitting in a restaurant and smiling at somebody">
         </picture>
     </footer>
+    <script>
+        const btn = document.querySelector(".theme-toggler");
+        const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+        let themeToggler = () => {
+            if (prefersDarkScheme.matches) {
+                document.body.classList.toggle("light-theme");
+            } else {
+                document.body.classList.toggle("dark-theme");
+            }
+        }
+        btn.addEventListener("click", themeToggler);
+    </script>
 </body>
 
 </html>
