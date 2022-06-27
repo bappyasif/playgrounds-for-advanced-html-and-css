@@ -86,6 +86,39 @@ header>button {
     border: none;
 }
 
+header > ul {
+    list-style-type: none;
+    z-index: 101;
+    position: absolute;
+    display: flex;
+    right: 0;
+    top: 2px;
+}
+
+header {
+    position: relative;
+}
+
+header .tooltips,
+header .tooltips-so {
+    position: absolute;
+    left: 20px;
+    background-color: aliceblue;
+    padding: 4px 6px;
+    top: 35px;
+    opacity: 0;
+    width: max-content;
+    transition: left .4s linear, opacity .4s linear;
+}
+
+header .themes-drawer {
+    display: none;
+}
+
+header .themes-drawer.show {
+    display: block;
+}
+
 i {
     outline: none;
 }
@@ -278,6 +311,24 @@ footer #contact-me-image {
 }
 
 /* hover effects */
+header .show-themes-icons:hover .tooltips-so,
+header .themes-drawer .theme-light:hover+.tooltips,
+header .themes-drawer .theme-night:hover+.tooltips {
+    opacity: 1;
+}
+
+header .show-themes-icons:hover .tooltips-so {
+    left: -195px;
+}
+
+header .themes-drawer .theme-light:hover+.tooltips {
+    left: -51px;
+}
+
+header .themes-drawer .theme-night:hover+.tooltips {
+    left: -13px;
+}
+
 .actionable-links>.devicon-github-original,
 .actionable-links>.oint {
     position: relative;

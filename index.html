@@ -12,7 +12,18 @@
 
 <body>
     <header aria-label="header landmark">
-        <button class="theme-toggler">toggle theme</button>
+        <ul>
+            <li class="themes-drawer">
+                <img class="theme-light" src="./portfolio-assests/images/theme-default.png" alt="theme-default-icon">
+                <span class="tooltips">light theme</span>
+                <img class="theme-night" src="./portfolio-assests/images/theme-night.png" alt="theme-night-icon">
+                <span class="tooltips">night theme</span>
+            </li>
+            <li class="show-themes-icons">
+                <img src="./portfolio-assests/images/theme-light.png" alt="theme-light-icon">
+                <span class="tooltips-so">themes options will show on click</span>
+            </li>
+        </ul>
         <section class="user-np" aria-label="user name and photo">
             <!-- <img src="portfolio-assests/images/ppp-img.jpg" alt="Liberty Lebowski"> -->
             <img sizes="(max-width: 1400px) 100vw, 1400px" srcset="portfolio-assests/images/ri-files/ppp-img_p9vr33_c_scale,w_200.jpg 200w,
@@ -193,8 +204,13 @@
         </picture>
     </footer>
     <script>
-        const btn = document.querySelector(".theme-toggler");
+        let themeDrawer = document.querySelector('.themes-drawer');
+        let themeDrawerTooltip = document.querySelector('.tooltips-so');
+        let showIcons = document.querySelector('.show-themes-icons');
+        const nightTheme = document.querySelector(".theme-night");
+        const lightTheme = document.querySelector(".theme-light");
         const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+
         let themeToggler = () => {
             if (prefersDarkScheme.matches) {
                 document.body.classList.toggle("light-theme");
@@ -202,7 +218,31 @@
                 document.body.classList.toggle("dark-theme");
             }
         }
-        btn.addEventListener("click", themeToggler);
+
+        let drawerToggler = () => {
+            themeDrawer.classList.toggle('show')
+            if(themeDrawer.classList.contains('show')) {
+                themeDrawerTooltip.style.display = 'none'
+            } else {
+                themeDrawerTooltip.style.display = 'block'
+            }
+        }
+
+        let showLightTheme = () => {
+            if (prefersDarkScheme.matches) {
+                document.body.classList.add("light-theme");
+            }
+        }
+
+        let showNightTheme = () => {
+            if (prefersDarkScheme.matches) {
+                document.body.classList.remove("light-theme");
+            }
+        }
+
+        lightTheme.addEventListener("click", showNightTheme);
+        nightTheme.addEventListener("click", showLightTheme);
+        showIcons.addEventListener("click", drawerToggler);
     </script>
 </body>
 
