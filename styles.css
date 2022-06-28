@@ -36,12 +36,14 @@ body {
     --primary-clr: green;
     --secondary-clr: maroon;
     --text-clr: whitesmoke;
+    --header-clr: #e7e7e7;
     --special-clr: purple;
     --background-clr: aquamarine;
     --bg-clr: springgreen;
     --icon-clr: black;
     --section-bg: gainsboro;
     --body-bg: whitesmoke;
+    --card-bg: greenyellow;
 }
 
 body {
@@ -54,7 +56,7 @@ body {
 header {
     display: flex;
     background: linear-gradient(90deg, var(--text-clr), var(--bg-clr));
-    padding: 42px 0 8px;
+    /* padding: 40px 0 0px; */
     position: relative;
 }
 
@@ -129,7 +131,7 @@ i:focus,
     border-radius: 6px;
 }
 
-.user-np>img,
+/* .user-np>img, */
 footer>img {
     max-width: 40vw;
     /* min-height: 33vh; */
@@ -138,27 +140,44 @@ footer>img {
 
 .user-np>img {
     margin: 0 0 0 145px;
+    max-height: 440px;
 }
 
 .user-np {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     position: relative;
 }
 
 .user-np h1 {
-    font-size: xxx-large;
+    /* font-size: xxx-large;
     position: absolute;
     bottom: 0;
+    color: var(--header-clr);
+    margin: auto; */
+
+    /* font-size: 1.7rem;
+    position: absolute;
+    color: var(--header-clr);
+    left: 152px;
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+    height: max-content;
+    font-weight: bold; */
+
+    font-size: 2.6rem;
     color: var(--text-clr);
-    margin: auto;
+    /* position: absolute;
+    color: var(--header-clr);
+    left: 0;
+    top: -47px; */
 }
 
 .about-me {
     text-align: justify;
-    margin: auto auto auto 20px;
+    margin: auto 134px auto 20px;
     background-color: var(--section-bg);
     padding: 20px;
     z-index: 99;
@@ -171,6 +190,7 @@ footer>img {
 
 .about-me p {
     font-family: 'fair-display-bold';
+    font-size: large;
 }
 
 .about-me .social-ml {
@@ -216,7 +236,8 @@ main h3 {
     text-align: left;
     margin: 20px 0 20px 0px;
     font-size: xx-large;
-    font-family: 'roboto-regular';
+    font-family: 'Roboto-Black';
+    color: var(--header-clr);
 }
 
 .project-card {
@@ -226,6 +247,7 @@ main h3 {
     flex-basis: 48.3%;
     outline: solid;
     text-align: justify;
+    background-color: var(--card-bg);
 }
 
 .project-card .screenshot {
@@ -242,6 +264,7 @@ main h3 {
     font-size: x-large;
     margin: 1.1vh 0;
     font-family: 'roboto-regular';
+    color: var(--card-header);
 }
 
 .project-card .card-details p {
@@ -249,6 +272,7 @@ main h3 {
     opacity: .6;
     font-size: larger;
     margin: 20px 0;
+    color: var(--card-text);
 }
 
 .project-card .card-details .actionable-links {
@@ -276,12 +300,14 @@ main h3 {
 .contact-details h5 {
     font-size: xxx-large;
     font-family: 'fair-display-regular';
+    color: var(--text-clr);
 }
 
 .contact-details>p {
     margin: 20px 0;
     display: flex;
     align-items: center;
+    color: var(--text-clr);
 }
 
 .contact-details>p span {
@@ -487,13 +513,15 @@ header .themes-drawer .theme-night:hover+.tooltips {
         /* --bg-clr: red; */
         --primary-clr: green;
         --secondary-clr: #c9cbd6;
-        --text-clr: #0ab63a;
+        --text-clr: #034e18;
         --special-clr: #1aff02;
         --background-clr: #ddefdb;
         --bg-clr: springgreen;
         --icon-clr: #487b05;
         --section-bg: gainsboro;
         --body-bg: #40cb9b;
+        --card-text: #041725;
+        --card-header: #022802;
     }
 
     body.light-theme {
@@ -507,6 +535,9 @@ header .themes-drawer .theme-night:hover+.tooltips {
         --icon-clr: #136731;
         --section-bg: #92afad;
         --body-bg: rgb(72, 93, 80);
+        --card-bg: #77a432;
+        --card-text: #083223;
+        --card-header: darkgreen;
     }
 }
 
@@ -519,9 +550,9 @@ header .themes-drawer .theme-night:hover+.tooltips {
 
 /* media queries */
 @media (min-width: 1338px) {
-    .about-me p {
-        font-size: x-large;
-    }
+    /* .about-me p {
+        font-size: large;
+    } */
 
     .all-project-cards {
         justify-content: space-between;
@@ -554,9 +585,9 @@ header .themes-drawer .theme-night:hover+.tooltips {
         margin: auto 40px auto 20px;
     }
 
-    .about-me p {
-        font-size: larger;
-    }
+    /* .about-me p {
+        font-size: large;
+    } */
 
     .user-np>img {
         /* min-height: 36vh; */

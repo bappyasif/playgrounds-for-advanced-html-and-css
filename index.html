@@ -25,6 +25,7 @@
             </li>
         </ul>
         <section class="user-np" aria-label="user name and photo">
+            <h1>Liberty Lebowski</h1>
             <!-- <img src="portfolio-assests/images/ppp-img.jpg" alt="Liberty Lebowski"> -->
             <img sizes="(max-width: 1400px) 100vw, 1400px" srcset="portfolio-assests/images/ri-files/ppp-img_p9vr33_c_scale,w_200.jpg 200w,
                     portfolio-assests/images/ri-files/ppp-img_p9vr33_c_scale,w_668.jpg 668w,
@@ -34,7 +35,7 @@
                     portfolio-assests/images/ri-files/ppp-img_p9vr33_c_scale,w_1400.jpg 1400w"
                 src="portfolio-assests/images/ri-files/ppp-img_p9vr33_c_scale,w_1400.jpg"
                 alt="Liberty Lebowski is sitting in office infront of a laptop">
-            <h1>Liberty Lebowski</h1>
+            <!-- <h1>Liberty Lebowski</h1> -->
         </section>
         <section class="about-me" aria-label="about me short description">
             <h2>About me</h2>
@@ -69,13 +70,13 @@
     </header>
     <main aria-label="main landmark">
         <h3>Featured Projects</h3>
-        <div class="all-project-cards" aria-label="list of my projects" role="list">
+        <div class="all-project-cards" aria-label="list of my projects" role="complementary">
             <!-- <h3>Featured Projects</h3> -->
             <section class="project-card" aria-label="First project card view">
                 <div class="screenshot"></div>
                 <div class="card-details">
                     <h4 class="proj-name">Project Name</h4>
-                    <p aria-label="project description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut
+                    <p aria-label="project description" role="article">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut
                         quia nesciunt quidem, neque ex
                         laboriosam tenetur accusamus? Cum vitae qui enim vero, minima velit, hic laborum nostrum
                         recusandae
@@ -96,7 +97,7 @@
                 <div class="screenshot"></div>
                 <div class="card-details">
                     <h4 class="proj-name">Project Name</h4>
-                    <p aria-label="project description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut
+                    <p aria-label="project description" role="article">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut
                         quia nesciunt quidem, neque ex
                         laboriosam tenetur accusamus? Cum vitae qui enim vero, minima velit, hic laborum nostrum
                         recusandae
@@ -121,7 +122,7 @@
                 <div class="screenshot"></div>
                 <div class="card-details">
                     <h4 class="proj-name">Project Name</h4>
-                    <p aria-label="project description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut
+                    <p aria-label="project description" role="article">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut
                         quia nesciunt quidem, neque ex
                         laboriosam tenetur accusamus? Cum vitae qui enim vero, minima velit, hic laborum nostrum
                         recusandae
@@ -147,7 +148,7 @@
                 <div class="screenshot"></div>
                 <div class="card-details">
                     <h4 class="proj-name">Project Name</h4>
-                    <p aria-label="project description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut
+                    <p aria-label="project description" role="article">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut
                         quia nesciunt quidem, neque ex
                         laboriosam tenetur accusamus? Cum vitae qui enim vero, minima velit, hic laborum nostrum
                         recusandae
@@ -174,19 +175,19 @@
     <footer aria-label="footer landmark">
         <section class="contact-details" aria-label="contact details">
             <h5>Contact me</h5>
-            <p aria-label="conluding sentence from LL">Please get in touch if you think our work could be mutually
+            <p aria-label="conluding sentence from LL" role="text">Please get in touch if you think our work could be mutually
                 beneficial!</p>
             <div class="address-lines">
-                <p aria-label="address line one">Rondom Straat Nummer 4567</p>
-                <p aria-label="address line two">Leuke Staad, Gronningen 6789</p>
+                <p aria-label="address line one" role="text">Rondom Straat Nummer 4567</p>
+                <p aria-label="address line two" role="text">Leuke Staad, Gronningen 6789</p>
             </div>
-            <p aria-label="call me">
+            <p aria-label="call me" role="article">
                 <img src="portfolio-assests/images/phone-outline.png" alt="telephone reciever">
-                <span aria-label="reach me at tele">444-4444-4444</span>
+                <span aria-label="reach me at tele" role="text">444-4444-4444</span>
             </p>
-            <p aria-label="email me">
+            <p aria-label="email me" role="article">
                 <img src="portfolio-assests/images/email-outline.png" alt="picture of an envelope">
-                <span aria-label="reach me at email">libert.lebowsky.is.here@ll.net</span>
+                <span aria-label="reach me at email" role="text">liberty.lebowsky.is.not.here@ll.net</span>
             </p>
         </section>
         <!-- <img src="portfolio-assests/images/pcm-img.jpg" alt="liberty lebowski in restaurant"> -->
@@ -231,12 +232,14 @@
         let showLightTheme = () => {
             if (prefersDarkScheme.matches) {
                 document.body.classList.add("light-theme");
+                themeDrawer.classList.toggle('show')
             }
         }
 
         let showNightTheme = () => {
             if (prefersDarkScheme.matches) {
                 document.body.classList.remove("light-theme");
+                themeDrawer.classList.toggle('show')
             }
         }
 
