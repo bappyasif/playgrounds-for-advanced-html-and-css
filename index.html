@@ -12,16 +12,16 @@
 
 <body>
     <header aria-label="header landmark">
-        <ul>
-            <li class="themes-drawer">
-                <img class="theme-light" src="./portfolio-assests/images/theme-default.png" alt="theme-default-icon">
-                <span class="tooltips">light theme</span>
-                <img class="theme-night" src="./portfolio-assests/images/theme-night.png" alt="theme-night-icon">
-                <span class="tooltips">night theme</span>
+        <ul aria-label="theme choices between light and dark">
+            <li class="themes-drawer" aria-label="choose a theme from given options">
+                <img class="theme-light" src="./portfolio-assests/images/theme-default.png" alt="theme-default-icon" aria-label="icon for light theme">
+                <span class="tooltips" aria-label="light theme tooltip text" role="tooltip">light theme</span>
+                <img class="theme-night" src="./portfolio-assests/images/theme-night.png" alt="theme-night-icon" aria-label="icon for night theme">
+                <span class="tooltips" aria-label="night theme tooltip text" role="tooltip">night theme</span>
             </li>
-            <li class="show-themes-icons">
-                <img src="./portfolio-assests/images/theme-light.png" alt="theme-light-icon">
-                <span class="tooltips-so">themes options will show on click</span>
+            <li class="show-themes-icons" aria-label="show theme options item">
+                <img src="./portfolio-assests/images/theme-light.png" alt="theme-light-icon" aria-label="show available themes">
+                <span class="tooltips-so" aria-label="default theme tooltip text" role="tooltip">themes options will show on click</span>
             </li>
         </ul>
         <section class="user-np" aria-label="user name and photo">
@@ -39,7 +39,7 @@
         </section>
         <section class="about-me" aria-label="about me short description">
             <h2>About me</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam illum excepturi inventore qui. Distinctio
+            <p aria-label="small description about me" role="article">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam illum excepturi inventore qui. Distinctio
                 eius rerum quasi molestias alias pariatur. Eos optio dolorem mollitia? Quo natus fuga iste at fugit?
                 Corporis dolorem debitis esse, possimus tenetur aut. Nostrum quidem vitae unde doloremque recusandae hic
                 sapiente explicabo? Voluptatem doloribus esse ut. Reprehenderit numquam iusto est ea voluptate, dolorem
@@ -51,7 +51,7 @@
 
                 <a href="" target="_blank">
                     <i class="devicon-linkedin-plain" aria-label="linked-in icon" role="img"><span
-                            class="show-me">linkedin
+                            class="show-me linked-in">linkedin
                             profile</span></i></a>
                 <a href="" target="_blank">
                     <i class="devicon-twitter-original" aria-label="twitter icon" role="img"><span
@@ -76,7 +76,8 @@
                 <div class="screenshot"></div>
                 <div class="card-details">
                     <h4 class="proj-name">Project Name</h4>
-                    <p aria-label="project description" role="article">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut
+                    <p aria-label="project description" role="article">Lorem ipsum dolor sit, amet consectetur
+                        adipisicing elit. Ut
                         quia nesciunt quidem, neque ex
                         laboriosam tenetur accusamus? Cum vitae qui enim vero, minima velit, hic laborum nostrum
                         recusandae
@@ -97,7 +98,8 @@
                 <div class="screenshot"></div>
                 <div class="card-details">
                     <h4 class="proj-name">Project Name</h4>
-                    <p aria-label="project description" role="article">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut
+                    <p aria-label="project description" role="article">Lorem ipsum dolor sit, amet consectetur
+                        adipisicing elit. Ut
                         quia nesciunt quidem, neque ex
                         laboriosam tenetur accusamus? Cum vitae qui enim vero, minima velit, hic laborum nostrum
                         recusandae
@@ -122,7 +124,8 @@
                 <div class="screenshot"></div>
                 <div class="card-details">
                     <h4 class="proj-name">Project Name</h4>
-                    <p aria-label="project description" role="article">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut
+                    <p aria-label="project description" role="article">Lorem ipsum dolor sit, amet consectetur
+                        adipisicing elit. Ut
                         quia nesciunt quidem, neque ex
                         laboriosam tenetur accusamus? Cum vitae qui enim vero, minima velit, hic laborum nostrum
                         recusandae
@@ -148,7 +151,8 @@
                 <div class="screenshot"></div>
                 <div class="card-details">
                     <h4 class="proj-name">Project Name</h4>
-                    <p aria-label="project description" role="article">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut
+                    <p aria-label="project description" role="article">Lorem ipsum dolor sit, amet consectetur
+                        adipisicing elit. Ut
                         quia nesciunt quidem, neque ex
                         laboriosam tenetur accusamus? Cum vitae qui enim vero, minima velit, hic laborum nostrum
                         recusandae
@@ -169,26 +173,118 @@
                     </div>
                 </div>
             </section>
+
+            <section class="project-card" aria-label="Fifth project card view">
+                <div class="screenshot"></div>
+                <div class="card-details">
+                    <h4 class="proj-name">Project Name</h4>
+                    <p aria-label="project description" role="article">Lorem ipsum dolor sit, amet consectetur
+                        adipisicing elit. Ut
+                        quia nesciunt quidem, neque ex
+                        laboriosam tenetur accusamus? Cum vitae qui enim vero, minima velit, hic laborum nostrum
+                        recusandae
+                        cumque ducimus.</p>
+                    <div class="actionable-links">
+                        <a href="" target="_blank"><i class="devicon-github-original" aria-label="github icon"
+                                role="img"></i></a>
+                        <div class="gh-tooltips" role="tooltip">Github repo link</div>
+
+                        <a href="" target="_blank" class="oint-link"><img class="oint"
+                                src="portfolio-assests/images/open-in-new.png" alt="open in new tab" /></a>
+                        <div class="oint-tooltips" role="tooltip">Open in new window</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="project-card" aria-label="Sixth project card view">
+                <div class="screenshot"></div>
+                <div class="card-details">
+                    <h4 class="proj-name">Project Name</h4>
+                    <p aria-label="project description" role="article">Lorem ipsum dolor sit, amet consectetur
+                        adipisicing elit. Ut
+                        quia nesciunt quidem, neque ex
+                        laboriosam tenetur accusamus? Cum vitae qui enim vero, minima velit, hic laborum nostrum
+                        recusandae
+                        cumque ducimus.</p>
+                    <div class="actionable-links">
+                        <a href="" target="_blank"><i class="devicon-github-original" aria-label="github icon"
+                                role="img"></i></a>
+                        <div class="gh-tooltips" role="tooltip">Github repo link</div>
+
+                        <a href="" target="_blank" class="oint-link"><img class="oint"
+                                src="portfolio-assests/images/open-in-new.png" alt="open in new tab" /></a>
+                        <div class="oint-tooltips" role="tooltip">Open in new window</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="project-card" aria-label="Seventh project card view">
+                <div class="screenshot"></div>
+                <div class="card-details">
+                    <h4 class="proj-name">Project Name</h4>
+                    <p aria-label="project description" role="article">Lorem ipsum dolor sit, amet consectetur
+                        adipisicing elit. Ut
+                        quia nesciunt quidem, neque ex
+                        laboriosam tenetur accusamus? Cum vitae qui enim vero, minima velit, hic laborum nostrum
+                        recusandae
+                        cumque ducimus.</p>
+                    <div class="actionable-links">
+                        <a href="" target="_blank"><i class="devicon-github-original" aria-label="github icon"
+                                role="img"></i></a>
+                        <div class="gh-tooltips" role="tooltip">Github repo link</div>
+
+                        <a href="" target="_blank" class="oint-link"><img class="oint"
+                                src="portfolio-assests/images/open-in-new.png" alt="open in new tab" /></a>
+                        <div class="oint-tooltips" role="tooltip">Open in new window</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="project-card" aria-label="Eighth project card view">
+                <div class="screenshot"></div>
+                <div class="card-details">
+                    <h4 class="proj-name">Project Name</h4>
+                    <p aria-label="project description" role="article">Lorem ipsum dolor sit, amet consectetur
+                        adipisicing elit. Ut
+                        quia nesciunt quidem, neque ex
+                        laboriosam tenetur accusamus? Cum vitae qui enim vero, minima velit, hic laborum nostrum
+                        recusandae
+                        cumque ducimus.</p>
+                    <div class="actionable-links">
+                        <a href="" target="_blank"><i class="devicon-github-original" aria-label="github icon"
+                                role="img"></i></a>
+                        <div class="gh-tooltips" role="tooltip">Github repo link</div>
+
+                        <a href="" target="_blank" class="oint-link"><img class="oint"
+                                src="portfolio-assests/images/open-in-new.png" alt="open in new tab" /></a>
+                        <div class="oint-tooltips" role="tooltip">Open in new window</div>
+                    </div>
+                </div>
+            </section>
         </div>
         <!-- <h3>Featured Projects</h3> -->
     </main>
     <footer aria-label="footer landmark">
-        <section class="contact-details" aria-label="contact details">
+        <!-- <h5>Contact me</h5> -->
+        <section aria-label="contact details">
             <h5>Contact me</h5>
-            <p aria-label="conluding sentence from LL" role="text">Please get in touch if you think our work could be mutually
-                beneficial!</p>
-            <div class="address-lines">
-                <p aria-label="address line one" role="text">Rondom Straat Nummer 4567</p>
-                <p aria-label="address line two" role="text">Leuke Staad, Gronningen 6789</p>
+            <div class="contact-details">
+                <p aria-label="conluding sentence from LL" role="text">Please get in touch if you think our work could be
+                    mutually
+                    beneficial!</p>
+                <div class="address-lines">
+                    <p aria-label="address line one" role="text">Rondom Straat Nummer 4567</p>
+                    <p aria-label="address line two" role="text">Leuke Staad, Gronningen 6789</p>
+                </div>
+                <p aria-label="call me" role="article">
+                    <img src="portfolio-assests/images/phone-outline.png" alt="telephone reciever">
+                    <span aria-label="reach me at tele" role="text">444-4444-4444</span>
+                </p>
+                <p aria-label="email me" role="article">
+                    <img src="portfolio-assests/images/email-outline.png" alt="picture of an envelope">
+                    <span aria-label="reach me at email" role="text">liberty.lebowsky.is.not.here@ll.net</span>
+                </p>
             </div>
-            <p aria-label="call me" role="article">
-                <img src="portfolio-assests/images/phone-outline.png" alt="telephone reciever">
-                <span aria-label="reach me at tele" role="text">444-4444-4444</span>
-            </p>
-            <p aria-label="email me" role="article">
-                <img src="portfolio-assests/images/email-outline.png" alt="picture of an envelope">
-                <span aria-label="reach me at email" role="text">liberty.lebowsky.is.not.here@ll.net</span>
-            </p>
         </section>
         <!-- <img src="portfolio-assests/images/pcm-img.jpg" alt="liberty lebowski in restaurant"> -->
         <picture>
@@ -212,6 +308,12 @@
         const lightTheme = document.querySelector(".theme-light");
         const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
 
+        if (prefersDarkScheme.matches) {
+            document.body.classList.remove("light-theme");
+        } else {
+            document.body.classList.add("dark-theme");
+        }
+
         let themeToggler = () => {
             if (prefersDarkScheme.matches) {
                 document.body.classList.toggle("light-theme");
@@ -222,7 +324,7 @@
 
         let drawerToggler = () => {
             themeDrawer.classList.toggle('show')
-            if(themeDrawer.classList.contains('show')) {
+            if (themeDrawer.classList.contains('show')) {
                 themeDrawerTooltip.style.display = 'none'
             } else {
                 themeDrawerTooltip.style.display = 'block'
@@ -231,14 +333,16 @@
 
         let showLightTheme = () => {
             if (prefersDarkScheme.matches) {
-                document.body.classList.add("light-theme");
+                // document.body.classList.add("light-theme");
+                document.body.classList.remove("light-theme");
                 themeDrawer.classList.toggle('show')
             }
         }
 
         let showNightTheme = () => {
             if (prefersDarkScheme.matches) {
-                document.body.classList.remove("light-theme");
+                document.body.classList.add("light-theme");
+                // document.body.classList.remove("light-theme");
                 themeDrawer.classList.toggle('show')
             }
         }

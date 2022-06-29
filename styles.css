@@ -44,6 +44,8 @@ body {
     --section-bg: gainsboro;
     --body-bg: whitesmoke;
     --card-bg: greenyellow;
+    --tooltips-bg: #28b65e;
+    --tooltips-clr: #1f5c46;
 }
 
 body {
@@ -56,7 +58,7 @@ body {
 header {
     display: flex;
     background: linear-gradient(90deg, var(--text-clr), var(--bg-clr));
-    /* padding: 40px 0 0px; */
+    padding: 40px 0 0px;
     position: relative;
 }
 
@@ -64,7 +66,7 @@ header::before,
 footer::before {
     content: '';
     position: absolute;
-    background-color: var(--background-clr);
+    background-color: var(--bg-clr);
     color: blue;
     /* z-index: 99; */
     /* inset: 2.4em 3em 3em 3em; */
@@ -80,7 +82,7 @@ footer::before {
 }
 
 footer::before {
-    clip-path: polygon(-49% 107%, 7% 100%, 100% 94%, 100% 0%);
+    clip-path: polygon(-24% 78%, 0% 98%, 100% 98%, 135% 0%);
     max-height: 458px;
 }
 
@@ -112,11 +114,12 @@ header .tooltips-so {
     position: absolute;
     left: 20px;
     background-color: aliceblue;
-    padding: 4px 6px;
+    padding: 4px 15px;
     top: 35px;
     opacity: 0;
     width: max-content;
     transition: left .4s linear, opacity .4s linear;
+    border-radius: 11px;
 }
 
 header .tooltips-so {
@@ -153,6 +156,7 @@ footer #contact-me-image {
     /* min-height: -webkit-fill-available; */
     max-height: 440px;
     /* max-width: 380px; */
+    border-radius: 8px;
 }
 
 .user-np>img {
@@ -185,8 +189,8 @@ footer #contact-me-image {
     height: max-content;
     font-weight: bold; */
 
-    font-size: 2.6rem;
-    color: var(--text-clr);
+    font-size: 5.6rem;
+    color: var(--footer-text-clr);
     /* position: absolute;
     color: var(--header-clr);
     left: 0;
@@ -196,11 +200,13 @@ footer #contact-me-image {
 .about-me {
     text-align: justify;
     /* margin: auto 134px auto 20px; */
-    margin: auto 35px auto 33px;
+    margin: auto 35px 0 33px;
     background-color: var(--section-bg);
     padding: 20px;
     z-index: 99;
     color: var(--text-clr);
+    align-self: flex-end;
+    border-radius: 4px;
 }
 
 .about-me h2 {
@@ -214,7 +220,7 @@ footer #contact-me-image {
 
 .about-me .social-ml {
     text-align: right;
-    /* margin-top: 2vh; */
+    margin-top: 2vh;
     display: flex;
     justify-content: flex-end;
 }
@@ -231,11 +237,12 @@ footer #contact-me-image {
     margin: none;
     text-decoration: none;
     display: flex;
-    color: var(--icon-clr);
+    color: var(--footer-text-clr);
 }
 
 .about-me .social-ml i:focus,
-.about-me .social-ml a:focus {
+.about-me .social-ml a:focus,
+.about-me .social-ml a:hover {
     outline: solid;
     border-radius: 50%;
 }
@@ -250,17 +257,26 @@ main {
 }
 
 .all-project-cards {
-    display: flex;
+    /* display: flex;
     flex-wrap: wrap;
     gap: 31px;
-    justify-content: center;
+    justify-content: center; */
+    display: grid;
+    /* grid-template-columns: minmax(20px, auto) 1fr 1fr; */
+    /* grid-template-columns: repeat(minmax(400px, auto) 4); */
+    /* grid-template-columns: repeat(auto-fill, 400px); */
+    /* grid-template-columns: repeat(auto-fit, 400px); */
+    /* grid-template-columns: minmax(min-content, 400px) minmax(400px, 1fr) minmax(400px, 1fr) minmax(400px, 1fr); */
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 20px;
+    padding: 0 29px;
 }
 
 main h3 {
     text-align: left;
     margin: 20px 0 20px 0px;
-    font-size: xx-large;
-    font-family: 'Roboto-Black';
+    font-size: xxx-large;
+    font-family: 'Roboto-Bold';
     color: var(--header-clr);
 }
 
@@ -268,10 +284,11 @@ main h3 {
     min-height: 400px;
     /* max-width: 400px; */
     /* flex-basis: 449px; */
-    flex-basis: 23.5vw;
+    /* flex-basis: 23.5vw; */
     outline: solid;
     text-align: justify;
     background-color: var(--card-bg);
+    border-radius: 4px;
 }
 
 .project-card .screenshot {
@@ -306,12 +323,20 @@ main h3 {
     position: absolute;
     top: 0;
     right: 0;
+    background-color: var(--bg-clr);
+    padding: 0px 8px 0 11px;
+    border-radius: 6px;
 }
 
 .project-card .card-details .actionable-links a {
     text-decoration: none;
     display: flex;
     color: var(--icon-clr);
+    margin: 0 4px;
+}
+
+i.devicon-github-original:hover {
+    color: var(--header-clr);
 }
 
 .contact-details {
@@ -320,19 +345,22 @@ main h3 {
     display: flex;
     flex-direction: column;
     z-index: 99;
+    padding: 0 29px;
 }
 
-.contact-details h5 {
+footer h5 {
     font-size: xxx-large;
     font-family: 'fair-display-regular';
-    color: var(--text-clr);
+    color: var(--footer-text-clr);
+    text-align: justify;
 }
 
 .contact-details>p {
     margin: 20px 0;
     display: flex;
     align-items: center;
-    color: var(--text-clr);
+    color: var(--footer-text-clr);
+    z-index: 103;
 }
 
 .contact-details>p span {
@@ -350,15 +378,18 @@ main h3 {
 }
 
 footer {
-    display: flex;
+    /* display: flex; */
     margin: 1.1vw auto;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     padding: 20px 4px;
-    background: linear-gradient(45deg, var(--background-clr), var(--special-clr));
+    background: linear-gradient(347deg, var(--text-clr), var(--bg-clr));
 }
 
 footer #contact-me-image {
     /* max-width: 42vw; */
+    width: -webkit-fill-available;
 }
 
 footer picture {
@@ -374,17 +405,17 @@ header .themes-drawer .theme-night:hover+.tooltips {
 
 header .show-themes-icons:hover .tooltips-so,
 header .show-themes-icons:focus .tooltips-so {
-    left: -195px;
+    left: -213px;
 }
 
 header .themes-drawer .theme-light:hover+.tooltips,
 header .themes-drawer .theme-light:focus+.tooltips {
-    left: -51px;
+    left: -65px;
 }
 
 header .themes-drawer .theme-night:hover+.tooltips,
 header .themes-drawer .theme-night:focus+.tooltips {
-    left: -13px;
+    left: -29px;
 }
 
 .actionable-links>.devicon-github-original,
@@ -403,10 +434,11 @@ header .themes-drawer .theme-night:focus+.tooltips {
     pointer-events: none;
     position: absolute;
     bottom: -35px;
-    left: -108px;
-    background-color: blue;
+    left: -128px;
+    background-color: var(--tooltips-bg);
     padding: 0 8px 4px;
     width: 159px;
+    border-radius: 6px;
 
     font-size: large;
     opacity: 0;
@@ -427,7 +459,7 @@ header .themes-drawer .theme-night:focus+.tooltips {
 .project-card .card-details .actionable-links a:focus~.gh-tooltips,
 .project-card .card-details .actionable-links a:hover~.gh-tooltips {
     /* content: 'github'; */
-    color: aqua;
+    color: var(--tooltips-clr);
     /* position: absolute;
     bottom: -39px;
     left: 0;
@@ -469,9 +501,11 @@ header .themes-drawer .theme-night:focus+.tooltips {
     position: absolute;
     width: max-content;
     bottom: -29px;
-    left: -150px;
-    background-color: blueviolet;
+    left: -119px;
+    background-color: var(--tooltips-bg);
+    color: var(--tooltips-clr);
     padding: 0 8px 2px;
+    border-radius: 6px;
     /* font-size: x-large; */
     font-size: large;
     z-index: 99;
@@ -512,17 +546,23 @@ header .themes-drawer .theme-night:focus+.tooltips {
 
 .show-me {
     position: absolute;
-    bottom: -29px;
+    bottom: -36px;
     width: max-content;
-    left: 13px;
-    background-color: burlywood;
+    left: -117px;
+    background-color: var(--tooltips-bg);
     padding: 0 11px 6px;
+    border-radius: 6px;
+    color: var(--tooltips-clr);
     /* opacity: 0; */
     /* font-size: small; */
     /* transition-property: font-size; */
 
     transition-property: opacity, font-size;
     transition-duration: 1.3s;
+}
+
+.social-ml span.show-me.linked-in {
+    left: -128px;
 }
 
 /* .social-ml i span */
@@ -541,7 +581,7 @@ header .themes-drawer .theme-night:focus+.tooltips {
 
 /* theme toggler */
 @media(prefers-color-scheme: dark) {
-    :root {
+    body.light-theme {
         /* --bg-clr: red; */
         --primary-clr: green;
         --secondary-clr: #c9cbd6;
@@ -549,29 +589,34 @@ header .themes-drawer .theme-night:focus+.tooltips {
         --special-clr: #1aff02;
         --background-clr: #ddefdb;
         --bg-clr: springgreen;
-        --icon-clr: #487b05;
+        --icon-clr: #676767;
         --section-bg: gainsboro;
         --body-bg: #40cb9b;
-        --card-text: #041725;
+        --card-bg: #0fe286;
+        --card-text: #02022f;
         --card-header: #022802;
         --header-clr: #033b27;
+        --footer-text-clr: #034e18;
+        --tooltips-bg: #c4d7cb;
+        --tooltips-clr: #034e18;
     }
 
-    body.light-theme {
+    :root {
         /* --bg-clr: yellow; */
         --primary-clr: #6d8000;
         --secondary-clr: #006a80;
         --text-clr: darkgreen;
-        --special-clr: #1a1827;
-        --background-clr: aquamarine;
+        --special-clr: #5ae2ab;
+        --background-clr: #0ae299;
         --bg-clr: rgb(79, 110, 79);
-        --icon-clr: #136731;
+        --icon-clr: #b6ceb6;
         --section-bg: #92afad;
         --body-bg: rgb(72, 93, 80);
-        --card-bg: #77a432;
-        --card-text: #083223;
-        --card-header: darkgreen;
+        --card-bg: #1f3004;
+        --card-text: #a9ffa0;
+        --card-header: #21ecb9;
         --header-clr: #034048;
+        --footer-text-clr: #b6ceb6;
     }
 }
 
@@ -596,6 +641,10 @@ header .themes-drawer .theme-night:focus+.tooltips {
         flex-direction: column;
     }
 
+    footer {
+        grid-template-columns: 1fr;
+    }
+
     .about-me {
         margin: 0;
     }
@@ -606,16 +655,59 @@ header .themes-drawer .theme-night:focus+.tooltips {
         min-width: -webkit-fill-available;
     }
 
-    .project-card {
-        flex-basis: 48.5vw;
+    .user-np h1 {
+        font-size: 3.6rem;
     }
+
+    /* .project-card {
+        flex-basis: 48.5vw;
+    } */
+
+    /* footer::before {
+        background-color: rgba(195, 195, 225, .4);
+    } */
 }
 
 @media (max-width: 1030px) {
-    .project-card {
+    /* .project-card {
         flex-basis: 99.5vw;
+    } */
+
+}
+
+@media (max-width: 600px) {
+    .all-project-cards {
+        grid-template-columns: 1fr;
     }
 
+    .user-np h1 {
+        font-size: 2.6rem;
+    }
+
+    footer picture {
+        justify-self: baseline;
+    }
+
+    .contact-details .address-lines,
+    .contact-details>p,
+    footer h5 {
+        font-size: larger;
+        /* white-space: pre-wrap; */
+        word-break: break-all; 
+        word-wrap: break-word;
+    }
+
+    footer h5 {
+        font-size: x-large;
+    }
+
+    footer #contact-me-image {
+        width: auto;
+    }
+
+    /* .project-card {
+        max-width: fit-content;
+    } */
 }
 
 
